@@ -1,45 +1,58 @@
 <template>
   <div id="loginContainer">
     <div id="username">
-      <input v-model="username" type="text" id="usernameInput" placeholder="Epost"/>
+      <input v-model="email" type="text" id="emailInput" placeholder="Epost" />
     </div>
     <div id="password">
-      <input v-model="password" type="password" id="passwordInput" placeholder="Passord"/>
+      <input
+        v-model="password"
+        type="password"
+        id="passwordInput"
+        placeholder="Passord"
+      />
     </div>
     <button v-on:click="handleClickSignin">Logg inn</button>
+    <label id="loginStatusMsg">{{ loginStatusMsg }}</label>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import {doLogin} from "@/utils/apiutils.js";
+
 export default {
   name: "LoginComponent",
-  props: {
-    title: String
+  data() {
+    return {
+      email: '',
+      password: '',
+      loginStatus: '',
+      loginStatusMsg: '',
+    }
   },
   methods: {
     async handleClickSignin() {
-      const loginRequest = {username: this.username, password: this.password};
-      const loginResponse = await doLogin(loginRequest);
-      this.loginStatus = loginResponse.loginStatus;
+      const loginRequest = {email: this.email, password: this.password};
+      //const loginResponse = await doLogin(loginRequest);
+
+      this.loginStatus = "Failure";
+      /*this.loginStatus = loginResponse.loginStatus;
       if (this.loginStatus === "Success") {
-        this.$store.dispatch("login", this.username, true);
-        this.$emit("success");
+        this.$store.dispatch("login", loginResponse.username, this.email, true);
 
         await this.$router.push({
-          name: "Home",
+          name: "subjects",
         });
-      } else {
-        this.$emit("failure");
+      } else*/ if(this.loginStatus === "Failure"){
+        this.loginStatusMsg = "E-post eller passordet er feil. Prøv igjen."
+
+        //Testing purposes
+        await this.$router.push({
+          name: "Subjects",
+        });
       }
     },
   },
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  }
 }
 </script>
 
