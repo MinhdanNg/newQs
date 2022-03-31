@@ -7,20 +7,20 @@ public class SubjectRegisterRequest
 {
     private String code;
     private String name;
-    private String teachers;
-    private String assistants;
-    private String students;
+    private String teachersCSV;
+    private String assistantsCSV;
+    private String studentsCSV;
     private List<TaskGroupRequest> tasks;
 
     public SubjectRegisterRequest() { }
 
-    public SubjectRegisterRequest(String code, String name, String teachers, String assistants, String students, List<TaskGroupRequest> tasks)
+    public SubjectRegisterRequest(String code, String name, String teachersCSV, String assistantsCSV, String studentsCSV, List<TaskGroupRequest> tasks)
     {
         this.code = code;
         this.name = name;
-        this.teachers = teachers;
-        this.assistants = assistants;
-        this.students = students;
+        this.teachersCSV = teachersCSV;
+        this.assistantsCSV = assistantsCSV;
+        this.studentsCSV = studentsCSV;
         this.tasks = tasks;
     }
 
@@ -44,34 +44,34 @@ public class SubjectRegisterRequest
         this.name = name;
     }
 
-    public String getTeachers()
+    public String getTeachersCSV()
     {
-        return teachers;
+        return teachersCSV;
     }
 
-    public void setTeachers(String teachers)
+    public void setTeachersCSV(String teachersCSV)
     {
-        this.teachers = teachers;
+        this.teachersCSV = teachersCSV;
     }
 
-    public String getAssistants()
+    public String getAssistantsCSV()
     {
-        return assistants;
+        return assistantsCSV;
     }
 
-    public void setAssistants(String assistants)
+    public void setAssistantsCSV(String assistantsCSV)
     {
-        this.assistants = assistants;
+        this.assistantsCSV = assistantsCSV;
     }
 
-    public String getStudents()
+    public String getStudentsCSV()
     {
-        return students;
+        return studentsCSV;
     }
 
-    public void setStudents(String students)
+    public void setStudentsCSV(String studentsCSV)
     {
-        this.students = students;
+        this.studentsCSV = studentsCSV;
     }
 
     public List<TaskGroupRequest> getTasks()

@@ -59,13 +59,13 @@ public class UserResponse
         this.email = email;
     }
 
-    public boolean isTeacher()
+    public boolean getIsTeacher()
     {
         return isTeacher;
     }
 
-    public void setTeacher(boolean teacher)
+    public void setIsTeacher(boolean isTeacher)
     {
-        isTeacher = teacher;
+        this.isTeacher = isTeacher;
     }
 }

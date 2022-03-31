@@ -18,14 +18,14 @@ public class Subject
     private List<User> assistants;
     @ManyToMany
     private List<User> students;
-    @OneToOne
-    private Tasks tasks;
+    @OneToMany
+    private List<TaskGroup> tasks;
     @OneToOne
     private Queue queue;
 
     public Subject() { }
 
-    public Subject(String code, String name, boolean isActive, List<User> teachers, List<User> assistants, List<User> students, Tasks tasks, Queue queue)
+    public Subject(String code, String name, boolean isActive, List<User> teachers, List<User> assistants, List<User> students, List<TaskGroup> tasks, Queue queue)
     {
         this.code = code;
         this.name = name;
@@ -107,12 +107,12 @@ public class Subject
         this.students = students;
     }
 
-    public Tasks getTasks()
+    public List<TaskGroup> getTasks()
     {
         return tasks;
     }
 
-    public void setTasks(Tasks tasks)
+    public void setTasks(List<TaskGroup> tasks)
     {
         this.tasks = tasks;
     }

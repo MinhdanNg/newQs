@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,13 +16,10 @@ public class Queue
     @OneToMany
     private List<QueueItem> items;
 
-    public Queue() { }
-
-    public Queue(boolean isActive, Room room, List<QueueItem> items)
+    public Queue()
     {
-        this.isActive = isActive;
-        this.room = room;
-        this.items = items;
+        isActive = true;
+        items = new ArrayList<>();
     }
 
     public long getId()

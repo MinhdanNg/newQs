@@ -1,16 +1,62 @@
 package edu.ntnu.idatt2105.newqs.service;
 
+import edu.ntnu.idatt2105.newqs.entity.User;
 import edu.ntnu.idatt2105.newqs.model.user.*;
+import edu.ntnu.idatt2105.newqs.repository.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService
 {
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
+    @Autowired
+    private UserRepository userRepository;
 
     public UserResponse get(UserRequest request)
+    {
+        return null;
+    }
+
+    public List<User> getOrCreate(String usersCSV, boolean isTeacher)
+    {
+        List<User> users = new ArrayList<>();
+
+        String[] lines = usersCSV.split("\n");
+        for (String line : lines)
+        {
+            String[] fields = line.split(",");
+            if (fields.length != 3)
+            {
+                throw new IllegalArgumentException("All lines in CSV must have 3 fields in this order: last name, first name, email");
+            }
+
+            String lastName = fields[0].strip();
+            String firstName = fields[1].strip();
+            String email = fields[2].strip();
+
+            User user = userRepository.getUserByEmail(email);
+            if (user == null)
+            {
+                user = register(firstName, lastName, email, isTeacher);
+            }
+            else if (isTeacher)
+            {
+                user.setIsTeacher(true);
+                userRepository.save(user);
+            }
+
+            users.add(user);
+        }
+        return users;
+    }
+
+    private User register(String firstName, String lastName, String email, boolean isTeacher)
     {
         return null;
     }
