@@ -1,8 +1,7 @@
 <template>
   <div id="loginContainer">
     <div id="username">
-      <BaseInput v-model="email" type="email" id="emailInput" placeholder="Epost"
-             :error="emailError"/>
+      <input v-model="email" type="text" id="emailInput" placeholder="Epost"/>
     </div>
     <div id="password">
       <input
@@ -20,14 +19,9 @@
 <script>
 /* eslint-disable */
 import {doLogin} from "@/utils/apiutils.js";
-import { useField, useForm } from 'vee-validate'
-import BaseInput from "@/components/BaseInput";
 
 export default {
   name: "LoginComponent",
-  components: {
-    BaseInput,
-  },
   data() {
     return {
       email: '',
@@ -59,28 +53,6 @@ export default {
       }
     },
   },
-  setup () {
-    const validations = {
-      email: value => {
-        if (!value) return 'This field is required'
-
-        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if (!regex.test(String(value).toLowerCase())) {
-          return 'Please enter a valid email address'
-        }
-        return true
-      },
-    }
-    useForm({
-      validationSchema: validations
-    })
-    const { value: email, errorMessage: emailError } = useField('email')
-
-    return {
-      email,
-      emailError,
-    }
-  }
 }
 </script>
 
