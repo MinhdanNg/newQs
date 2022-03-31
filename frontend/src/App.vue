@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <div id="nav">
+    <div id="nav" v-if="$store.state.loginStatus">
       <img src="./assets/logo.png" alt="logo" id="logo" />
       <p id="usernameNav">{{ $store.state.username }}</p>
       <div>

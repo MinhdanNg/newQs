@@ -7,3 +7,23 @@ export function doLogin(loginRequest) {
       return response.data;
     });
 }
+
+export function getUser(){
+
+}
+
+export function getQueue(){
+
+}
+
+export function addToQueue(queueInfo){
+    return axios
+        .post("", queueInfo)
+        .then((response) => {
+            return response.data
+        })
+}
+
+export function getSubjects(){
+
+}
