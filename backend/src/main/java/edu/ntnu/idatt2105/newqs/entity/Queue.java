@@ -15,6 +15,15 @@ public class Queue
     @OneToMany
     private List<QueueItem> items;
 
+    public Queue() { }
+
+    public Queue(boolean isActive, Room room, List<QueueItem> items)
+    {
+        this.isActive = isActive;
+        this.room = room;
+        this.items = items;
+    }
+
     public long getId()
     {
         return id;

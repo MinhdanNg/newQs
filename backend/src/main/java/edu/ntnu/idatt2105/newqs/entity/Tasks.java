@@ -15,6 +15,13 @@ public class Tasks
     @OneToMany
     private List<TaskGroup> taskGroups;
 
+    public Tasks() { }
+
+    public Tasks(List<TaskGroup> taskGroups)
+    {
+        this.taskGroups = taskGroups;
+    }
+
     public long getId()
     {
         return id;

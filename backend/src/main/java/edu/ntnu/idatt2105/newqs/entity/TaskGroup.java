@@ -13,6 +13,14 @@ public class TaskGroup
     private int numTasks;
     private int numRequired;
 
+    public TaskGroup() { }
+
+    public TaskGroup(int numTasks, int numRequired)
+    {
+        this.numTasks = numTasks;
+        this.numRequired = numRequired;
+    }
+
     public long getId()
     {
         return id;

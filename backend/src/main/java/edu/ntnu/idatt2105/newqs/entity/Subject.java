@@ -23,6 +23,20 @@ public class Subject
     @OneToOne
     private Queue queue;
 
+    public Subject() { }
+
+    public Subject(String code, String name, boolean isActive, List<User> teachers, List<User> assistants, List<User> students, Tasks tasks, Queue queue)
+    {
+        this.code = code;
+        this.name = name;
+        this.isActive = isActive;
+        this.teachers = teachers;
+        this.assistants = assistants;
+        this.students = students;
+        this.tasks = tasks;
+        this.queue = queue;
+    }
+
     public long getId()
     {
         return id;

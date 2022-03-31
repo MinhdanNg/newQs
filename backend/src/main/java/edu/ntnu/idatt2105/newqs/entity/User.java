@@ -13,6 +13,17 @@ public class User
     private String email;
     private boolean isTeacher;
 
+    public User() { }
+
+    public User(String id, String firstName, String lastName, String email, boolean isTeacher)
+    {
+        Id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.isTeacher = isTeacher;
+    }
+
     public String getId()
     {
         return Id;

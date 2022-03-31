@@ -14,6 +14,15 @@ public class Room
     private int numTables;
     private String imageURL;
 
+    public Room() { }
+
+    public Room(String name, int numTables, String imageURL)
+    {
+        this.name = name;
+        this.numTables = numTables;
+        this.imageURL = imageURL;
+    }
+
     public long getId()
     {
         return id;

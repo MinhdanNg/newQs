@@ -20,6 +20,17 @@ public class QueueItem
     private Date timeJoined;
     private String table;
 
+    public QueueItem() { }
+
+    public QueueItem(User user, User assistedBy, String type, Date timeJoined, String table)
+    {
+        this.user = user;
+        this.assistedBy = assistedBy;
+        this.type = type;
+        this.timeJoined = timeJoined;
+        this.table = table;
+    }
+
     public long getId()
     {
         return id;
