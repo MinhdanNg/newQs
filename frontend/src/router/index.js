@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/LoginView.vue";
-import TAQueue from "../views/QueueTA.vue";
+import Queue from "../views/Queue.vue";
 import SubjectsView from "@/views/SubjectsView";
-import QueueStudent from "@/views/QueueStudent";
+import Settings from "@/views/Settings";
 
 Vue.use(VueRouter);
 
@@ -14,9 +14,9 @@ const routes = [
     component: Login,
   },
   {
-    path: "/queueTA",
-    name: "TAQ",
-    component: TAQueue,
+    path: "/queue",
+    name: "Queue",
+    component: Queue,
   },
   {
     path: "/subjects",
@@ -24,9 +24,9 @@ const routes = [
     component: SubjectsView,
   },
   {
-    path: "/queue",
-    name: "Queue",
-    component: QueueStudent,
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
   },
 ];
 

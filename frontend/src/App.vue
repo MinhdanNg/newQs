@@ -1,12 +1,18 @@
 <template>
   <div id="container">
     <div id="nav">
-      <img src="./assets/logo.png" alt="logo" id="logo">
-      <p id="username">Per Olav Jensen</p>
+      <img src="./assets/logo.png" alt="logo" id="logo" />
+      <p id="usernameNav">{{ $store.state.username }}</p>
       <div>
-      <button class="navButtons"><img src="./assets/logout.png" alt="Logg ut" id="logoutIcon"></button>
-      <router-link class="navButtons" :to="{ name:'Login'}">Innstillinger</router-link>
-      <router-link class="navButtons" :to="{name: 'Subjects'}">Fag</router-link>
+        <button class="navButtons">
+          <img src="./assets/logout.png" alt="Logg ut" id="logoutIcon" />
+        </button>
+        <router-link class="navButtons" :to="{ name: 'Settings' }"
+          >Innstillinger</router-link
+        >
+        <router-link class="navButtons" :to="{ name: 'Subjects' }"
+          >Fag</router-link
+        >
       </div>
     </div>
     <div id="content">
@@ -15,6 +21,7 @@
   </div>
 </template>
 
+<script></script>
 <style>
 body {
   margin: 0;
@@ -37,7 +44,7 @@ body {
 #nav a.router-link-exact-active {
   border-bottom: solid white 2px;
 }
-#nav{
+#nav {
   background-color: #333;
   display: flex;
   flex-direction: row;
@@ -48,7 +55,7 @@ body {
   border-bottom: solid white 2px;
   cursor: pointer;
 }
-.navButtons{
+.navButtons {
   font-size: 20px;
   background-color: transparent;
   border: none;
@@ -61,7 +68,7 @@ body {
   font-weight: normal;
 }
 
-#logoutIcon{
+#logoutIcon {
   height: 30px;
 }
 #logoutIcon:hover {
@@ -72,7 +79,7 @@ body {
   padding: 15px;
 }
 
-#username {
+#usernameNav {
   flex-grow: 1;
   font-size: 20px;
 }
