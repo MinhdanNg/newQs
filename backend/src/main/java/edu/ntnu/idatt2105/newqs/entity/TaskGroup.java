@@ -1,12 +1,14 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class TaskGroup
 {
     @Id
+    @GeneratedValue
     private long id;
     private int numTasks;
     private int numRequired;

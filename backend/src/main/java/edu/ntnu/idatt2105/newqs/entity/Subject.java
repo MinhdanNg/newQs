@@ -7,6 +7,7 @@ import java.util.List;
 public class Subject
 {
     @Id
+    @GeneratedValue
     private long id;
     private String code;
     private String name;

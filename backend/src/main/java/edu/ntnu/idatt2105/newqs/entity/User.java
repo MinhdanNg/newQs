@@ -7,20 +7,20 @@ import javax.persistence.Id;
 public class User
 {
     @Id
-    private String ID;
+    private String Id;
     private String firstName;
     private String lastName;
     private String email;
     private boolean isTeacher;
 
-    public String getID()
+    public String getId()
     {
-        return ID;
+        return Id;
     }
 
-    public void setID(String ID)
+    public void setId(String id)
     {
-        this.ID = ID;
+        this.Id = id;
     }
 
     public String getFirstName()

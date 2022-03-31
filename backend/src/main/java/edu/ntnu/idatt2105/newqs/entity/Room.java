@@ -1,12 +1,14 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Room
 {
     @Id
+    @GeneratedValue
     private long id;
     private String name;
     private int numTables;

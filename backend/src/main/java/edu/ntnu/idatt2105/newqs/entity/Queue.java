@@ -1,15 +1,13 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Queue
 {
     @Id
+    @GeneratedValue
     private long id;
     private boolean isActive;
     @ManyToOne

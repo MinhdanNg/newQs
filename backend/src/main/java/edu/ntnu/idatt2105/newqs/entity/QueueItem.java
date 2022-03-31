@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 public class QueueItem
 {
     @Id
+    @GeneratedValue
     private long id;
     @ManyToOne
     private User user;
