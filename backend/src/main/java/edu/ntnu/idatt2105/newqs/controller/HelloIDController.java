@@ -17,7 +17,7 @@ public class HelloIDController
     private static final Logger LOGGER = LogManager.getLogger(HelloIDController.class);
 
     @GetMapping(value = "")
-    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @ResponseStatus(value = HttpStatus.OK)
     public String hello()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
