@@ -6,15 +6,19 @@
     <p id="username" class="gridItem">{{ username }}</p>
     <p id="helpType" class="gridItem">{{ helpType }}</p>
     <p id="task" class="gridItem">Øving {{ taskNumber }}</p>
-    <p id="time" class="gridItem"></p>
-    <p id="place" class="gridItem">{{ place }}</p>
-    <p id="TA" class="gridItem">{{ TA }}</p>
+
+    <Stopwatch id="time" class="gridItem hideOnMobile" />
+    <p id="place" class="gridItem hideOnMobile">{{ place }}</p>
+    <p id="TA" class="gridItem hideOnMobile">{{ TA }}</p>
   </div>
 </template>
 
 <script>
+import Stopwatch from "@/components/Stopwatch.vue";
+
 export default {
   name: "QStudent",
+  components: {Stopwatch},
   data() {
     return {
       isHelping: false,
@@ -57,6 +61,7 @@ export default {
   width: 100px;
 }
 #time {
+  padding: 15px 0;
   width: 150px;
   grid-area: time;
 }
@@ -72,5 +77,16 @@ export default {
 }
 .helping {
   border-left: 8px solid lightgreen;
+}
+@media only screen and (max-width: 600px) {
+  .gridItem {
+    width: 150px;
+  }
+  #task {
+    width: 80px;
+  }
+  #helpType {
+    width: 100px;
+  }
 }
 </style>

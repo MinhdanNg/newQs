@@ -1,13 +1,12 @@
 <template>
   <div id="subjectContainer">
     <div id="subjectNames">
-      <p>{{subjectCode}}IDATT2105</p>
-      <h2>{{subjectName}}Fullstack</h2>
-      <button class="infoButton">Øvinger</button>
-      <button class="infoButton">Info</button>
+      <p>{{subjectCode}}</p>
+      <h2>{{subjectName}}</h2>
+<!--      <button class="infoButton" v-if="$store.state.role==='student'">Øvinger</button>-->
       <button @click="toQueue" class="infoButton">Til kø</button>
     </div>
-    <div id="subjectDetail">
+    <div v-if="$store.state.role==='student'" id="subjectDetail" >
       <div id="taskInfo" class="tabContent">
         <div class="title">
           <h2>Øvinger</h2>
@@ -87,7 +86,8 @@ h3 {
   text-align: left;
   background-color: #25458a;
   color: white;
-  padding: 5px 80px 5px 20px;
+  padding: 5px 20px;
+  width: 280px;
 }
 
 #subjectDetail {
@@ -127,5 +127,23 @@ h3 {
 th, td {
   border-bottom: 1px solid dimgrey;
   padding: 10px;
+}
+@media only screen and (max-width: 600px) {
+  #subjectContainer {
+    border-radius: 6px;
+    border: 2px solid #25458a;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px auto;
+    padding: 0;
+    height: 150px;
+  }
+  #subjectNames {
+    text-align: left;
+    background-color: #25458a;
+    color: white;
+    padding: 5px 20px;
+    width: 100%;
+  }
 }
 </style>

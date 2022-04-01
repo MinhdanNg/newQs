@@ -2,15 +2,15 @@
   <div id="container">
     <div id="nav" v-if="$store.state.loginStatus">
       <img src="./assets/logo.png" alt="logo" id="logo" />
-      <p id="usernameNav">{{ $store.state.username }}</p>
+      <p id="usernameNav">{{ $store.state.username }}: <button id="swapRole" @click="swapRole">{{$store.state.role}}</button></p>
       <div>
-        <button class="navButtons">
+        <button class="navButtons" id="logOutButton" @click="logOut">
           <img src="./assets/logout.png" alt="Logg ut" id="logoutIcon" />
         </button>
-        <router-link class="navButtons" :to="{ name: 'Settings' }"
+        <router-link class="navButtons hideOnMobile" :to="{ name: 'Settings' }"
           >Innstillinger</router-link
         >
-        <router-link class="navButtons" :to="{ name: 'Subjects' }"
+        <router-link class="navButtons hideOnMobile" :to="{ name: 'Subjects' }"
           >Fag</router-link
         >
       </div>
@@ -18,10 +18,41 @@
     <div id="content">
       <router-view />
     </div>
+    <div class="mobileNav">
+      <router-link class="navButtons" :to="{ name: 'Settings' }"
+      >Innstillinger</router-link
+      >
+      <router-link class="navButtons" :to="{ name: 'Subjects' }"
+      >Fag</router-link
+      >
+    </div>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  components: {
+  },
+  methods: {
+    swapRole() {
+      if(this.$store.state.role === "student"){
+        this.$store.commit("SET_ROLE", "læringsassistent")
+      } else {
+        this.$store.commit("SET_ROLE", "student")
+      }
+      this.$router.push({
+        name: "Subjects",
+      });
+    },
+    logOut(){
+      this.$store.state.loginStatus = false;
+      this.$router.push({
+        name: "Login",
+      });
+    }
+  }
+}
+</script>
 <style>
 body {
   margin: 0;
@@ -78,9 +109,25 @@ body {
   height: 30px;
   padding: 15px;
 }
-
 #usernameNav {
   flex-grow: 1;
   font-size: 20px;
+}
+@media only screen and (max-width: 600px) {
+  #content {
+    width: 100%;
+  }
+  .hideOnMobile {
+    display: none;
+  }
+  .mobileNav {
+    background-color: #333;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 }
 </style>

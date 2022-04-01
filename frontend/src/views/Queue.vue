@@ -9,7 +9,7 @@
     <p>Antall studenter:</p>
     -->
 
-    <button id="queueUpButton" @click="showModal('register')">Still deg i kø</button>
+    <button v-if="$store.state.role==='student'" id="queueUpButton" @click="showModal('register')">Still deg i kø</button>
     <div id="queueAndFilter">
       <div id="queue">
         <button
@@ -134,11 +134,12 @@ export default {
     },
 
     showModal(modal, index) {
-      this.backdrop = true;
-      if(modal === "help") {
+      if(modal === "help" && this.$store.state.role === 'læringsassistent') {
+        this.backdrop = true;
         this.helpStudentModal = true;
         this.currentStudentModal = this.studentTestList[index];
-      } else {
+      } else if(modal === "register" && this.$store.state.role === 'student'){
+        this.backdrop = true;
         this.registerQModal = true;
       }
     },
@@ -220,7 +221,7 @@ export default {
   position: fixed; /* Stay in place */
   top: 20%;
   left: 50%;
-  margin-left: -250px; /* Negative half of width. */
+  transform: translateX(-50%);
   background-color: #fefefe;
   padding: 20px;
   width: 500px;
@@ -254,5 +255,10 @@ export default {
 }
 #queueUpButton:hover {
   cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .modal-content {
+    width: 60%;
+  }
 }
 </style>
