@@ -113,6 +113,17 @@ body {
   flex-grow: 1;
   font-size: 20px;
 }
+#swapRole {
+  background-color: darkblue;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+#swapRole:hover {
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
   #content {
     width: 100%;

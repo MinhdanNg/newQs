@@ -1,6 +1,8 @@
 <template>
   <div>
-    <select name="task" id="taskSelector" class="filterItem">
+    <div id="registerQContainer">
+      <h2>Registrering</h2>
+    <select name="task" class="selector">
       <option value="" disabled selected hidden>Øving...</option>
       <option value="1">1</option>
       <option value="1">2</option>
@@ -9,14 +11,24 @@
   {{ task.number }}
 </option> }}-->
     </select>
-    <div class="filterItem">
-      <input type="radio" name="place" checked />
-      <label for="approval">Hjemme</label>
-      <input type="radio" name="place" />
-      <label for="help">Gløshaugen</label>
+    <div>
+      <div>
+      <input type="radio" name="place" checked v-model="place" value="home" class="radio"/>
+      <label>Hjemme</label>
     </div>
-
-    <div class="filterItem">
+      <div>
+      <input type="radio" name="place" v-model="place" value="school" class="radio"/>
+      <label>Gløshaugen </label>
+      </div>
+      <div v-show="place === 'school'">
+      <label>Bordnummer: </label>
+      <select name="tableNumber" id="tableNumber" class="selector">
+        <option v-for='(n, i) in 18' :key="n" value="i">{{i}}</option>
+      </select>
+      </div>
+    </div>
+    <img src="@/assets/roomPic.png" alt="Picture of the room" v-show="place === 'school'">
+    <div>
       <input type="radio" id="approval" name="helpType" checked />
       <label for="approval">Godkjenning</label>
       <input type="radio" id="help" name="helpType" />
@@ -24,7 +36,8 @@
     </div>
     <label> Beskjed: </label>
     <input type="text" id="message" />
-    <input type="submit" value="Still i kø" class="filterItem" @click="registerToQueue"/>
+    <input type="submit" value="Still i kø" class="filterItem" @click="registerToQueue" id="registerButton"/>
+    </div>
   </div>
 </template>
 
@@ -35,7 +48,7 @@ export default {
   data () {
     return {
       taskNumber: '',
-      place: '',
+      place: 'home',
       helpType: '',
       message: '',
     }
@@ -48,16 +61,42 @@ export default {
       if(queueStatus === "success"){
         console.log("success")
       }
+      this.$emit("stopwatchStart")
     }
   }
 };
 </script>
 
 <style scoped>
-#taskSelector {
+input {
+  margin: 10px;
+}
+#registerQContainer {
+  font-size: 20px;
+  height: 400px;
+  overflow: scroll;
+}
+.selector {
   font-size: 16px;
   padding: 5px;
   border-radius: 20px;
   text-align: center;
+}
+#registerButton {
+  background-color: darkblue;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+#registerButton:hover {
+  cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  #registerQContainer {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
