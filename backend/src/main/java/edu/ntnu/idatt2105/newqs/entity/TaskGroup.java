@@ -3,9 +3,10 @@ package edu.ntnu.idatt2105.newqs.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class TaskGroup
+public class TaskGroup implements Serializable
 {
     @Id
     @GeneratedValue

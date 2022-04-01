@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService
@@ -25,6 +26,7 @@ public class UserService
 
     public List<User> getOrCreate(String usersCSV, boolean isTeacher)
     {
+        LOGGER.trace(usersCSV);
         List<User> users = new ArrayList<>();
 
         String[] lines = usersCSV.split("\n");
@@ -40,7 +42,10 @@ public class UserService
             String firstName = fields[1].strip();
             String email = fields[2].strip();
 
+            LOGGER.trace("Email: " + email);
+
             User user = userRepository.getUserByEmail(email);
+
             if (user == null)
             {
                 user = register(firstName, lastName, email, isTeacher);
@@ -58,6 +63,8 @@ public class UserService
 
     private User register(String firstName, String lastName, String email, boolean isTeacher)
     {
-        return null;
+        User user = new User(UUID.randomUUID().toString(), firstName, lastName, email, isTeacher);
+        userRepository.save(user);
+        return user;
     }
 }

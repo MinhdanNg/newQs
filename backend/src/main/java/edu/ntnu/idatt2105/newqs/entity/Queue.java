@@ -1,11 +1,12 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Queue
+public class Queue implements Serializable
 {
     @Id
     @GeneratedValue

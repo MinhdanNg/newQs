@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +49,12 @@ public class SubjectService
 
     public SubjectResponse get(SubjectRequest request)
     {
-        return null;
+        Optional<Subject> optionalSubject = subjectRepository.findById(request.getSubjectId());
+        if (optionalSubject.isEmpty())
+        {
+            return null;
+        }
+        return Mapper.ToSubjectResponse(optionalSubject.get());
     }
 
     public void activate(SubjectRequest request)

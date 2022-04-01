@@ -1,10 +1,11 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Subject
+public class Subject implements Serializable
 {
     @Id
     @GeneratedValue

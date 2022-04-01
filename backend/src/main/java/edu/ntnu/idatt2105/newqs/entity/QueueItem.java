@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class QueueItem
+public class QueueItem implements Serializable
 {
     @Id
     @GeneratedValue
@@ -18,17 +19,17 @@ public class QueueItem
     private User assistedBy;
     private String type;
     private Date timeJoined;
-    private String table;
+    private String tableNr;
 
     public QueueItem() { }
 
-    public QueueItem(User user, User assistedBy, String type, Date timeJoined, String table)
+    public QueueItem(User user, User assistedBy, String type, Date timeJoined, String tableNr)
     {
         this.user = user;
         this.assistedBy = assistedBy;
         this.type = type;
         this.timeJoined = timeJoined;
-        this.table = table;
+        this.tableNr = tableNr;
     }
 
     public long getId()
@@ -81,13 +82,13 @@ public class QueueItem
         this.timeJoined = timeJoined;
     }
 
-    public String getTable()
+    public String getTableNr()
     {
-        return table;
+        return tableNr;
     }
 
-    public void setTable(String table)
+    public void setTableNr(String table)
     {
-        this.table = table;
+        this.tableNr = table;
     }
 }

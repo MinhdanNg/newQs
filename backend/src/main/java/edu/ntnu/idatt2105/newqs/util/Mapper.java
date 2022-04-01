@@ -25,7 +25,7 @@ public class Mapper
                 ToUserResponses(subject.getAssistants()),
                 ToUserResponses(subject.getStudents()),
                 ToTasksResponse(subject.getTasks()),
-                ToQueueResponse(subject.getQueue())
+                subject.getQueue().getId()
         );
     }
 
@@ -102,7 +102,7 @@ public class Mapper
                 ToUserResponse(item.getAssistedBy()),
                 item.getType(),
                 item.getTimeJoined(),
-                item.getTable()
+                item.getTableNr()
         );
     }
 }

@@ -1,11 +1,10 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Room
+public class Room implements Serializable
 {
     @Id
     @GeneratedValue
