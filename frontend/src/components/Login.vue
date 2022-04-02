@@ -33,7 +33,7 @@ export default {
   methods: {
     async handleClickSignin() {
       const loginRequest = {email: this.email, password: this.password};
-      //const loginResponse = await doLogin(loginRequest);
+      const loginResponse = await doLogin(loginRequest);
 
       this.loginStatus = "Failure";
       /*this.loginStatus = loginResponse.loginStatus;
@@ -51,6 +51,7 @@ export default {
           name: "Subjects",
         });
       }
+      console.log(loginResponse)
     },
   },
 }
