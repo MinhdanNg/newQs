@@ -7,29 +7,17 @@ import java.util.List;
 
 public class QueueResponse
 {
-    private long queueId;
     private boolean isActive;
     private RoomResponse room;
     private List<QueueItemResponse> items;
 
     public QueueResponse() { }
 
-    public QueueResponse(long queueId, boolean isActive, RoomResponse room, List<QueueItemResponse> items)
+    public QueueResponse(boolean isActive, RoomResponse room, List<QueueItemResponse> items)
     {
-        this.queueId = queueId;
         this.isActive = isActive;
         this.room = room;
         this.items = items;
-    }
-
-    public long getQueueId()
-    {
-        return queueId;
-    }
-
-    public void setQueueId(long queueId)
-    {
-        this.queueId = queueId;
     }
 
     public boolean isActive()

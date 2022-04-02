@@ -5,8 +5,8 @@ import edu.ntnu.idatt2105.newqs.model.queue.QueueResponse;
 import edu.ntnu.idatt2105.newqs.model.queueitem.QueueItemResponse;
 import edu.ntnu.idatt2105.newqs.model.room.RoomResponse;
 import edu.ntnu.idatt2105.newqs.model.subject.SubjectResponse;
-import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupResponse;
-import edu.ntnu.idatt2105.newqs.model.tasks.TasksResponse;
+import edu.ntnu.idatt2105.newqs.repository.tasks.TaskGroupResponse;
+import edu.ntnu.idatt2105.newqs.repository.tasks.TasksResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 import java.util.List;
@@ -72,7 +72,6 @@ public class Mapper
     public static QueueResponse ToQueueResponse(Queue queue)
     {
         return new QueueResponse(
-                queue.getId(),
                 queue.isActive(),
                 ToRoomResponse(queue.getRoom()),
                 ToQueueItemResponses(queue.getItems())
@@ -97,7 +96,6 @@ public class Mapper
     public static QueueItemResponse ToQueueItemResponse(QueueItem item)
     {
         return new QueueItemResponse(
-                item.getId(),
                 ToUserResponse(item.getUser()),
                 ToUserResponse(item.getAssistedBy()),
                 item.getType(),

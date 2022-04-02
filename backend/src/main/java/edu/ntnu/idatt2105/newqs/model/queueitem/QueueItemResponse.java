@@ -6,8 +6,7 @@ import java.util.Date;
 
 public class QueueItemResponse
 {
-    private long queueItemId;
-    private UserResponse user;
+    private UserResponse student;
     private UserResponse assistedBy;
     private String type;
     private Date timeJoined;
@@ -15,34 +14,23 @@ public class QueueItemResponse
 
     public QueueItemResponse() { }
 
-    public QueueItemResponse(long queueItemId, UserResponse user, UserResponse assistedBy, String type, Date timeJoined, String table)
+    public QueueItemResponse(UserResponse student, UserResponse assistedBy, String type, Date timeJoined, String table)
     {
-        this.queueItemId = queueItemId;
-        this.user = user;
+        this.student = student;
         this.assistedBy = assistedBy;
         this.type = type;
         this.timeJoined = timeJoined;
         this.table = table;
     }
 
-    public long getQueueItemId()
+    public UserResponse getStudent()
     {
-        return queueItemId;
+        return student;
     }
 
-    public void setQueueItemId(long queueItemId)
+    public void setStudent(UserResponse student)
     {
-        this.queueItemId = queueItemId;
-    }
-
-    public UserResponse getUser()
-    {
-        return user;
-    }
-
-    public void setUser(UserResponse user)
-    {
-        this.user = user;
+        this.student = student;
     }
 
     public UserResponse getAssistedBy()

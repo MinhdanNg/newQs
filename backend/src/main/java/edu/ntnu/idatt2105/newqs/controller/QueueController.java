@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2105.newqs.controller;
 
 import edu.ntnu.idatt2105.newqs.model.queue.*;
+import edu.ntnu.idatt2105.newqs.model.queueitem.QueueItemResponse;
 import edu.ntnu.idatt2105.newqs.service.QueueService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/queue")
+@RequestMapping(value = "/subject/{subjectId}/queue")
 @EnableAutoConfiguration
 @CrossOrigin
 public class QueueController
@@ -20,32 +21,32 @@ public class QueueController
     @Autowired
     private QueueService queueService;
 
-    @PutMapping(value = "/start/{queueId}")
+    @PutMapping(value = "/start")
     @ResponseStatus(value = HttpStatus.OK)
-    public void start(@PathVariable long queueId)
+    public void start(@PathVariable long subjectId)
     {
-        queueService.start(queueId);
+        queueService.start(subjectId);
     }
 
-    @PutMapping(value = "/stop/{queueId}")
+    @PutMapping(value = "/stop")
     @ResponseStatus(value = HttpStatus.OK)
-    public void stop(@PathVariable long queueId)
+    public void stop(@PathVariable long subjectId)
     {
-        queueService.stop(queueId);
+        queueService.stop(subjectId);
     }
 
-    @GetMapping(value = "/get/{queueId}")
+    @GetMapping(value = "/get")
     @ResponseStatus(value = HttpStatus.OK)
-    public QueueResponse get(@PathVariable long queueId)
+    public QueueResponse get(@PathVariable long subjectId)
     {
-        return queueService.get(queueId);
+        return queueService.get(subjectId);
     }
 
-    @PostMapping(value = "/join/{queueId}")
+    @PostMapping(value = "/join")
     @ResponseStatus(value = HttpStatus.OK)
-    public QueueResponse join(@PathVariable long queueId, @RequestBody QueueJoinRequest request)
+    public QueueItemResponse join(@PathVariable long subjectId, @RequestBody QueueJoinRequest request)
     {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return queueService.join(queueId, userId, request);
+        return queueService.join(subjectId, userId, request);
     }
 }

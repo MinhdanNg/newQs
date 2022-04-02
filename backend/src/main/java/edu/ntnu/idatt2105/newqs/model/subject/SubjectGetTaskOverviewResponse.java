@@ -4,25 +4,25 @@ import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 public class SubjectGetTaskOverviewResponse
 {
-    private UserResponse user;
+    private UserResponse student;
     private int[] approvedTasks;
 
     public SubjectGetTaskOverviewResponse() { }
 
-    public SubjectGetTaskOverviewResponse(UserResponse user, int[] approvedTasks)
+    public SubjectGetTaskOverviewResponse(UserResponse student, int[] approvedTasks)
     {
-        this.user = user;
+        this.student = student;
         this.approvedTasks = approvedTasks;
     }
 
-    public UserResponse getUser()
+    public UserResponse getStudent()
     {
-        return user;
+        return student;
     }
 
-    public void setUser(UserResponse user)
+    public void setStudent(UserResponse student)
     {
-        this.user = user;
+        this.student = student;
     }
 
     public int[] getApprovedTasks()

@@ -29,42 +29,42 @@ public class SubjectController
         return subjectService.register(request);
     }
 
-    @GetMapping(value = "/get/{subjectId}")
+    @GetMapping(value = "/{subjectId}/get")
     @ResponseStatus(value = HttpStatus.OK)
     public SubjectResponse get(@PathVariable long subjectId)
     {
         return subjectService.get(subjectId);
     }
 
-    @PutMapping(value = "/activate/{subjectId}")
+    @PutMapping(value = "/{subjectId}/activate")
     @ResponseStatus(value = HttpStatus.OK)
     public void activate(@PathVariable long subjectId)
     {
         subjectService.activate(subjectId);
     }
 
-    @PutMapping(value = "/archive/{subjectId}")
+    @PutMapping(value = "/{subjectId}/archive")
     @ResponseStatus(value = HttpStatus.OK)
     public void archive(@PathVariable long subjectId)
     {
         subjectService.archive(subjectId);
     }
 
-    @DeleteMapping(value = "/delete/{subjectId}")
+    @DeleteMapping(value = "/{subjectId}/delete")
     @ResponseStatus(value = HttpStatus.OK)
     public void delete(@PathVariable long subjectId)
     {
         subjectService.delete(subjectId);
     }
 
-    @PostMapping(value = "/add-users/{subjectId}")
+    @PostMapping(value = "/{subjectId}/add-users")
     @ResponseStatus(value = HttpStatus.OK)
     public void addUsers(@PathVariable long subjectId, @RequestBody SubjectAddUsersRequest request)
     {
         subjectService.addUsers(subjectId, request);
     }
 
-    @GetMapping(value = "/get-my-task-overview/{subjectId}")
+    @GetMapping(value = "/{subjectId}/get-my-task-overview")
     @ResponseStatus(value = HttpStatus.OK)
     public SubjectGetTaskOverviewResponse getMyTaskOverview(@PathVariable long subjectId)
     {
@@ -72,7 +72,7 @@ public class SubjectController
         return subjectService.getMyTaskOverview(subjectId, userId);
     }
 
-    @GetMapping(value = "/get-all-task-overview/{subjectId}")
+    @GetMapping(value = "/{subjectId}/get-all-task-overview")
     @ResponseStatus(value = HttpStatus.OK)
     public List<SubjectGetTaskOverviewResponse> getAllTaskOverview(@PathVariable long subjectId)
     {

@@ -19,7 +19,7 @@ public class UserController
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/get/{userId}")
+    @GetMapping(value = "/{userId}/get")
     @ResponseStatus(value = HttpStatus.OK)
     public UserResponse get(@PathVariable String userId)
     {

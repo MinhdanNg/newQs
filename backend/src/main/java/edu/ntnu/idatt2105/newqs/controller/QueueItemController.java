@@ -1,18 +1,16 @@
 package edu.ntnu.idatt2105.newqs.controller;
 
-import edu.ntnu.idatt2105.newqs.model.queueitem.*;
 import edu.ntnu.idatt2105.newqs.service.QueueItemService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/queueitem")
+@RequestMapping(value = "/subject/{subjectId}/queue-item")
 @EnableAutoConfiguration
 @CrossOrigin
 public class QueueItemController
@@ -21,32 +19,32 @@ public class QueueItemController
     @Autowired
     private QueueItemService queueItemService;
 
-    @PutMapping(value = "/assist/{queueItemId}")
+    @PutMapping(value = "/{studentId}/assist")
     @ResponseStatus(value = HttpStatus.OK)
-    public void assist(@PathVariable long queueItemId)
+    public void assist(@PathVariable long subjectId, @PathVariable String studentId)
     {
         String assistantId = SecurityContextHolder.getContext().getAuthentication().getName();
-        queueItemService.assist(queueItemId, assistantId);
+        queueItemService.assist(subjectId, studentId, assistantId);
     }
 
-    @DeleteMapping(value = "/approve/{queueItemId}")
+    @DeleteMapping(value = "/{studentId}/approve")
     @ResponseStatus(value = HttpStatus.OK)
-    public void approve(@PathVariable long queueItemId)
+    public void approve(@PathVariable long subjectId, @PathVariable String studentId)
     {
-        queueItemService.approve(queueItemId);
+        queueItemService.approve(subjectId, studentId);
     }
 
-    @DeleteMapping(value = "/reject/{queueItemId}")
+    @DeleteMapping(value = "/{studentId}/reject")
     @ResponseStatus(value = HttpStatus.OK)
-    public void reject(@PathVariable long queueItemId)
+    public void reject(@PathVariable long subjectId, @PathVariable String studentId)
     {
-        queueItemService.reject(queueItemId);
+        queueItemService.reject(subjectId, studentId);
     }
 
-    @PutMapping(value = "/postpone/{queueItemId}")
+    @PutMapping(value = "/{studentId}/postpone")
     @ResponseStatus(value = HttpStatus.OK)
-    public void postpone(@PathVariable long queueItemId)
+    public void postpone(@PathVariable long subjectId, @PathVariable String studentId)
     {
-        queueItemService.postpone(queueItemId);
+        queueItemService.postpone(subjectId, studentId);
     }
 }
