@@ -3,6 +3,7 @@ package edu.ntnu.idatt2105.newqs.service;
 import edu.ntnu.idatt2105.newqs.entity.User;
 import edu.ntnu.idatt2105.newqs.model.user.*;
 import edu.ntnu.idatt2105.newqs.repository.UserRepository;
+import edu.ntnu.idatt2105.newqs.util.Mapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class UserService
 
     public UserResponse get(String userId)
     {
-        return null;
+        User user = userRepository.findById(userId).orElseThrow();
+        return Mapper.ToUserResponse(user);
     }
 
     public List<User> getOrCreate(String usersCSV, boolean isTeacher)
@@ -44,7 +46,7 @@ public class UserService
 
             LOGGER.trace("Email: " + email);
 
-            User user = userRepository.getUserByEmail(email);
+            User user = userRepository.findUserByEmail(email);
 
             if (user == null)
             {

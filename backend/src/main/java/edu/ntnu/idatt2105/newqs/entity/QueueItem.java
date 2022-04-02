@@ -1,11 +1,9 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class QueueItem implements Serializable
@@ -14,22 +12,25 @@ public class QueueItem implements Serializable
     @GeneratedValue
     private long id;
     @ManyToOne
-    private User user;
+    private User student;
     @ManyToOne
     private User assistedBy;
     private String type;
     private Date timeJoined;
     private String tableNr;
+    @OneToMany
+    private List<Task> tasks;
 
     public QueueItem() { }
 
-    public QueueItem(User user, User assistedBy, String type, Date timeJoined, String tableNr)
+    public QueueItem(User student, User assistedBy, String type, Date timeJoined, String tableNr, List<Task> tasks)
     {
-        this.user = user;
+        this.student = student;
         this.assistedBy = assistedBy;
         this.type = type;
         this.timeJoined = timeJoined;
         this.tableNr = tableNr;
+        this.tasks = tasks;
     }
 
     public long getId()
@@ -42,14 +43,14 @@ public class QueueItem implements Serializable
         this.id = id;
     }
 
-    public User getUser()
+    public User getStudent()
     {
-        return user;
+        return student;
     }
 
-    public void setUser(User user)
+    public void setStudent(User user)
     {
-        this.user = user;
+        this.student = user;
     }
 
     public User getAssistedBy()
@@ -90,5 +91,15 @@ public class QueueItem implements Serializable
     public void setTableNr(String table)
     {
         this.tableNr = table;
+    }
+
+    public List<Task> getTasks()
+    {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
     }
 }

@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2105.newqs.repository.tasks;
+package edu.ntnu.idatt2105.newqs.model.tasks;
 
 public class TaskGroupResponse
 {

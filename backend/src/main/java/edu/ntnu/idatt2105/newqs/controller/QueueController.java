@@ -1,7 +1,7 @@
 package edu.ntnu.idatt2105.newqs.controller;
 
 import edu.ntnu.idatt2105.newqs.model.queue.*;
-import edu.ntnu.idatt2105.newqs.model.queueitem.QueueItemResponse;
+import edu.ntnu.idatt2105.newqs.model.queue.QueueItemResponse;
 import edu.ntnu.idatt2105.newqs.service.QueueService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,7 +46,7 @@ public class QueueController
     @ResponseStatus(value = HttpStatus.OK)
     public QueueItemResponse join(@PathVariable long subjectId, @RequestBody QueueJoinRequest request)
     {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return queueService.join(subjectId, userId, request);
+        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return queueService.join(subjectId, studentId, request);
     }
 }
