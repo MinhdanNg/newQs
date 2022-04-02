@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     async handleClickSignin() {
-      const loginRequest = {email: this.email, password: this.password};
-      const loginResponse = await doLogin(loginRequest);
+      //const loginRequest = {email: this.email, password: this.password};
+      const loginResponse = await doLogin();
 
       this.loginStatus = "Failure";
       /*this.loginStatus = loginResponse.loginStatus;

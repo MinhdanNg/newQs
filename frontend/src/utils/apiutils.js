@@ -5,18 +5,15 @@ const header = {
     'Authorization': 'Basic bmV3UVNfY2xpZW50OjZjYmY3ZTFmLWRiZWMtNDA2Yy1iYjhjLTk5MTVmYTFkODM1MA=='
 }
 
-export function doLogin(loginRequest) {
+export function doLogin() {
   return axios
-    .post("http://localhost:8080/login", loginRequest, {
-        headers: header,
-        data: {
+    .post("http://localhost:8080/auth/realms/master/protocol/openid-connect/token", {
             grant_type: 'password',
             scope: 'openid',
             client_id: 'newQS_client',
             username: 'admin',
-            password: 'admin',
-        }
-    })
+            password: 'admin'} ,
+    {headers: header})
     .then((response) => {
       return response.data;
     });
