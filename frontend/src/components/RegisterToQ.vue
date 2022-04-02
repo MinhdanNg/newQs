@@ -23,7 +23,7 @@
       <div v-show="place === 'school'">
       <label>Bordnummer: </label>
       <select name="tableNumber" id="tableNumber" class="selector">
-        <option v-for='(n, i) in 18' :key="n" value="i">{{i}}</option>
+        <option v-for='(n, i) in 18' :key="n" value="i">{{i + 1}}</option>
       </select>
       </div>
     </div>

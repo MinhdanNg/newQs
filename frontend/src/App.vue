@@ -2,15 +2,12 @@
   <div id="container">
     <div id="nav" v-if="$store.state.loginStatus">
       <img src="./assets/logo.png" alt="logo" id="logo" />
-      <p id="usernameNav">{{ $store.state.username }}: <button id="swapRole" @click="swapRole">{{$store.state.role}}</button></p>
+      <p id="usernameNav">{{ $store.state.username }}<button id="swapRole" @click="swapRole" v-if="!($store.state.role==='admin')"> {{$store.state.role}}</button></p>
       <div>
         <button class="navButtons" id="logOutButton" @click="logOut">
           <img src="./assets/logout.png" alt="Logg ut" id="logoutIcon" />
         </button>
-        <router-link class="navButtons hideOnMobile" :to="{ name: 'Settings' }"
-          >Innstillinger</router-link
-        >
-        <router-link class="navButtons hideOnMobile" :to="{ name: 'Subjects' }"
+        <router-link class="navButtons hideOnMobile" :to="{ name: 'Subjects' }" v-if="!($store.state.role==='admin')"
           >Fag</router-link
         >
       </div>
@@ -19,9 +16,6 @@
       <router-view />
     </div>
     <div class="mobileNav">
-      <router-link class="navButtons" :to="{ name: 'Settings' }"
-      >Innstillinger</router-link
-      >
       <router-link class="navButtons" :to="{ name: 'Subjects' }"
       >Fag</router-link
       >
@@ -123,6 +117,9 @@ body {
 }
 #swapRole:hover {
   cursor: pointer;
+}
+.mobileNav {
+  display: none;
 }
 @media only screen and (max-width: 600px) {
   #content {

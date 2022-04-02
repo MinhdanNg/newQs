@@ -1,0 +1,26 @@
+<template>
+  <div id="adminNav">
+    <router-link class="" :to="{ name: 'AdminSubjects' }">Fag</router-link> |
+    <router-link class="" :to="{ name: '' }">Legg til medlem</router-link>
+    <div id="content">
+      <router-view />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "AdminView"
+}
+</script>
+
+<style scoped>
+#adminNav a.router-link-exact-active {
+  border-bottom: solid white 2px;
+}
+
+#adminNav a:hover {
+  border-bottom: solid white 2px;
+  cursor: pointer;
+}
+</style>

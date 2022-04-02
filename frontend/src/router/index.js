@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Login from "../views/LoginView.vue";
 import Queue from "../views/Queue.vue";
 import SubjectsView from "@/views/SubjectsView";
-import Settings from "@/views/Settings";
+import AdminView from "@/views/AdminView";
+import AdminSubjects from "@/views/AdminSubjects";
 
 Vue.use(VueRouter);
 
@@ -24,9 +25,14 @@ const routes = [
     component: SubjectsView,
   },
   {
-    path: "/settings",
-    name: "Settings",
-    component: Settings,
+    path: "/admin",
+    name: "Admin",
+    component: AdminView,
+  },
+  {
+    path: "/admin/subjects",
+    name: "AdminSubjects",
+    component: AdminSubjects,
   },
 ];
 

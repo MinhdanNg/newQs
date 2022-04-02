@@ -1,6 +1,6 @@
 <template>
   <div id="clock">
-    <span class="time">{{ time }}</span>
+    <span class="time" @stopwatchStart="start">{{ time }}</span>
   </div>
 </template>
 

@@ -47,9 +47,16 @@ export default {
         this.loginStatusMsg = "E-post eller passordet er feil. Prøv igjen."
 
         //Testing purposes
-        await this.$router.push({
-          name: "Subjects",
-        });
+        this.$store.state.loginStatus = true;
+        if(this.$store.state.role === 'admin'){
+          await this.$router.push({
+            name: "AdminSubjects",
+          });
+        } else {
+          await this.$router.push({
+            name: "Subjects",
+          });
+        }
       }
     },
   },

@@ -4,7 +4,13 @@
       <p>{{subjectCode}}</p>
       <h2>{{subjectName}}</h2>
 <!--      <button class="infoButton" v-if="$store.state.role==='student'">Øvinger</button>-->
-      <button @click="toQueue" class="infoButton">Til kø</button>
+      <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin')">Til kø</button>
+      <div v-if="$store.state.role==='admin'">
+        <button>Arkiver</button>
+        <button>Slett</button>
+        <button>Rediger</button>
+        <button>Se mer</button>
+      </div>
     </div>
     <div v-if="$store.state.role==='student'" id="subjectDetail" >
       <div id="taskInfo" class="tabContent">
