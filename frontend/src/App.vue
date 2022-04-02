@@ -13,7 +13,8 @@
       </div>
     </div>
     <div id="content">
-      <router-view />
+      <AdminView v-if="$store.state.role === 'admin'"/>
+      <router-view v-else/>
     </div>
     <div class="mobileNav">
       <router-link class="navButtons" :to="{ name: 'Subjects' }"
@@ -24,8 +25,10 @@
 </template>
 
 <script>
+import AdminView from "@/views/AdminView";
 export default {
   components: {
+    AdminView,
   },
   methods: {
     swapRole() {
