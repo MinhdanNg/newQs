@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2105.newqs.model.queueitem;
+package edu.ntnu.idatt2105.newqs.model.queue;
 
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 

@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2105.newqs.model.subject;
 
-import edu.ntnu.idatt2105.newqs.repository.tasks.TaskGroupRegisterRequest;
+import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupRegisterRequest;
 import java.util.List;
 
 public class SubjectRegisterRequest

@@ -36,6 +36,29 @@ public class SubjectController
         return subjectService.get(subjectId);
     }
 
+    @GetMapping(value = "/get-all")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<SubjectResponse> getAll()
+    {
+        return subjectService.getAll();
+    }
+
+    @GetMapping(value = "/get-where-student")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<SubjectResponse> getWhereStudent()
+    {
+        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return subjectService.getWhereStudent(studentId);
+    }
+
+    @GetMapping(value = "/get-where-assistant")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<SubjectResponse> getWhereAssistant()
+    {
+        String assistantId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return subjectService.getWhereAssistant(assistantId);
+    }
+
     @PutMapping(value = "/{subjectId}/activate")
     @ResponseStatus(value = HttpStatus.OK)
     public void activate(@PathVariable long subjectId)

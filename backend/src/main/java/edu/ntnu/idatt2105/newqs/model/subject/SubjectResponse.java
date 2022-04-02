@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2105.newqs.model.subject;
 
-import edu.ntnu.idatt2105.newqs.repository.tasks.TasksResponse;
+import edu.ntnu.idatt2105.newqs.model.tasks.TasksResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 import java.util.List;

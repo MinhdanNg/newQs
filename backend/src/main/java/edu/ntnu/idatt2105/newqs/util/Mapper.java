@@ -2,11 +2,11 @@ package edu.ntnu.idatt2105.newqs.util;
 
 import edu.ntnu.idatt2105.newqs.entity.*;
 import edu.ntnu.idatt2105.newqs.model.queue.QueueResponse;
-import edu.ntnu.idatt2105.newqs.model.queueitem.QueueItemResponse;
+import edu.ntnu.idatt2105.newqs.model.queue.QueueItemResponse;
 import edu.ntnu.idatt2105.newqs.model.room.RoomResponse;
 import edu.ntnu.idatt2105.newqs.model.subject.SubjectResponse;
-import edu.ntnu.idatt2105.newqs.repository.tasks.TaskGroupResponse;
-import edu.ntnu.idatt2105.newqs.repository.tasks.TasksResponse;
+import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupResponse;
+import edu.ntnu.idatt2105.newqs.model.tasks.TasksResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 import java.util.List;
@@ -29,6 +29,10 @@ public class Mapper
         );
     }
 
+    public static List<SubjectResponse> ToSubjectResponses(List<Subject> subjects)
+    {
+        return subjects.stream().map(Mapper::ToSubjectResponse).collect(Collectors.toList());
+    }
 
     public static List<UserResponse> ToUserResponses(List<User> users)
     {
@@ -96,7 +100,7 @@ public class Mapper
     public static QueueItemResponse ToQueueItemResponse(QueueItem item)
     {
         return new QueueItemResponse(
-                ToUserResponse(item.getUser()),
+                ToUserResponse(item.getStudent()),
                 ToUserResponse(item.getAssistedBy()),
                 item.getType(),
                 item.getTimeJoined(),

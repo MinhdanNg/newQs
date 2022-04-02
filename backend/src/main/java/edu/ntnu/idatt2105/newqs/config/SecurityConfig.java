@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public void configure(WebSecurity web) throws Exception
     {
         web.ignoring().antMatchers(
+                "/user/login",
                 "/v2/api-docs",
                 "/v2/api-docs/**",
                 "/configuration/ui",
