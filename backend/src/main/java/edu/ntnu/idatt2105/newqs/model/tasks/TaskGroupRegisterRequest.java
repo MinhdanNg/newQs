@@ -1,13 +1,13 @@
 package edu.ntnu.idatt2105.newqs.model.tasks;
 
-public class TaskGroupRequest
+public class TaskGroupRegisterRequest
 {
     private int numTasks;
     private int numRequired;
 
-    public TaskGroupRequest() { }
+    public TaskGroupRegisterRequest() { }
 
-    public TaskGroupRequest(int numTasks, int numRequired)
+    public TaskGroupRegisterRequest(int numTasks, int numRequired)
     {
         this.numTasks = numTasks;
         this.numRequired = numRequired;

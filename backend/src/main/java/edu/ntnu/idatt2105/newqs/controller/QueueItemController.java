@@ -21,31 +21,32 @@ public class QueueItemController
     @Autowired
     private QueueItemService queueItemService;
 
-    @PutMapping(value = "/assist")
+    @PutMapping(value = "/assist/{queueItemId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void assist(@RequestBody QueueItemAssistRequest request)
+    public void assist(@PathVariable long queueItemId)
     {
-        queueItemService.assist(request);
+        String assistantId = SecurityContextHolder.getContext().getAuthentication().getName();
+        queueItemService.assist(queueItemId, assistantId);
     }
 
-    @DeleteMapping(value = "/approve")
+    @DeleteMapping(value = "/approve/{queueItemId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void approve(@RequestBody QueueItemRequest request)
+    public void approve(@PathVariable long queueItemId)
     {
-        queueItemService.approve(request);
+        queueItemService.approve(queueItemId);
     }
 
-    @DeleteMapping(value = "/reject")
+    @DeleteMapping(value = "/reject/{queueItemId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void reject(@RequestBody QueueItemRequest request)
+    public void reject(@PathVariable long queueItemId)
     {
-        queueItemService.reject(request);
+        queueItemService.reject(queueItemId);
     }
 
-    @PutMapping(value = "/postpone")
+    @PutMapping(value = "/postpone/{queueItemId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void postpone(@RequestBody QueueItemRequest request)
+    public void postpone(@PathVariable long queueItemId)
     {
-        queueItemService.postpone(request);
+        queueItemService.postpone(queueItemId);
     }
 }

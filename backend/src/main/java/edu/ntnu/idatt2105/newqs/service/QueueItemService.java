@@ -1,6 +1,5 @@
 package edu.ntnu.idatt2105.newqs.service;
 
-import edu.ntnu.idatt2105.newqs.model.queueitem.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -10,22 +9,22 @@ public class QueueItemService
 {
     private static final Logger LOGGER = LogManager.getLogger(QueueItemService.class);
 
-    public void assist(QueueItemAssistRequest request)
+    public void assist(long queueItemId, String assistantID)
     {
 
     }
 
-    public void approve(QueueItemRequest request)
+    public void approve(long queueItemId)
     {
 
     }
 
-    public void reject(QueueItemRequest request)
+    public void reject(long queueItemId)
     {
 
     }
 
-    public void postpone(QueueItemRequest request)
+    public void postpone(long queueItemId)
     {
 
     }

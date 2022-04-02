@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2105.newqs.model.subject;
 
-import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupRequest;
+import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupRegisterRequest;
 import java.util.List;
 
 public class SubjectRegisterRequest
@@ -10,11 +10,11 @@ public class SubjectRegisterRequest
     private String teachersCSV;
     private String assistantsCSV;
     private String studentsCSV;
-    private List<TaskGroupRequest> tasks;
+    private List<TaskGroupRegisterRequest> tasks;
 
     public SubjectRegisterRequest() { }
 
-    public SubjectRegisterRequest(String code, String name, String teachersCSV, String assistantsCSV, String studentsCSV, List<TaskGroupRequest> tasks)
+    public SubjectRegisterRequest(String code, String name, String teachersCSV, String assistantsCSV, String studentsCSV, List<TaskGroupRegisterRequest> tasks)
     {
         this.code = code;
         this.name = name;
@@ -74,12 +74,12 @@ public class SubjectRegisterRequest
         this.studentsCSV = studentsCSV;
     }
 
-    public List<TaskGroupRequest> getTasks()
+    public List<TaskGroupRegisterRequest> getTasks()
     {
         return tasks;
     }
 
-    public void setTasks(List<TaskGroupRequest> tasks)
+    public void setTasks(List<TaskGroupRegisterRequest> tasks)
     {
         this.tasks = tasks;
     }

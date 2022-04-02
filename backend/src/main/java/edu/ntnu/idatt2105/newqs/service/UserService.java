@@ -19,7 +19,7 @@ public class UserService
     @Autowired
     private UserRepository userRepository;
 
-    public UserResponse get(UserRequest request)
+    public UserResponse get(String userId)
     {
         return null;
     }

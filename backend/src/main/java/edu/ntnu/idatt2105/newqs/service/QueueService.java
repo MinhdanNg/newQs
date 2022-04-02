@@ -10,22 +10,22 @@ public class QueueService
 {
     private static final Logger LOGGER = LogManager.getLogger(QueueService.class);
 
-    public void start(QueueRequest request)
+    public void start(long queueId)
     {
 
     }
 
-    public void stop(QueueRequest request)
+    public void stop(long queueId)
     {
 
     }
 
-    public QueueResponse get(QueueRequest request)
+    public QueueResponse get(long queueId)
     {
         return null;
     }
 
-    public QueueResponse join(QueueJoinRequest request)
+    public QueueResponse join(long queueId, String userId, QueueJoinRequest request)
     {
         return null;
     }

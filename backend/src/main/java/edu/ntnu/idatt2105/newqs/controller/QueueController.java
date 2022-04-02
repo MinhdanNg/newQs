@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,31 +20,32 @@ public class QueueController
     @Autowired
     private QueueService queueService;
 
-    @PutMapping(value = "/start")
+    @PutMapping(value = "/start/{queueId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void start(@RequestBody QueueRequest request)
+    public void start(@PathVariable long queueId)
     {
-        queueService.start(request);
+        queueService.start(queueId);
     }
 
-    @PutMapping(value = "/stop")
+    @PutMapping(value = "/stop/{queueId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void stop(@RequestBody QueueRequest request)
+    public void stop(@PathVariable long queueId)
     {
-        queueService.stop(request);
+        queueService.stop(queueId);
     }
 
-    @GetMapping(value = "/get")
+    @GetMapping(value = "/get/{queueId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public QueueResponse get(@RequestBody QueueRequest request)
+    public QueueResponse get(@PathVariable long queueId)
     {
-        return queueService.get(request);
+        return queueService.get(queueId);
     }
 
-    @PostMapping(value = "/join")
+    @PostMapping(value = "/join/{queueId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public QueueResponse join(@RequestBody QueueJoinRequest request)
+    public QueueResponse join(@PathVariable long queueId, @RequestBody QueueJoinRequest request)
     {
-        return queueService.join(request);
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return queueService.join(queueId, userId, request);
     }
 }

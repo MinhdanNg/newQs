@@ -47,9 +47,9 @@ public class SubjectService
         return Mapper.ToSubjectResponse(subject);
     }
 
-    public SubjectResponse get(SubjectRequest request)
+    public SubjectResponse get(long subjectId)
     {
-        Optional<Subject> optionalSubject = subjectRepository.findById(request.getSubjectId());
+        Optional<Subject> optionalSubject = subjectRepository.findById(subjectId);
         if (optionalSubject.isEmpty())
         {
             return null;
@@ -57,32 +57,32 @@ public class SubjectService
         return Mapper.ToSubjectResponse(optionalSubject.get());
     }
 
-    public void activate(SubjectRequest request)
+    public void activate(long subjectId)
     {
 
     }
 
-    public void archive(SubjectRequest request)
+    public void archive(long subjectId)
     {
 
     }
 
-    public void delete(SubjectRequest request)
+    public void delete(long subjectId)
     {
 
     }
 
-    public void addUsers(SubjectAddUsersRequest request)
+    public void addUsers(long subjectId, SubjectAddUsersRequest request)
     {
 
     }
 
-    public SubjectGetTaskOverviewResponse getTaskOverview(SubjectGetTaskOverviewRequest request)
+    public List<SubjectGetTaskOverviewResponse> getAllTaskOverview(long subjectId)
     {
         return null;
     }
 
-    public List<SubjectGetTaskOverviewResponse> getAllTaskOverview(SubjectRequest request)
+    public SubjectGetTaskOverviewResponse getMyTaskOverview(long subjectId, String userId)
     {
         return null;
     }

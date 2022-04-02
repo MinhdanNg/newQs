@@ -19,10 +19,10 @@ public class UserController
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/get")
+    @GetMapping(value = "/get/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public UserResponse get(@RequestBody UserRequest request)
+    public UserResponse get(@PathVariable String userId)
     {
-        return userService.get(request);
+        return userService.get(userId);
     }
 }
