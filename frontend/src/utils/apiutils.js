@@ -1,28 +1,40 @@
 import axios from "axios";
 
-const header = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': 'Basic bmV3UVNfY2xpZW50OjZjYmY3ZTFmLWRiZWMtNDA2Yy1iYjhjLTk5MTVmYTFkODM1MA=='
-}
-
-export function doLogin() {
+export function doLogin(loginRequest) {
   return axios
-    .post("http://localhost:8080/auth/realms/master/protocol/openid-connect/token", {
-            grant_type: 'password',
-            scope: 'openid',
-            client_id: 'newQS_client',
-            username: 'admin',
-            password: 'admin'} ,
-    {headers: header})
+    .post("http://localhost:8085/api/user/login", loginRequest)
     .then((response) => {
-      return response.data;
+      return response;
     });
 }
 
+// USER
 export function getUser(){
-
+    return axios
+        .get("http://localhost:8085/api/user", this.$store.state.userInfo)
+        .then((response) => {
+            return response;
+        });
 }
 
+export function getAllUsers(){
+    return axios
+        .get("")
+        .then((response) => {
+            return response;
+        });
+}
+
+// SUBJECT
+export function getSubjectsWhereStudent(){
+    return axios
+        .get("", this.$store.state.userInfo)
+        .then((response) =>{
+            return response;
+        });
+}
+
+// QUEUE
 export function getQueue(){
 
 }
@@ -31,10 +43,6 @@ export function addToQueue(queueInfo){
     return axios
         .post("", queueInfo)
         .then((response) => {
-            return response.data
+            return response
         })
-}
-
-export function getSubjects(){
-
 }

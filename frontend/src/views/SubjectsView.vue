@@ -22,6 +22,8 @@
 
 <script>
 import Subject from "@/components/Subject";
+// import { getSubjectsWhereStudent } from "@/utils/apiutils.js";
+
 export default {
   name: "SubjectsView",
   components: {
@@ -29,20 +31,22 @@ export default {
   },
   data (){
     return {
-      subjectsList: [{
+      subjectsList:
+      /* TODO: getSubjectsWhereStudent()*/
+          [{
         subjectCode: "IDATT2105",
         subjectName: "Fullstack",
-        active: true,
+        isActive: true,
       },
         {
           subjectCode: "IDATT2104",
           subjectName: "Nettverksprogrammering",
-          active: false,
+          isActive: false,
         },
         {
           subjectCode: "IDATT2106",
           subjectName: "Systemutvikling",
-          active: true,
+          isActive: true,
         }
       ],
     }
@@ -50,12 +54,12 @@ export default {
   computed: {
     activeSubjects(){
       let activeSubjects = []
-      this.subjectsList.forEach(s => {s.active ? activeSubjects.push(s) : null})
+      this.subjectsList.forEach(s => {s.isActive ? activeSubjects.push(s) : null})
       return activeSubjects
     },
     inactiveSubjects(){
       let activeSubjects = []
-      this.subjectsList.forEach(s => {!s.active ? activeSubjects.push(s) : null})
+      this.subjectsList.forEach(s => {!s.isActive ? activeSubjects.push(s) : null})
       return activeSubjects
     }
   }

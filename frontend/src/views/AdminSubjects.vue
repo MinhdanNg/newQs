@@ -32,7 +32,9 @@ export default {
   },
   data (){
     return {
-      subjectsList: [{
+      subjectsList: [
+          //TODO: GET ALL SUBJECTS
+        {
         subjectCode: "IDATT2105",
         subjectName: "Fullstack",
         active: true,

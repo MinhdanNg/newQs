@@ -18,6 +18,9 @@ export default {
   },
   data (){
     return {
+      users: [
+        //TODO: GET ALL USERS
+      ],
       backdrop: false,
       addingUser: false
     }

@@ -7,19 +7,11 @@
         <button class="navButtons" id="logOutButton" @click="logOut">
           <img src="./assets/logout.png" alt="Logg ut" id="logoutIcon" />
         </button>
-        <router-link class="navButtons hideOnMobile" :to="{ name: 'Subjects' }" v-if="!($store.state.role==='admin')"
-          >Fag</router-link
-        >
       </div>
     </div>
     <div id="content">
       <AdminView v-if="$store.state.role === 'admin'"/>
       <router-view v-else/>
-    </div>
-    <div class="mobileNav">
-      <router-link class="navButtons" :to="{ name: 'Subjects' }"
-      >Fag</router-link
-      >
     </div>
   </div>
 </template>
@@ -121,23 +113,8 @@ body {
 #swapRole:hover {
   cursor: pointer;
 }
-.mobileNav {
-  display: none;
-}
 @media only screen and (max-width: 600px) {
   #content {
-    width: 100%;
-  }
-  .hideOnMobile {
-    display: none;
-  }
-  .mobileNav {
-    background-color: #333;
-    display: flex;
-    flex-direction: row;
-    color: white;
-    position: fixed;
-    bottom: 0;
     width: 100%;
   }
 }

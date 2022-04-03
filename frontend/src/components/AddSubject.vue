@@ -48,13 +48,28 @@
 <script>
 export default {
   name: "AddSubject",
+  props: {
+    subjectCode: String,
+    subjectName: String,
+    teachers: String,
+    teachAss: String,
+    students: String,
+    /*taskCount: String,
+    tasklist: [],
+    // Task subgroups
+    subgroups: [],
+
+    currentSubgroupNumber: 1,
+    currentSubgroupChecked: [],
+    currentSubgroupObligatory: '',*/
+  },
   data () {
     return {
-      subjectCode: '',
-      subjectName: '',
-      teachers: '',
-      teachAss: '',
-      students: '',
+      newSubjectCode: '',
+      newSubjectName: '',
+      newTeachers: '',
+      newTeachAss: '',
+      newStudents: '',
       taskCount: '',
       tasklist: [],
       // Task subgroups
@@ -84,6 +99,7 @@ export default {
 
     },
     addSubject(){
+      //TODO ADD SUBJECT
     },
   },
 }

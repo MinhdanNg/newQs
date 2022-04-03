@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     helpStudent() {
+      // TODO: Active ishelping and add note to database
       if(this.isHelping){
         this.isHelping = false;
         this.helpButton = "Hjelp student";
@@ -48,8 +49,12 @@ export default {
         this.helpButton = "Hjelper";
       }
     },
-    approveTask() {},
-    pendStudent() {},
+    approveTask() {
+      //TODO: APPROVE STUDENT
+    },
+    pendStudent() {
+      //TODO: PEND STUDENT
+    },
   },
 };
 </script>

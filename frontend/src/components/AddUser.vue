@@ -41,6 +41,7 @@
           </div>
         </div>
       </div>
+      <input type="submit" @click="addUser">
     </form>
   </div>
 </template>
@@ -66,6 +67,11 @@ export default {
       return this.allSubjects.filter(subject => {
         return subject.subjectCode.toLowerCase().includes(this.search.toLowerCase())
       })
+    }
+  },
+  methods: {
+    addUser(){
+      //TODO ADD USER
     }
   }
 }

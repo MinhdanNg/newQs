@@ -1,5 +1,5 @@
 <template>
-  <div id="adminNav">
+  <div id="adminNav" v-if="$store.state.role==='admin'">
     <router-link class="" :to="{ name: 'AdminSubjects' }">Fag</router-link> |
     <router-link class="" :to="{ name: 'AdminUsers' }">Brukere</router-link>
     <div id="content">

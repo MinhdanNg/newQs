@@ -23,7 +23,7 @@
       <div v-show="place === 'school'">
       <label>Bordnummer: </label>
       <select name="tableNumber" id="tableNumber" class="selector">
-        <option v-for='(n, i) in 18' :key="n" value="i">{{i + 1}}</option>
+        <option v-for='(n, i) in 18' :key="n" :value="i">{{i + 1}}</option>
       </select>
       </div>
     </div>
@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     registerToQueue(){
+      //TODO: Register to Q
       const queueInfo = {taskNumber: this.taskNumber, place: this.place, helpType: this.helpType, message: this.message}
       const queueStatus = addToQueue(queueInfo)
 

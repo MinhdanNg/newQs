@@ -32,33 +32,34 @@ export default {
   },
   methods: {
     async handleClickSignin() {
-      //const loginRequest = {email: this.email, password: this.password};
-      const loginResponse = await doLogin();
+      const loginRequest = {email: this.email, password: this.password};
+      const loginResponse = await doLogin(loginRequest);
 
-      this.loginStatus = "Failure";
       /*this.loginStatus = loginResponse.loginStatus;
-      if (this.loginStatus === "Success") {
-        this.$store.dispatch("login", loginResponse.username, this.email, true);
+    if (this.loginStatus === "Success") {
+      this.$store.dispatch("login", loginResponse.username, this.email, true);
 
+      await this.$router.push({
+        name: "subjects",
+      });
+    } else if(this.loginStatus === "Failure"){
+      this.loginStatusMsg = "E-post eller passordet er feil. Prøv igjen."
+    loginResponse
+      //Testing purposes
+      this.$store.state.loginStatus = true;
+      if(this.$store.state.role === 'admin'){
         await this.$router.push({
-          name: "subjects",
+          name: "AdminSubjects",
         });
-      } else*/ if(this.loginStatus === "Failure"){
-        this.loginStatusMsg = "E-post eller passordet er feil. Prøv igjen."
-
-        //Testing purposes
-        this.$store.state.loginStatus = true;
-        if(this.$store.state.role === 'admin'){
-          await this.$router.push({
-            name: "AdminSubjects",
-          });
-        } else {
-          await this.$router.push({
-            name: "Subjects",
-          });
-        }
+      } else {
+        await this.$router.push({
+          name: "Subjects",
+        });
       }
-      console.log(loginResponse)
+     */
+      await this.$router.push({
+        name: "Subjects"
+      })
     },
   },
 }

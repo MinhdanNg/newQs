@@ -6,10 +6,10 @@
 <!--      <button class="infoButton" v-if="$store.state.role==='student'">Øvinger</button>-->
       <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin')">Til kø</button>
       <div v-if="$store.state.role==='admin'">
-        <button>Arkiver</button>
-        <button>Slett</button>
-        <button>Rediger</button>
-        <button>Se mer</button>
+        <button @click="archiveSubject" class="infoButton">Arkiver</button>
+        <button @click="deleteSubject" class="infoButton">Slett</button>
+        <button @click="editSubject" class="infoButton">Rediger</button>
+        <button @click="viewMoreSubject" class="infoButton">Se mer</button>
       </div>
     </div>
     <div v-if="$store.state.role==='student'" id="subjectDetail" >
@@ -57,7 +57,9 @@ export default {
   },
   data() {
     return {
-
+      taskInfo: [
+          // TODO: Get user tasks in subject {tasknumber: "", taskStatus: ""}
+      ]
     }
   },
   methods: {
@@ -66,6 +68,18 @@ export default {
         name: "Queue",
       });
     },
+    archiveSubject(){
+
+    },
+    deleteSubject(){
+
+    },
+    editSubject(){
+
+    },
+    viewMoreSubject(){
+
+    }
   },
 };
 </script>
@@ -107,9 +121,8 @@ h3 {
   margin: 10px;
 }
 .infoButton {
-  padding: 10px;
-  font-size: 16px;
-  margin: 5px;
+  padding: 8px;
+  font-size: 14px;
   border-radius: 10px;
 }
 .infoButton:hover {

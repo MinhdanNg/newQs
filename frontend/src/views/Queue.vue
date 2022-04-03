@@ -1,14 +1,6 @@
 <template>
   <div id="queueContainer">
     <h1>{{ subjectName }}</h1>
-    <!-- CAN BE DELETED
-    <div id="message">
-      <p id="msg">Her er det en viktig melding til alle</p>
-      <button id="editMsg">Rediger</button>
-    </div>
-    <p>Antall studenter:</p>
-    -->
-
     <button v-if="$store.state.role==='student'" id="queueUpButton" @click="showModal('register')">Still deg i kø</button>
     <div id="queueAndFilter">
       <div id="queue">
@@ -29,42 +21,20 @@
         </button>
         <div id="modalBackdrop" @click="closeModal" v-show="backdrop"></div>
         <HelpStudent
-          class="modal-content"
+          class="modalContent"
           @borderStatus="updateBorderStatus()"
           v-bind:class="{ helpingStudentModal: isHelping }"
           v-show="helpStudentModal"
           :username="currentStudentModal.username"
           :message="currentStudentModal.message"
         />
-        <RegisterToQ class="modal-content" id="registerModal" v-if="registerQModal"/>
+        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"/>
       </div>
-<!-- ADD IF YOU HAVE TIME
-<div id="filter">
-        <h2>Filter</h2>
-        <select name="task" id="taskSelector" class="filterItem">
-          <option value="" disabled selected hidden>Øving...</option>
-          <option value="1">Alle</option>
-          <option value="1">1</option>
-          <option value="1">2</option>
-          <option value="1">3</option>
-          &lt;!&ndash; {{<option v-for="task in tasks" :key="task.number">
-    {{ task.number }}
-  </option> }}&ndash;&gt;
-        </select>
-        <div class="filterItem">
-          <input type="checkbox" id="approval" name="approval" checked />
-          <label for="approval">Godkjenning</label>
-          <input type="checkbox" id="help" name="help" checked />
-          <label for="help">Hjelp</label>
-        </div>
-        <input type="submit" value="Søk" class="filterItem" id="submitFilter" />
-      </div>-->
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import QStudent from "@/components/QStudent.vue";
 import HelpStudent from "@/components/HelpStudent";
 import RegisterToQ from "@/components/RegisterToQ";
@@ -84,9 +54,10 @@ export default {
       helpStudentModal: false,
       registerQModal: false,
       backdrop: false,
-      currentStudentModal: 'test',
+      currentStudentModal: '',
 
       studentTestList: [
+          // TODO: get queue users
         {
           username: "Josten Brosten",
           helpType: "Godkjenning",
@@ -150,18 +121,6 @@ export default {
 };
 </script>
 <style scoped>
-#message {
-  background-color: #cdffc2;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-}
-#msg {
-  flex-grow: 1;
-}
-#editMsg {
-  display: inline-block;
-}
 #queueAndFilter {
   display: flex;
   flex-direction: row;
@@ -170,39 +129,6 @@ export default {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-}
-#filter {
-  position: sticky;
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
-  border: solid 1px lightblue;
-  width: 200px;
-  height: 250px;
-  padding: 10px;
-}
-#taskSelector {
-  font-size: 16px;
-  padding: 5px;
-  border-radius: 20px;
-  text-align: center;
-}
-.filterItem {
-  margin: 10px;
-}
-#submitFilter {
-  font-size: 16px;
-  padding: 10px 5px;
-  border-radius: 10px;
-  text-align: center;
-  border: none;
-  background-color: darkblue;
-  color: white;
-}
-
-#submitFilter:hover {
-  cursor: pointer;
-  background-color: blue;
 }
 
 #modalBackdrop {
@@ -216,7 +142,7 @@ export default {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
-.modal-content {
+.modalContent {
   z-index: 100; /* Sit on top */
   position: fixed; /* Stay in place */
   top: 20%;
