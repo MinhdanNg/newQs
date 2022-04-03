@@ -24,8 +24,7 @@ public class Mapper
                 ToUserResponses(subject.getTeachers()),
                 ToUserResponses(subject.getAssistants()),
                 ToUserResponses(subject.getStudents()),
-                ToTasksResponse(subject.getTasks()),
-                subject.getQueue().getId()
+                ToTasksResponse(subject.getTasks())
         );
     }
 

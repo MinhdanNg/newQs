@@ -15,11 +15,10 @@ public class SubjectResponse
     private List<UserResponse> assistants;
     private List<UserResponse> students;
     private TasksResponse tasks;
-    private long queueId;
 
     public SubjectResponse() { }
 
-    public SubjectResponse(long subjectId, String code, String name, boolean isActive, List<UserResponse> teachers, List<UserResponse> assistants, List<UserResponse> students, TasksResponse tasks, long queueId)
+    public SubjectResponse(long subjectId, String code, String name, boolean isActive, List<UserResponse> teachers, List<UserResponse> assistants, List<UserResponse> students, TasksResponse tasks)
     {
         this.subjectId = subjectId;
         this.code = code;
@@ -29,7 +28,6 @@ public class SubjectResponse
         this.assistants = assistants;
         this.students = students;
         this.tasks = tasks;
-        this.queueId = queueId;
     }
 
     public long getSubjectId()
@@ -110,15 +108,5 @@ public class SubjectResponse
     public void setTasks(TasksResponse tasks)
     {
         this.tasks = tasks;
-    }
-
-    public long getQueueId()
-    {
-        return queueId;
-    }
-
-    public void setQueueId(long queueId)
-    {
-        this.queueId = queueId;
     }
 }
