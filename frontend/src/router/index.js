@@ -5,6 +5,7 @@ import Queue from "../views/Queue.vue";
 import SubjectsView from "@/views/SubjectsView";
 import AdminView from "@/views/AdminView";
 import AdminSubjects from "@/views/AdminSubjects";
+import AdminUsers from "@/views/AdminUsers";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/admin/subjects",
     name: "AdminSubjects",
     component: AdminSubjects,
+  },
+  {
+    path: "/admin/users",
+    name: "AdminUsers",
+    component: AdminUsers,
   },
 ];
 

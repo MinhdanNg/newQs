@@ -1,7 +1,7 @@
 <template>
   <div id="adminNav">
     <router-link class="" :to="{ name: 'AdminSubjects' }">Fag</router-link> |
-    <router-link class="" :to="{ name: '' }">Legg til medlem</router-link>
+    <router-link class="" :to="{ name: 'AdminUsers' }">Brukere</router-link>
     <div id="content">
       <router-view />
     </div>
