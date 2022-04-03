@@ -13,24 +13,24 @@ public class QueueItem implements Serializable
     private long id;
     @ManyToOne
     private User student;
+    @ManyToMany
+    private List<Task> tasks;
     @ManyToOne
     private User assistedBy;
     private String type;
     private Date timeJoined;
     private String tableNr;
-    @OneToMany
-    private List<Task> tasks;
 
     public QueueItem() { }
 
-    public QueueItem(User student, User assistedBy, String type, Date timeJoined, String tableNr, List<Task> tasks)
+    public QueueItem(User student, List<Task> tasks, User assistedBy, String type, Date timeJoined, String tableNr)
     {
         this.student = student;
+        this.tasks = tasks;
         this.assistedBy = assistedBy;
         this.type = type;
         this.timeJoined = timeJoined;
         this.tableNr = tableNr;
-        this.tasks = tasks;
     }
 
     public long getId()
@@ -51,6 +51,16 @@ public class QueueItem implements Serializable
     public void setStudent(User user)
     {
         this.student = user;
+    }
+
+    public List<Task> getTasks()
+    {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks)
+    {
+        this.tasks = tasks;
     }
 
     public User getAssistedBy()
@@ -91,15 +101,5 @@ public class QueueItem implements Serializable
     public void setTableNr(String table)
     {
         this.tableNr = table;
-    }
-
-    public List<Task> getTasks()
-    {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks)
-    {
-        this.tasks = tasks;
     }
 }

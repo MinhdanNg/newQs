@@ -3,16 +3,15 @@ package edu.ntnu.idatt2105.newqs.service;
 import com.google.common.collect.Lists;
 import edu.ntnu.idatt2105.newqs.entity.*;
 import edu.ntnu.idatt2105.newqs.model.subject.*;
-import edu.ntnu.idatt2105.newqs.repository.QueueRepository;
-import edu.ntnu.idatt2105.newqs.repository.SubjectRepository;
-import edu.ntnu.idatt2105.newqs.repository.TaskGroupRepository;
-import edu.ntnu.idatt2105.newqs.repository.UserRepository;
+import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupRegisterRequest;
+import edu.ntnu.idatt2105.newqs.repository.*;
 import edu.ntnu.idatt2105.newqs.util.Mapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +23,8 @@ public class SubjectService
     private SubjectRepository subjectRepository;
     @Autowired
     private TaskGroupRepository taskGroupRepository;
+    @Autowired
+    private TaskRepository taskRepository;
     @Autowired
     private QueueRepository queueRepository;
     @Autowired
@@ -37,13 +38,30 @@ public class SubjectService
         List<User> assistants = userService.getOrCreate(request.getAssistantsCSV(), false);
         List<User> students = userService.getOrCreate(request.getStudentsCSV(), false);
 
-        List<TaskGroup> tasks = request.getTasks().stream().map(taskGroupRequest -> new TaskGroup(taskGroupRequest.getNumTasks(), taskGroupRequest.getNumRequired())).collect(Collectors.toList());
-        tasks = Lists.newArrayList(taskGroupRepository.saveAll(tasks));
+        List<TaskGroup> taskGroups = new ArrayList<>();
+        int taskNr = 1;
+        for (TaskGroupRegisterRequest taskGroupRegisterRequest : request.getTaskGroups())
+        {
+
+            List<Task> tasks = new ArrayList<>();
+            for (int i = 0; i < taskGroupRegisterRequest.getNumTasks(); i++)
+            {
+                Task task = new Task(taskNr);
+                tasks.add(task);
+                taskNr++;
+            }
+            taskRepository.saveAll(tasks);
+
+
+            TaskGroup taskGroup = new TaskGroup(tasks, taskGroupRegisterRequest.getNumRequired());
+            taskGroups.add(taskGroup);
+        }
+        taskGroupRepository.saveAll(taskGroups);
 
         Queue queue = new Queue();
         queue = queueRepository.save(queue);
 
-        Subject subject = new Subject(request.getCode(), request.getName(), true, teachers, assistants, students, tasks, queue);
+        Subject subject = new Subject(request.getCode(), request.getName(), true, teachers, assistants, students, taskGroups, queue);
         subject = subjectRepository.save(subject);
 
         return Mapper.ToSubjectResponse(subject);

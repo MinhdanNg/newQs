@@ -3,7 +3,9 @@ package edu.ntnu.idatt2105.newqs.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class TaskGroup implements Serializable
@@ -11,14 +13,15 @@ public class TaskGroup implements Serializable
     @Id
     @GeneratedValue
     private long id;
-    private int numTasks;
+    @OneToMany
+    private List<Task> tasks;
     private int numRequired;
 
     public TaskGroup() { }
 
-    public TaskGroup(int numTasks, int numRequired)
+    public TaskGroup(List<Task> tasks, int numRequired)
     {
-        this.numTasks = numTasks;
+        this.tasks = tasks;
         this.numRequired = numRequired;
     }
 
@@ -32,14 +35,14 @@ public class TaskGroup implements Serializable
         this.id = id;
     }
 
-    public int getNumTasks()
+    public List<Task> getTasks()
     {
-        return numTasks;
+        return tasks;
     }
 
-    public void setNumTasks(int numTasks)
+    public void setTasks(List<Task> tasks)
     {
-        this.numTasks = numTasks;
+        this.tasks = tasks;
     }
 
     public int getNumRequired()
