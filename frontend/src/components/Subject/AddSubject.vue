@@ -91,7 +91,7 @@ export default {
         teachersCSV: this.teachers,
         studentsCSV: this.students,
         assistantsCSV: this.teachAss,
-        tasks: this.subgroups,
+        taskGroups: this.subgroups,
       });
     },
   },

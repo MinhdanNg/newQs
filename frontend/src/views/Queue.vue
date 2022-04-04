@@ -28,7 +28,9 @@
           :username="currentStudentModal.username"
           :message="currentStudentModal.message"
         />
-        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"/>
+        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"
+                     :subjectId="this.subjectID"
+        />
       </div>
     </div>
   </div>
@@ -38,7 +40,7 @@
 import QStudent from "@/components/Queue/QStudent.vue";
 import HelpStudent from "@/components/Queue/HelpStudent";
 import RegisterToQ from "@/components/Queue/RegisterToQ";
-//import {getQueue} from "@/utils/apiutils";
+import {getQueue} from "@/utils/apiutils";
 
 export default {
   name: "Queue",
@@ -48,12 +50,13 @@ export default {
     QStudent,
   },
   props: {
-    subjectID: String,
+    subjectID: Number,
     subjectName: String,
   },
   data() {
     return {
 
+      queueList: [],
       studentTestList: [
         {
           username: "Josten Brosten",
@@ -61,31 +64,6 @@ export default {
           task: "2",
           place: "Digital",
           TA: "Tonelise Pedersen",
-          message: 'får ikke til øving 2',
-        },
-        {
-          username: "Hallgeir Brosten",
-          helpType: "Godkjenning",
-          task: "2",
-          place: "",
-          TA: "Kari Treskål",
-          message: '',
-        },
-        {
-          username: "Janne Panne",
-          helpType: "Hjelp",
-          task: "3",
-          place: "Digital",
-          TA: "",
-          message: 'jeg trenger hjelp',
-        },
-        {
-          username: "Hanne Lange",
-          helpType: "Hjelp",
-          task: "3",
-          place: "",
-          TA: "",
-          message: '',
         },
       ],
 
@@ -98,9 +76,16 @@ export default {
     };
   },
   methods: {
-    getQueueItem(){
-      //const item = getQueue()
+    async getQueueItem(){
+      const queueItems = await getQueue(this.subjectID).items
 
+      for (const item of queueItems) {
+        this.queueList.push({username: item.student.firstname + " " + item.student.firstname,
+          helpType: item.type,
+          task: item.tasks,
+          place: item.table,
+          TA: item.assistedBy.firstName + " " + item.assistedBy.lastName})
+      }
     },
     closeModal() {
       this.backdrop = false;
@@ -125,6 +110,9 @@ export default {
       this.isHelping = true;
     },
   },
+  beforeMount() {
+    this.getQueueItem()
+  }
 };
 </script>
 <style scoped>

@@ -9,16 +9,6 @@
         <input type="radio" value="student" v-model="role" checked> <label>Student</label>
         <input type="radio" value="teacher" v-model="role"> <label>Lærer</label>
       </div>
-      <div v-if="role === 'teacher'">
-        <label>Fag</label>
-        <p>Lærer i fagene:</p>
-        <input type="text" placeholder="Søk etter emnekode" class="searchBox" v-model="search"/>
-        <div class="allSubjects">
-        <div v-for="(subject, index) in filteredList" :key="index">
-          <input type="checkbox"> <label>{{ subject.subjectCode + " " + subject.subjectName }}</label>
-        </div>
-      </div>
-      </div>
       <div v-if="role === 'student'">
         <label>Fag</label>
         <p>Student i fagene:</p>

@@ -53,21 +53,26 @@ export default {
   },
   data() {
     return {
-      isActive: getQueue(this.subjectID).active
+      isActive: ''
     }
   },
   methods: {
+    async queueStatus(){
+      const status = await getQueue(this.subjectID)
+      this.isActive = status.active
+    },
     toQueue() {
       this.$router.push({
         name: "Queue",
-        params: {subjectName: this.subjectName}
+        params: {subjectID: this.subjectID,
+          subjectName: this.subjectName}
       });
     },
     startQ(){
-      startQueue()
+      startQueue(this.subjectID)
     },
     stopQ(){
-      stopQueue()
+      stopQueue(this.subjectID)
     },
     archiveSubject(){
       archiveSubject(this.subjectID)
@@ -78,6 +83,9 @@ export default {
     viewMoreSubject(){
     }
   },
+  beforeMount() {
+    this.queueStatus()
+  }
 };
 </script>
 

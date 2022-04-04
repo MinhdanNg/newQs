@@ -4,12 +4,10 @@
       <h2>Registrering</h2>
     <select name="task" class="selector">
       <option value="" disabled selected hidden>Øving...</option>
-      <option value="1">1</option>
-      <option value="1">2</option>
-      <option value="1">3</option>
-      <!-- {{<option v-for="task in tasks" :key="task.number">
-  {{ task.number }}
-</option> }}-->
+      <option v-for="task in tasks" :key="task">
+        {{ task }}
+      </option>
+
     </select>
     <div>
       <div>
@@ -39,18 +37,25 @@
 </template>
 
 <script>
-import {addToQueue} from "@/utils/apiutils";
+import {addToQueue, getSubject} from "@/utils/apiutils";
 export default {
   name: "RegisterToQ",
+  prop: {
+    subjectID: Number
+  },
   data () {
     return {
       taskNumber: '',
       place: 'home',
       helpType: '',
       message: '',
+      tasks: '',
     }
   },
   methods: {
+    async getTasks(){
+      this.tasks = getSubject(this.subjectID).numTasks
+    },
     registerToQueue(){
       const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType, message: this.message}
       addToQueue(queueInfo)

@@ -29,9 +29,11 @@ export default {
       } else {
         this.$store.commit("SET_ROLE", "student")
       }
-      this.$router.push({
-        name: "Subjects",
-      });
+      if(this.$route.name !== 'Subjects'){
+        this.$router.push({
+          name: "Subjects",
+        });
+      }
     },
     logOut(){
       this.$store.dispatch("logout")
