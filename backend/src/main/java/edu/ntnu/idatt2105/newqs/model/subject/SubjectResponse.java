@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2105.newqs.model.subject;
 
-import edu.ntnu.idatt2105.newqs.model.tasks.TasksResponse;
+import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 import java.util.List;
@@ -14,12 +14,12 @@ public class SubjectResponse
     private List<UserResponse> teachers;
     private List<UserResponse> assistants;
     private List<UserResponse> students;
-    private TasksResponse tasks;
-    private long queueId;
+    private int numTasks;
+    private List<TaskGroupResponse> taskGroups;
 
     public SubjectResponse() { }
 
-    public SubjectResponse(long subjectId, String code, String name, boolean isActive, List<UserResponse> teachers, List<UserResponse> assistants, List<UserResponse> students, TasksResponse tasks, long queueId)
+    public SubjectResponse(long subjectId, String code, String name, boolean isActive, List<UserResponse> teachers, List<UserResponse> assistants, List<UserResponse> students, int numTasks, List<TaskGroupResponse> taskGroups)
     {
         this.subjectId = subjectId;
         this.code = code;
@@ -28,8 +28,8 @@ public class SubjectResponse
         this.teachers = teachers;
         this.assistants = assistants;
         this.students = students;
-        this.tasks = tasks;
-        this.queueId = queueId;
+        this.numTasks = numTasks;
+        this.taskGroups = taskGroups;
     }
 
     public long getSubjectId()
@@ -102,23 +102,23 @@ public class SubjectResponse
         this.students = students;
     }
 
-    public TasksResponse getTasks()
+    public int getNumTasks()
     {
-        return tasks;
+        return numTasks;
     }
 
-    public void setTasks(TasksResponse tasks)
+    public void setNumTasks(int numTasks)
     {
-        this.tasks = tasks;
+        this.numTasks = numTasks;
     }
 
-    public long getQueueId()
+    public List<TaskGroupResponse> getTaskGroups()
     {
-        return queueId;
+        return taskGroups;
     }
 
-    public void setQueueId(long queueId)
+    public void setTaskGroups(List<TaskGroupResponse> taskGroups)
     {
-        this.queueId = queueId;
+        this.taskGroups = taskGroups;
     }
 }

@@ -24,8 +24,6 @@ public class QueueItemService
     private SubjectRepository subjectRepository;
     @Autowired
     private QueueRepository queueRepository;
-    @Autowired
-    private ApprovedTaskRepository approvedTaskRepository;
 
     public void assist(long subjectId, String studentId, String assistantId)
     {
@@ -42,15 +40,12 @@ public class QueueItemService
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
         User student = userRepository.findById(studentId).orElseThrow();
 
-        List<ApprovedTask> approvedTasks = new ArrayList<>();
+        List<Task> approvedTasks = new ArrayList<>();
 
-        for (Task task : queueItem.getTasks())
-        {
-            ApprovedTask approvedTask = new ApprovedTask(task ,student);
-            approvedTasks.add(approvedTask);
-        }
+        student.getApprovedTasks().addAll(queueItem.getTasks());
 
-        approvedTaskRepository.saveAll(approvedTasks);
+        userRepository.save(student);
+        queueItemRepository.delete(queueItem);
     }
 
     public void reject(long subjectId, String studentId)

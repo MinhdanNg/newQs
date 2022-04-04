@@ -10,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QueueService
@@ -54,10 +56,16 @@ public class QueueService
         User student = userRepository.findById(studentId).orElseThrow();
 
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
+        List<TaskGroup> taskGroups = subject.getTaskGroups();
+        List<Task> subjectTasks = new ArrayList<>();
+        for (TaskGroup taskGroup : taskGroups)
+        {
+            subjectTasks.addAll(taskGroup.getTasks());
+        }
 
-        List<Task> tasks = taskRepository.findTasksByTaskNrInAndSubject(request.getTasks(), subject);
+        List<Task> tasks = subjectTasks.stream().filter(task -> request.getTasks().contains(task.getTaskNr())).collect(Collectors.toList());
 
-        QueueItem queueItem = new QueueItem(student, null, request.getType(), new Date(), request.getTableNr(), tasks);
+        QueueItem queueItem = new QueueItem(student, tasks, null, request.getType(), new Date(), request.getTableNr());
 
         queueItem = queueItemRepository.save(queueItem);
         queue.getItems().add(queueItem);

@@ -20,13 +20,13 @@ public class Subject implements Serializable
     @ManyToMany
     private List<User> students;
     @OneToMany
-    private List<TaskGroup> tasks;
+    private List<TaskGroup> taskGroups;
     @OneToOne
     private Queue queue;
 
     public Subject() { }
 
-    public Subject(String code, String name, boolean isActive, List<User> teachers, List<User> assistants, List<User> students, List<TaskGroup> tasks, Queue queue)
+    public Subject(String code, String name, boolean isActive, List<User> teachers, List<User> assistants, List<User> students, List<TaskGroup> taskGroups, Queue queue)
     {
         this.code = code;
         this.name = name;
@@ -34,7 +34,7 @@ public class Subject implements Serializable
         this.teachers = teachers;
         this.assistants = assistants;
         this.students = students;
-        this.tasks = tasks;
+        this.taskGroups = taskGroups;
         this.queue = queue;
     }
 
@@ -108,14 +108,14 @@ public class Subject implements Serializable
         this.students = students;
     }
 
-    public List<TaskGroup> getTasks()
+    public List<TaskGroup> getTaskGroups()
     {
-        return tasks;
+        return taskGroups;
     }
 
-    public void setTasks(List<TaskGroup> tasks)
+    public void setTaskGroups(List<TaskGroup> tasks)
     {
-        this.tasks = tasks;
+        this.taskGroups = tasks;
     }
 
     public Queue getQueue()

@@ -10,18 +10,18 @@ public class SubjectRegisterRequest
     private String teachersCSV;
     private String assistantsCSV;
     private String studentsCSV;
-    private List<TaskGroupRegisterRequest> tasks;
+    private List<TaskGroupRegisterRequest> taskGroups;
 
     public SubjectRegisterRequest() { }
 
-    public SubjectRegisterRequest(String code, String name, String teachersCSV, String assistantsCSV, String studentsCSV, List<TaskGroupRegisterRequest> tasks)
+    public SubjectRegisterRequest(String code, String name, String teachersCSV, String assistantsCSV, String studentsCSV, List<TaskGroupRegisterRequest> taskGroups)
     {
         this.code = code;
         this.name = name;
         this.teachersCSV = teachersCSV;
         this.assistantsCSV = assistantsCSV;
         this.studentsCSV = studentsCSV;
-        this.tasks = tasks;
+        this.taskGroups = taskGroups;
     }
 
     public String getCode()
@@ -74,13 +74,13 @@ public class SubjectRegisterRequest
         this.studentsCSV = studentsCSV;
     }
 
-    public List<TaskGroupRegisterRequest> getTasks()
+    public List<TaskGroupRegisterRequest> getTaskGroups()
     {
-        return tasks;
+        return taskGroups;
     }
 
-    public void setTasks(List<TaskGroupRegisterRequest> tasks)
+    public void setTaskGroups(List<TaskGroupRegisterRequest> taskGroups)
     {
-        this.tasks = tasks;
+        this.taskGroups = taskGroups;
     }
 }

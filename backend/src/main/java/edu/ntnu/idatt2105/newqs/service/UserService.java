@@ -6,12 +6,21 @@ import edu.ntnu.idatt2105.newqs.repository.UserRepository;
 import edu.ntnu.idatt2105.newqs.util.Mapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService
@@ -20,10 +29,41 @@ public class UserService
     @Autowired
     private UserRepository userRepository;
 
+    private final RestTemplate restTemplate;
+
+    public UserService(RestTemplateBuilder restTemplateBuilder)
+    {
+        this.restTemplate = restTemplateBuilder.build();
+    }
+
     public UserResponse get(String userId)
     {
         User user = userRepository.findById(userId).orElseThrow();
         return Mapper.ToUserResponse(user);
+    }
+
+    public LoginResponse login(LoginRequest request)
+    {
+        final String uri = "http://localhost:8080/auth/realms/master/protocol/openid-connect/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setBasicAuth("bmV3UXNfY2lsZW50OmMxOTY1ZTBkLWRjZGQtNDQ5MC04MzlhLTRlOGJmMGM1MzgwOA==");
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type","password");
+        map.add("scope","openid");
+        map.add("client_id","newQs_client");
+        map.add("username", request.getUsername());
+        map.add("password", request.getPassword());
+
+        HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(map, headers);
+
+        ResponseEntity<AccessTokenResponse> responseEntity = restTemplate.postForEntity(uri, accessTokenRequest, AccessTokenResponse.class);
+
+        AccessTokenResponse accessTokenResponse = responseEntity.getBody();
+
+        return new LoginResponse(accessTokenResponse.getAccess_token(), accessTokenResponse.getExpires_in());
     }
 
     public List<User> getOrCreate(String usersCSV, boolean isTeacher)
@@ -65,8 +105,50 @@ public class UserService
 
     private User register(String firstName, String lastName, String email, boolean isTeacher)
     {
-        User user = new User(UUID.randomUUID().toString(), firstName, lastName, email, isTeacher);
+        String accessToken = getAdminAccessToken();
+
+        final String uri2 = "http://localhost:8080/auth/admin/realms/master/users";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(accessToken);
+
+        JSONObject userJSONObject = new JSONObject();
+
+        try
+        {
+            userJSONObject.put("firstName", firstName);
+            userJSONObject.put("lastName", lastName);
+            userJSONObject.put("email", email);
+            userJSONObject.put("username", email);
+            userJSONObject.put("enabled", true);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        LOGGER.trace(userJSONObject.toString());
+
+        HttpEntity<String> userRegisterRequest = new HttpEntity<>(userJSONObject.toString(), headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri2, userRegisterRequest, String.class);
+
+        String url = responseEntity.getHeaders().getLocation().toString();
+        String[] urlSplit = url.split("/");
+        String userId = urlSplit[urlSplit.length - 1];
+
+        User user = new User(userId, firstName, lastName, email, isTeacher);
         userRepository.save(user);
+
         return user;
     }
+
+    private String getAdminAccessToken()
+    {
+        LoginRequest adminLoginRequest = new LoginRequest("admin", "admin");
+        LoginResponse adminLoginResponse = login(adminLoginRequest);
+        return adminLoginResponse.getAccessToken();
+    }
+
 }

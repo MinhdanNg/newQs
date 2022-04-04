@@ -1,8 +1,8 @@
 package edu.ntnu.idatt2105.newqs.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class User implements Serializable
@@ -13,6 +13,8 @@ public class User implements Serializable
     private String lastName;
     private String email;
     private boolean isTeacher;
+    @ManyToMany
+    private List<Task> approvedTasks;
 
     public User() { }
 
@@ -73,5 +75,15 @@ public class User implements Serializable
     public void setIsTeacher(boolean isTeacher)
     {
         this.isTeacher = isTeacher;
+    }
+
+    public List<Task> getApprovedTasks()
+    {
+        return approvedTasks;
+    }
+
+    public void setApprovedTasks(List<Task> approvedTasks)
+    {
+        this.approvedTasks = approvedTasks;
     }
 }
