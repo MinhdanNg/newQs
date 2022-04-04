@@ -35,7 +35,7 @@ public class QueueItemService
         if (queueItem.getType().equals("approval"))
         {
             User student = userRepository.findById(studentId).orElseThrow();
-            student.getApprovedTasks().addAll(queueItem.getTasks());
+            student.getApprovedTasks().add(queueItem.getTask());
             userRepository.save(student);
         }
 
