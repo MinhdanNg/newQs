@@ -7,9 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class QueueItemService
 {
@@ -20,8 +17,6 @@ public class QueueItemService
     private QueueItemRepository queueItemRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private SubjectRepository subjectRepository;
     @Autowired
     private QueueRepository queueRepository;
 
@@ -37,14 +32,13 @@ public class QueueItemService
     {
         QueueItem queueItem = findQueueItem(subjectId, studentId);
 
-        Subject subject = subjectRepository.findById(subjectId).orElseThrow();
-        User student = userRepository.findById(studentId).orElseThrow();
+        if (queueItem.getType().equals("approval"))
+        {
+            User student = userRepository.findById(studentId).orElseThrow();
+            student.getApprovedTasks().addAll(queueItem.getTasks());
+            userRepository.save(student);
+        }
 
-        List<Task> approvedTasks = new ArrayList<>();
-
-        student.getApprovedTasks().addAll(queueItem.getTasks());
-
-        userRepository.save(student);
         queueItemRepository.delete(queueItem);
     }
 
