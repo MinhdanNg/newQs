@@ -71,15 +71,23 @@ public class UserService
 
         Optional<User> optionalUser = userRepository.findUserByEmail(request.getUsername());
 
-        if (optionalUser.isPresent())
+        User user;
+        if (optionalUser.isEmpty())
         {
-            return Mapper.ToLoginResponse(accessTokenResponse, optionalUser.get());
+            user = getKeycloak(request.getUsername());
+            if (user == null)
+            {
+                return null;
+            }
+
+            userRepository.save(user);
         }
         else
         {
-            return Mapper.ToLoginResponse(accessTokenResponse, null);
+            user = optionalUser.get();
         }
 
+        return Mapper.ToLoginResponse(accessTokenResponse, user);
     }
 
     public List<User> getOrCreate(String usersCSV, boolean isTeacher)
@@ -176,11 +184,11 @@ public class UserService
         return new User(userId, firstName, lastName, email, isTeacher);
     }
 
-    private User getKeycloak(String email)
+    private User getKeycloak(String username)
     {
         String accessToken = getAdminAccessToken();
 
-        final String uri = "http://localhost:8080/auth/admin/realms/master/users?email=" + email;
+        final String uri = "http://localhost:8080/auth/admin/realms/master/users?exact=true&username=" + username;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -198,7 +206,7 @@ public class UserService
             String firstName = (String) linkedHashMap.get("firstName");
             String lastName = (String) linkedHashMap.get("lastName");
 
-            return new User(id, firstName, lastName, email, false);
+            return new User(id, firstName, lastName, username, false);
         }
 
         return null;
@@ -206,8 +214,27 @@ public class UserService
 
     private String getAdminAccessToken()
     {
-        LoginRequest adminLoginRequest = new LoginRequest("admin", "admin");
-        LoginResponse adminLoginResponse = login(adminLoginRequest);
-        return adminLoginResponse.getAccessToken();
+        LoginRequest request = new LoginRequest("admin", "admin");
+
+        final String uri = "http://localhost:8080/auth/realms/master/protocol/openid-connect/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setBasicAuth("bmV3UXNfY2lsZW50OmMxOTY1ZTBkLWRjZGQtNDQ5MC04MzlhLTRlOGJmMGM1MzgwOA==");
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type","password");
+        map.add("scope","openid");
+        map.add("client_id","newQs_client");
+        map.add("username", request.getUsername());
+        map.add("password", request.getPassword());
+
+        HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(map, headers);
+
+        ResponseEntity<AccessTokenResponse> responseEntity = restTemplate.postForEntity(uri, accessTokenRequest, AccessTokenResponse.class);
+
+        AccessTokenResponse accessTokenResponse = responseEntity.getBody();
+
+        return accessTokenResponse.getAccess_token();
     }
 }
