@@ -1,20 +1,18 @@
 package edu.ntnu.idatt2105.newqs.model.queue;
 
-import java.util.List;
-
 public class QueueJoinRequest
 {
     private String type;
     private String tableNr;
-    private List<Integer> tasks;
+    private int task;
 
     public QueueJoinRequest() { }
 
-    public QueueJoinRequest(String type, String tableNr, List<Integer> tasks)
+    public QueueJoinRequest(String type, String tableNr, int task)
     {
         this.type = type;
         this.tableNr = tableNr;
-        this.tasks = tasks;
+        this.task = task;
     }
 
     public String getType()
@@ -37,13 +35,13 @@ public class QueueJoinRequest
         this.tableNr = tableNr;
     }
 
-    public List<Integer> getTasks()
+    public int getTask()
     {
-        return tasks;
+        return task;
     }
 
-    public void setTasks(List<Integer> tasks)
+    public void setTask(int task)
     {
-        this.tasks = tasks;
+        this.task = task;
     }
 }

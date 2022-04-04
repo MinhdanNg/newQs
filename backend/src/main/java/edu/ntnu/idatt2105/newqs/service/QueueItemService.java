@@ -31,13 +31,17 @@ public class QueueItemService
     public void approve(long subjectId, String studentId)
     {
         QueueItem queueItem = findQueueItem(subjectId, studentId);
+        Queue queue = queueService.findQueue(subjectId);
 
         if (queueItem.getType().equals("approval"))
         {
             User student = userRepository.findById(studentId).orElseThrow();
-            student.getApprovedTasks().addAll(queueItem.getTasks());
+            student.getApprovedTasks().add(queueItem.getTask());
             userRepository.save(student);
         }
+
+        queue.getItems().remove(queueItem);
+        queueRepository.save(queue);
 
         queueItemRepository.delete(queueItem);
     }
@@ -45,6 +49,11 @@ public class QueueItemService
     public void reject(long subjectId, String studentId)
     {
         QueueItem queueItem = findQueueItem(subjectId, studentId);
+        Queue queue = queueService.findQueue(subjectId);
+
+        queue.getItems().remove(queueItem);
+        queueRepository.save(queue);
+
         queueItemRepository.delete(queueItem);
     }
 
@@ -54,9 +63,12 @@ public class QueueItemService
         QueueItem queueItem = findQueueItem(subjectId, studentId);
 
         queue.getItems().remove(queueItem);
-        queue.getItems().add(queueItem);
-
         queueRepository.save(queue);
+        queueItemRepository.save(queueItem);
+
+        queue.getItems().add(queueItem);
+        queueRepository.save(queue);
+        queueItemRepository.save(queueItem);
     }
 
     public QueueItem findQueueItem(long subjectId, String studentId)

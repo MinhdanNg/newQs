@@ -5,17 +5,17 @@ import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 public class QueueItemResponse
 {
     private UserResponse student;
-    private int[] tasks;
+    private int task;
     private UserResponse assistedBy;
     private String type;
     private String table;
 
     public QueueItemResponse() { }
 
-    public QueueItemResponse(UserResponse student, int[] tasks, UserResponse assistedBy, String type, String table)
+    public QueueItemResponse(UserResponse student, int tasks, UserResponse assistedBy, String type, String table)
     {
         this.student = student;
-        this.tasks = tasks;
+        this.task = task;
         this.assistedBy = assistedBy;
         this.type = type;
         this.table = table;
@@ -31,14 +31,14 @@ public class QueueItemResponse
         this.student = student;
     }
 
-    public int[] getTasks()
+    public int getTask()
     {
-        return tasks;
+        return task;
     }
 
-    public void setTasks(int[] tasks)
+    public void setTasks(int task)
     {
-        this.tasks = tasks;
+        this.task = task;
     }
 
     public UserResponse getAssistedBy()

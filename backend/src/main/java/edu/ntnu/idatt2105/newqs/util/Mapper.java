@@ -92,7 +92,7 @@ public class Mapper
 
         return new QueueItemResponse(
                 ToUserResponse(item.getStudent()),
-                item.getTasks().stream().map(Task::getTaskNr).mapToInt(taskNr -> taskNr).toArray(),
+                item.getTask().getTaskNr(),
                 item.getAssistedBy() != null ? ToUserResponse(item.getAssistedBy()) : null,
                 item.getType(),
                 item.getTableNr()
