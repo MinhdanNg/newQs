@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="showModal('addUser')">Legg til bruker</button>
+    <button @click="showModal('addUser')" class="infoButton">Legg til bruker</button>
     <div>
       <input
         type="text"
@@ -122,5 +122,13 @@ export default {
 .userBox {
   display: flex;
   flex-direction: row;
+}
+.infoButton {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.infoButton:hover {
+  cursor: pointer;
 }
 </style>

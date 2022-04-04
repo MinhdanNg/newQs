@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="showModal">Legg til fag</button>
+    <button @click="showModal" class="infoButton">Legg til fag</button>
     <div>
       <input
         type="text"
@@ -128,5 +128,13 @@ export default {
   width: 50%;
   border-radius: 20px;
   border: 4px solid lightblue;
+}
+.infoButton {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.infoButton:hover {
+  cursor: pointer;
 }
 </style>
