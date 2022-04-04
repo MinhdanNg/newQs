@@ -1,6 +1,9 @@
 <template>
   <div>
     <button @click="showModal">Legg til fag</button>
+    <div>
+      <input type="text" placeholder="Søk etter emnekode" class="searchBox" v-model="search"/>
+    </div>
     <h2>Aktive fag</h2>
     <div>
       <Subject v-for="(subject, index) in activeSubjects"
@@ -22,8 +25,10 @@
 </template>
 
 <script>
-import Subject from "@/components/Subject";
-import AddSubject from "@/components/AddSubject";
+import Subject from "@/components/Subject/Subject";
+import AddSubject from "@/components/Subject/AddSubject";
+import { getAllSubjects } from "@/utils/apiutils"
+
 export default {
   name: "SubjectsView",
   components: {
@@ -32,29 +37,22 @@ export default {
   },
   data (){
     return {
-      subjectsList: [
-          //TODO: GET ALL SUBJECTS
-        {
-        subjectCode: "IDATT2105",
-        subjectName: "Fullstack",
-        active: true,
-      },
-        {
-          subjectCode: "IDATT2104",
-          subjectName: "Nettverksprogrammering",
-          active: false,
-        },
-        {
-          subjectCode: "IDATT2106",
-          subjectName: "Systemutvikling",
-          active: true,
-        }
-      ],
+      subjectsList: [{
+        archive: '',
+        subjectCode: '',
+        subjectName: '',
+      }],
       backdrop: false,
-      addingSubject: false
+      addingSubject: false,
+      search: '',
     }
   },
   methods: {
+    async getSubjects() {
+      const allSubjects = await getAllSubjects()
+      allSubjects.forEach((subject) =>
+          this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+    },
     closeModal() {
       this.backdrop = false;
       this.addingSubject = false;
@@ -65,17 +63,25 @@ export default {
       this.addingSubject = true;
     },
   },
+  beforeMount() {
+    this.getSubjects()
+    },
   computed: {
     activeSubjects(){
       let activeSubjects = []
-      this.subjectsList.forEach(s => {s.active ? activeSubjects.push(s) : null})
+      this.subjectsList.forEach(s => {!s.archive ? activeSubjects.push(s) : null})
       return activeSubjects
     },
     inactiveSubjects(){
       let activeSubjects = []
-      this.subjectsList.forEach(s => {!s.active ? activeSubjects.push(s) : null})
+      this.subjectsList.forEach(s => {s.archive ? activeSubjects.push(s) : null})
       return activeSubjects
-    }
+    },
+    filteredList() {
+      return this.subjectsList.filter(subject => {
+        return subject.subjectCode.toLowerCase().includes(this.search.toLowerCase())
+      })
+    },
   }
 };
 </script>

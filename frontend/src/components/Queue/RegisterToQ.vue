@@ -33,11 +33,6 @@
       <label for="approval">Godkjenning</label>
       <input type="radio" id="help" name="helpType" />
       <label for="help">Hjelp</label>
-    </div>
-    <label> Beskjed: </label>
-    <input type="text" id="message" />
-    <input type="submit" value="Still i kø" class="filterItem" @click="registerToQueue" id="registerButton"/>
-    </div>
   </div>
 </template>
 
@@ -55,14 +50,8 @@ export default {
   },
   methods: {
     registerToQueue(){
-      //TODO: Register to Q
-      const queueInfo = {taskNumber: this.taskNumber, place: this.place, helpType: this.helpType, message: this.message}
-      const queueStatus = addToQueue(queueInfo)
-
-      if(queueStatus === "success"){
-        console.log("success")
-      }
-      this.$emit("stopwatchStart")
+      const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType, message: this.message}
+      addToQueue(queueInfo)
     }
   }
 };

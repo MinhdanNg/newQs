@@ -6,10 +6,6 @@
               :style="isHelping ? {backgroundColor: 'green'} : null " class="helpButton">
         {{ helpButton }}
       </button>
-      <label>Beskjed:</label>
-      <div>
-        <p>{{ message }}</p>
-      </div>
       <label class="containerItem"> Merknad: </label>
       <input type="text" class="containerItem" id="note" />
       <div class="containerItem">
@@ -25,11 +21,14 @@
 </template>
 
 <script>
+import {approveStudent, helpStudent, postponeStudent, rejectStudent} from "@/utils/apiutils";
+
 export default {
   name: "HelpStudent",
   props: {
     username: String,
-    message: String,
+    studentID: Number,
+    subjectID: Number,
   },
   data() {
     return {
@@ -39,21 +38,23 @@ export default {
   },
   methods: {
     helpStudent() {
-      // TODO: Active ishelping and add note to database
       if(this.isHelping){
         this.isHelping = false;
         this.helpButton = "Hjelp student";
+        rejectStudent(this.subjectID, this.studentID)
+
       } else {
         this.$emit("borderStatus", "help");
         this.isHelping = true;
         this.helpButton = "Hjelper";
+        helpStudent(this.subjectID, this.studentID)
       }
     },
     approveTask() {
-      //TODO: APPROVE STUDENT
+      approveStudent(this.subjectID, this.studentID)
     },
     pendStudent() {
-      //TODO: PEND STUDENT
+      postponeStudent(this.subjectID, this.studentID)
     },
   },
 };

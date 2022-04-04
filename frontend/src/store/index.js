@@ -9,8 +9,8 @@ export default new Vuex.Store({
     email: "",
     loginStatus: true,
     role: "admin",
-    userInfo: {accessToken: "",
-      userID: "",}
+    accessToken: "",
+    userID: "",
   },
   mutations: {
     SET_USERNAME(state, username) {
@@ -25,9 +25,8 @@ export default new Vuex.Store({
     SET_ROLE(state, role) {
       state.role = role;
     },
-    SET_USERINFO(state, token, ID){
-      state.userInfo.accessToken = token
-      state.userInfo.userID = ID
+    SET_TOKEN(state, token){
+      state.accessToken = token
     }
   },
   actions: {

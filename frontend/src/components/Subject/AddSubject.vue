@@ -46,30 +46,17 @@
 </template>
 
 <script>
+import { addSubject } from "@/utils/apiutils";
+
 export default {
   name: "AddSubject",
-  props: {
-    subjectCode: String,
-    subjectName: String,
-    teachers: String,
-    teachAss: String,
-    students: String,
-    /*taskCount: String,
-    tasklist: [],
-    // Task subgroups
-    subgroups: [],
-
-    currentSubgroupNumber: 1,
-    currentSubgroupChecked: [],
-    currentSubgroupObligatory: '',*/
-  },
   data () {
     return {
-      newSubjectCode: '',
-      newSubjectName: '',
-      newTeachers: '',
-      newTeachAss: '',
-      newStudents: '',
+      subjectCode: '',
+      subjectName: '',
+      teachers: '',
+      teachAss: '',
+      students: '',
       taskCount: '',
       tasklist: [],
       // Task subgroups
@@ -99,7 +86,14 @@ export default {
 
     },
     addSubject(){
-      //TODO ADD SUBJECT
+      addSubject({
+        name: this.subjectName,
+        code: this.subjectCode,
+        teachersCSV: this.teachers,
+        studentsCSV: this.students,
+        assistantsCSV: this.teachAss,
+        tasks: this.tasklist,
+      });
     },
   },
 }

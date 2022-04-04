@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async handleClickSignin() {
-      const loginRequest = {email: this.email, password: this.password};
+      const loginRequest = {username: this.email, password: this.password};
       const loginResponse = await doLogin(loginRequest);
 
       /*this.loginStatus = loginResponse.loginStatus;
@@ -57,6 +57,7 @@ export default {
         });
       }
      */
+      this.$store.commit("SET_TOKEN", loginResponse.accessToken)
       await this.$router.push({
         name: "Subjects"
       })

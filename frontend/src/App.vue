@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import AdminView from "@/views/AdminView";
+import AdminView from "@/views/AdminViews/AdminView";
 export default {
   components: {
     AdminView,

@@ -35,9 +35,10 @@
 </template>
 
 <script>
-import QStudent from "@/components/QStudent.vue";
-import HelpStudent from "@/components/HelpStudent";
-import RegisterToQ from "@/components/RegisterToQ";
+import QStudent from "@/components/Queue/QStudent.vue";
+import HelpStudent from "@/components/Queue/HelpStudent";
+import RegisterToQ from "@/components/Queue/RegisterToQ";
+//import {getQueue} from "@/utils/apiutils";
 
 export default {
   name: "Queue",
@@ -46,18 +47,14 @@ export default {
     HelpStudent,
     QStudent,
   },
+  props: {
+    subjectID: String,
+    subjectName: String,
+  },
   data() {
     return {
-      subjectName: "Fag",
-      subjectMaxTask: 0,
-      isHelping: false,
-      helpStudentModal: false,
-      registerQModal: false,
-      backdrop: false,
-      currentStudentModal: '',
 
       studentTestList: [
-          // TODO: get queue users
         {
           username: "Josten Brosten",
           helpType: "Godkjenning",
@@ -92,9 +89,19 @@ export default {
         },
       ],
 
+      isHelping: false,
+      helpStudentModal: false,
+      registerQModal: false,
+      backdrop: false,
+      currentStudentModal: '',
+
     };
   },
   methods: {
+    getQueueItem(){
+      //const item = getQueue()
+
+    },
     closeModal() {
       this.backdrop = false;
       if(this.helpStudentModal){

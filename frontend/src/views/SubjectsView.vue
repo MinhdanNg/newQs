@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link :to="{ name: 'Subjects' }">Aktive fag</router-link> |
-    <router-link :to="{ name: 'OldSubjects' }">Arkiverte fag</router-link>
+    <router-link :to="{ name: 'ArchivedSubjects' }">Arkiverte fag</router-link>
     <h2>Aktiv kø</h2>
     <div>
       <Subject v-for="(subject, index) in activeSubjects"
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Subject from "@/components/Subject";
+import Subject from "@/components/Subject/Subject";
 // import { getSubjectsWhereStudent } from "@/utils/apiutils.js";
 
 export default {
@@ -32,22 +32,11 @@ export default {
   data (){
     return {
       subjectsList:
-      /* TODO: getSubjectsWhereStudent()*/
-          [{
-        subjectCode: "IDATT2105",
-        subjectName: "Fullstack",
-        isActive: true,
-      },
-        {
-          subjectCode: "IDATT2104",
-          subjectName: "Nettverksprogrammering",
-          isActive: false,
-        },
-        {
-          subjectCode: "IDATT2106",
-          subjectName: "Systemutvikling",
-          isActive: true,
-        }
+      /* TODO: getSubjectsWhereStudent() if student, else get where assistant*/
+          [
+            { subjectCode: "1234",
+              subjectName: "test",
+              subjectID: 1,}
       ],
     }
   },

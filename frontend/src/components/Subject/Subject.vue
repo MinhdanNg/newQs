@@ -3,16 +3,18 @@
     <div id="subjectNames">
       <p>{{subjectCode}}</p>
       <h2>{{subjectName}}</h2>
-<!--      <button class="infoButton" v-if="$store.state.role==='student'">Øvinger</button>-->
-      <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin')">Til kø</button>
+      <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin') && isActive">Til kø</button>
+      <div v-if="$store.state.role==='læringsassistent'">
+        <button v-if="!subjectInfo.active" class="infoButton" @click="startQ">Start kø</button>
+        <button v-else class="infoButton" @click="stopQ">Stopp kø</button>
+      </div>
       <div v-if="$store.state.role==='admin'">
         <button @click="archiveSubject" class="infoButton">Arkiver</button>
         <button @click="deleteSubject" class="infoButton">Slett</button>
-        <button @click="editSubject" class="infoButton">Rediger</button>
         <button @click="viewMoreSubject" class="infoButton">Se mer</button>
       </div>
     </div>
-    <div v-if="$store.state.role==='student'" id="subjectDetail" >
+    <div v-if="$store.state.role==='student' || showUserTasks" id="subjectDetail" >
       <div id="taskInfo" class="tabContent">
         <div class="title">
           <h2>Øvinger</h2>
@@ -30,16 +32,6 @@
              <td>Godkjent</td>
              <td>Levert for sent</td>
            </tr>
-           <tr>
-             <td>Øving 1</td>
-             <td>Godkjent</td>
-             <td>Levert for sent</td>
-           </tr>
-           <tr>
-             <td>Øving 1</td>
-             <td>Godkjent</td>
-             <td>Levert for sent</td>
-           </tr>
          </table>
         </div>
       </div>
@@ -49,36 +41,43 @@
 </template>
 
 <script>
+import {getMyTasks, deleteSubject, archiveSubject, getSubject, startQueue, stopQueue} from "@/utils/apiutils";
+
 export default {
   name: "Subject",
   props: {
     subjectCode: String,
     subjectName: String,
+    subjectID: String,
+    isActive: Boolean,
+    showUserTasks: Boolean,
   },
   data() {
     return {
-      taskInfo: [
-          // TODO: Get user tasks in subject {tasknumber: "", taskStatus: ""}
-      ]
+      taskInfo: getMyTasks(this.subjectID),
+      subjectInfo: getSubject(this.subjectID)
     }
   },
   methods: {
     toQueue() {
       this.$router.push({
         name: "Queue",
+        params: {subjectName: this.subjectName}
       });
     },
+    startQ(){
+      startQueue()
+    },
+    stopQ(){
+      stopQueue()
+    },
     archiveSubject(){
-
+      archiveSubject(this.subjectID)
     },
     deleteSubject(){
-
-    },
-    editSubject(){
-
+      deleteSubject(this.subjectID)
     },
     viewMoreSubject(){
-
     }
   },
 };

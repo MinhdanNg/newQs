@@ -3,9 +3,10 @@ import VueRouter from "vue-router";
 import Login from "../views/LoginView.vue";
 import Queue from "../views/Queue.vue";
 import SubjectsView from "@/views/SubjectsView";
-import AdminView from "@/views/AdminView";
-import AdminSubjects from "@/views/AdminSubjects";
-import AdminUsers from "@/views/AdminUsers";
+import ArchivedSubjects from "@/views/ArchivedSubjects";
+import AdminView from "@/views/AdminViews/AdminView";
+import AdminSubjects from "@/views/AdminViews/AdminSubjects";
+import AdminUsers from "@/views/AdminViews/AdminUsers";
 
 Vue.use(VueRouter);
 
@@ -19,11 +20,17 @@ const routes = [
     path: "/queue",
     name: "Queue",
     component: Queue,
+    props: true,
   },
   {
     path: "/subjects",
     name: "Subjects",
     component: SubjectsView,
+  },
+  {
+    path: "/subjects/archive",
+    name: "ArchivedSubjects",
+    component: ArchivedSubjects,
   },
   {
     path: "/admin",
