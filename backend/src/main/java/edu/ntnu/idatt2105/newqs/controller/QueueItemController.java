@@ -50,7 +50,7 @@ public class QueueItemController
     @ResponseStatus(value = HttpStatus.OK)
     public void postpone(@PathVariable long subjectId, @PathVariable String studentId) throws AccessException
     {
-        authorizationService.assertAssistantGrant(subjectId);
+        authorizationService.assertIsUser(subjectId, studentId);
         queueItemService.postpone(subjectId, studentId);
     }
 }
