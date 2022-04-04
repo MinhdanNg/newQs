@@ -33,6 +33,14 @@ export function getAllUsers(){
             return response.data;
         });
 }
+export function addUser(userInfo){
+    return axios
+        .post("http://localhost:8085/api/user/register", userInfo ,{
+            headers: {
+                Authorization: 'Bearer ' + store.getters.token
+            }
+        });
+}
 
 // SUBJECT
 export function getSubjectsWhereStudent(){
@@ -152,6 +160,17 @@ export function getQueue(subjectID){
             return response.data
         });
 }
+export function getQueueItems(subjectID){
+    return axios
+        .get("http://localhost:8085/api/subject/" + subjectID + "/queue/get", {
+            headers: {
+                Authorization: 'Bearer ' + store.getters.token
+            }
+        })
+        .then((response) =>{
+            return response.data.items
+        });
+}
 
 export function startQueue(subjectID){
     return axios
@@ -171,9 +190,9 @@ export function stopQueue(subjectID){
         });
 }
 
-export function addToQueue(queueInfo){
+export function addToQueue(subjectID, queueInfo){
     return axios
-        .post("", queueInfo, {
+        .post("http://localhost:8085/api/subject/" + subjectID + "/queue/join", queueInfo, {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }

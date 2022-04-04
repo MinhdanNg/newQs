@@ -14,6 +14,8 @@ const store = new Vuex.Store({
     role: "",
     userID: "",
     accessToken: "",
+
+    currentSubjectId: "",
   },
   getters: {
     token: function (state) {
@@ -38,6 +40,9 @@ const store = new Vuex.Store({
     },
     SET_USERID(state, id){
       state.userID = id
+    },
+    SET_SUBJECTID(state, id){
+      state.currentSubjectId = id
     }
   },
   actions: {

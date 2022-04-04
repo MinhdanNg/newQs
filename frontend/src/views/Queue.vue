@@ -5,7 +5,7 @@
     <div id="queueAndFilter">
       <div id="queue">
         <button
-            v-for="(student, index) in studentTestList"
+            v-for="(student, index) in queueList"
             :key="index"
             @click="showModal('help', index)"
             class="btnStudent"
@@ -26,11 +26,9 @@
           v-bind:class="{ helpingStudentModal: isHelping }"
           v-show="helpStudentModal"
           :username="currentStudentModal.username"
-          :message="currentStudentModal.message"
+          :studentID="currentStudentModal.studentId"
         />
-        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"
-                     :subjectId="this.subjectID"
-        />
+        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"/>
       </div>
     </div>
   </div>
@@ -40,7 +38,7 @@
 import QStudent from "@/components/Queue/QStudent.vue";
 import HelpStudent from "@/components/Queue/HelpStudent";
 import RegisterToQ from "@/components/Queue/RegisterToQ";
-import {getQueue} from "@/utils/apiutils";
+import {getQueueItems} from "@/utils/apiutils";
 
 export default {
   name: "Queue",
@@ -57,15 +55,6 @@ export default {
     return {
 
       queueList: [],
-      studentTestList: [
-        {
-          username: "Josten Brosten",
-          helpType: "Godkjenning",
-          task: "2",
-          place: "Digital",
-          TA: "Tonelise Pedersen",
-        },
-      ],
 
       isHelping: false,
       helpStudentModal: false,
@@ -77,14 +66,21 @@ export default {
   },
   methods: {
     async getQueueItem(){
-      const queueItems = await getQueue(this.subjectID).items
-
+      const queueItems = await getQueueItems(this.subjectID)
       for (const item of queueItems) {
-        this.queueList.push({username: item.student.firstname + " " + item.student.firstname,
-          helpType: item.type,
-          task: item.tasks,
-          place: item.table,
-          TA: item.assistedBy.firstName + " " + item.assistedBy.lastName})
+        item.assistedBy != null ? this.queueList.push({
+              username: item.student.firstName + " " + item.student.lastName,
+              helpType: item.type,
+              task: item.tasks[0],
+              place: item.table,
+              TA: item.assistedBy.firstName + " " + item.assistedBy.lastName,
+              studentId: item.student.id}) :
+            this.queueList.push({username: item.student.firstName + " " + item.student.lastName,
+              helpType: item.type,
+              task: item.tasks[0],
+              place: item.table,
+              TA: "",
+              studentId: item.student.id})
       }
     },
     closeModal() {
@@ -100,7 +96,7 @@ export default {
       if(modal === "help" && this.$store.state.role === 'læringsassistent') {
         this.backdrop = true;
         this.helpStudentModal = true;
-        this.currentStudentModal = this.studentTestList[index];
+        this.currentStudentModal = this.queueList[index];
       } else if(modal === "register" && this.$store.state.role === 'student'){
         this.backdrop = true;
         this.registerQModal = true;
@@ -178,7 +174,7 @@ export default {
   cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
-  .modal-content {
+  .modalContent {
     width: 60%;
   }
 }

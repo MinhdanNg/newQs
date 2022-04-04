@@ -117,7 +117,7 @@ body {
 }
 @media only screen and (max-width: 600px) {
   #content {
-    width: 100%;
+    width: 90%;
   }
 }
 </style>

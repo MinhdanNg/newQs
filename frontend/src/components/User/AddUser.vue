@@ -3,7 +3,9 @@
     <h2>Legg til bruker</h2>
     <form id="userForm">
       <label>Brukerinformasjon: </label>
-      <input type="text" placeholder="Format: Etternavn, fornavn, epost">
+      <input type="text" placeholder="fornavn" v-model="firstName">
+      <input type="text" placeholder="etternavn" v-model="lastName">
+      <input type="text" placeholder="e-post" v-model="email">
       <label>Bruker-type:</label>
       <div>
         <input type="radio" value="student" v-model="role" checked> <label>Student</label>
@@ -17,7 +19,7 @@
         </div>
         <div class="allSubjects">
             <div v-for="(subject, index) in filteredList" :key="index">
-              <input type="checkbox"> <label>{{ subject.subjectCode + " " + subject.subjectName }}</label>
+              <input type="checkbox" v-model="isStudentIn" :value="subject.subjectID"> <label>{{ subject.subjectCode + " " + subject.subjectName }}</label>
             </div>
         </div>
         <hr>
@@ -26,7 +28,7 @@
           <p>Læringsassistent i fagene:</p>
           <div class="allSubjects">
           <div v-for="(subject, index) in filteredList" :key="index">
-            <input type="checkbox"> <label>{{ subject.subjectCode + " " + subject.subjectName }}</label>
+            <input type="checkbox" v-model="isTeachAssIn" :value="subject.subjectID"> <label>{{ subject.subjectCode + " " + subject.subjectName }}</label>
           </div>
           </div>
         </div>
@@ -37,6 +39,8 @@
 </template>
 
 <script>
+import {addUser, getAllSubjects} from "@/utils/apiutils";
+
 export default {
   name: "AddUser",
   data (){
@@ -45,24 +49,44 @@ export default {
       role: 'student',
 
       search: '',
-      allSubjects: [
-          {subjectName: "Full-stack Applikasjonsutvikling", subjectCode: "IDATT2105"},
-        {subjectName: "Full-stack Applikasjonsutvikling", subjectCode: "hkkjhk"},
-        {subjectName: "Full-stack Applikasjonsutvikling", subjectCode: "abcde"}
-      ],
+      firstName: '',
+      lastName: '',
+      email: '',
+      subjectsList: [],
+      isStudentIn: [],
+      isTeachAssIn: [],
     }
   },
   computed: {
     filteredList() {
-      return this.allSubjects.filter(subject => {
+      return this.subjectsList.filter(subject => {
         return subject.subjectCode.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   },
   methods: {
-    addUser(){
-      //TODO ADD USER
+    async getSubjects() {
+      const allSubjects = await getAllSubjects()
+      allSubjects.forEach((subject) =>
+          this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
+    },
+    async addUser(){
+      let isTeacher = false
+      if(this.role === "teacher") {
+        isTeacher = true
+      }
+      await addUser({
+        assistantSubjects: this.isTeachAssIn,
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        studentSubjects: this.isStudentIn,
+        teacher: isTeacher
+      })
     }
+  },
+  beforeMount() {
+    this.getSubjects()
   }
 }
 </script>

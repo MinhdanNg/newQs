@@ -4,9 +4,9 @@
     v-bind:class="{ pending: isPending, helping: TA.length > 0 }"
   >
     <p id="username" class="gridItem">{{ username }}</p>
-    <p id="helpType" class="gridItem">{{ helpType }}</p>
+    <p id="helpType" class="gridItem">{{ helpTypeTranslate }}</p>
     <p id="task" class="gridItem">Øving {{ taskNumber }}</p>
-    <p id="place" class="gridItem hideOnMobile">{{ place }}</p>
+    <p id="place" class="gridItem hideOnMobile">Plass: {{ place }}</p>
     <p id="TA" class="gridItem hideOnMobile">{{ TA }}</p>
   </div>
 </template>
@@ -18,16 +18,28 @@ export default {
   data() {
     return {
       isPending: false,
+      helpTypeTranslate: '',
     };
   },
   props: {
     username: String,
     helpType: String,
-    taskNumber: String,
+    taskNumber: Number,
     place: String,
     TA: String,
   },
-  methods: {},
+  methods: {
+    translateHelptype(){
+      if(this.helpType === 'help'){
+        this.helpTypeTranslate = "Hjelp"
+      } else {
+        this.helpTypeTranslate = "Godkjenning"
+      }
+    }
+  },
+  beforeMount() {
+    this.translateHelptype()
+  }
 };
 </script>
 
@@ -79,6 +91,9 @@ export default {
   }
   #helpType {
     width: 100px;
+  }
+  .hideOnMobile {
+    display: none;
   }
 }
 </style>

@@ -41,9 +41,6 @@
 import {addToQueue, getSubject} from "@/utils/apiutils";
 export default {
   name: "RegisterToQ",
-  prop: {
-    subjectID: Number
-  },
   data () {
     return {
       taskNumber: '',
@@ -55,11 +52,12 @@ export default {
   },
   methods: {
     async getTasks(){
-      this.tasks = getSubject(this.subjectID).numTasks
+      const numTasks = await getSubject(this.$store.state.currentSubjectId)
+      this.tasks = numTasks.numTasks
     },
     registerToQueue(){
-      const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType, message: this.message}
-      addToQueue(queueInfo)
+      const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType}
+      addToQueue(this.$store.state.currentSubjectId, queueInfo)
     }
   },
   beforeMount() {

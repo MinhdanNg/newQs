@@ -6,8 +6,6 @@
               :style="isHelping ? {backgroundColor: 'green'} : null " class="helpButton">
         {{ helpButton }}
       </button>
-      <label class="containerItem"> Merknad: </label>
-      <input type="text" class="containerItem" id="note" />
       <div class="containerItem">
         <button @click="approveTask" id="approveButton" class="helpButton">
           Godkjenn
@@ -27,13 +25,13 @@ export default {
   name: "HelpStudent",
   props: {
     username: String,
-    studentID: Number,
-    subjectID: Number,
+    studentID: String,
   },
   data() {
     return {
       isHelping: false,
-      helpButton: "Hjelp student"
+      helpButton: "Hjelp student",
+      subjectID: this.$store.state.currentSubjectId
     };
   },
   methods: {

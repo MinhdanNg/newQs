@@ -18,7 +18,7 @@
       <div id="taskInfo" class="tabContent">
         <div class="title">
           <h2>Øvinger</h2>
-          <p>Status: Godkjent</p>
+          <p>Status: </p>
         </div>
         <div>
          <table class="taskTable">
@@ -75,6 +75,7 @@ export default {
         params: {subjectID: this.subjectID,
           subjectName: this.subjectName}
       });
+      this.$store.commit("SET_SUBJECTID", this.subjectID)
     },
     startQ(){
       startQueue(this.subjectID)
