@@ -4,17 +4,13 @@
     <div>
       <input type="text" placeholder="Søk etter bruker" class="searchBox" v-model="search"/>
     </div>
-    <div class="userBox"><!--v-for="(user, index) in users" :key="index"-->
+    <div class="userBox"  v-for="(user, index) in users" :key="index">
       <User class="userObject"
-            :userName="'Jonathan'"
-            :userEmail="'john@ntnu.no'"
-            :userRole="'Student'"
-            :userId="2"
-      />
-<!--            :userName="user.name"
+            :userName="user.firstName + ' ' + user.lastName"
             :userEmail="user.email"
-            :userRole="user.role"
-            :userId="user.id"-->
+            :userRole="user.teacher"
+            :userId="user.id"
+      />
 
       <button @click="showModal('user')">Mer</button>
       <UserSubjects v-show="userSubjectsModal"
@@ -30,6 +26,7 @@
 import User from "@/components/User/User";
 import AddUser from "@/components/User/AddUser";
 import UserSubjects from "@/components/User/UserSubjects";
+import {getAllUsers} from "@/utils/apiutils";
 
 export default {
   name: "UsersView",
@@ -38,11 +35,9 @@ export default {
     AddUser,
     UserSubjects
   },
-  data (){
+  data() {
     return {
-      users: [
-        //TODO: GET ALL USERS
-      ],
+      users: getAllUsers(),
       backdrop: false,
       addingUser: false,
       userSubjectsModal: false,
@@ -57,7 +52,7 @@ export default {
     },
 
     showModal(modal) {
-      if(modal === "user") {
+      if (modal === "user") {
         this.backdrop = true;
         this.userSubjectsModal = true;
       } else {
@@ -68,12 +63,11 @@ export default {
     computed: {
       filteredList() {
         return this.users.filter(user => {
-          return user.name.toLowerCase().includes(this.search.toLowerCase())
+          return user.firstName.toLowerCase().includes(this.search.toLowerCase()) || user.lastName.toLowerCase().includes(this.search.toLowerCase())
         })
       },
     }
   }
-
 }
 </script>
 

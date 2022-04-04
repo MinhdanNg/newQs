@@ -35,8 +35,7 @@ export default {
       const loginRequest = {username: this.email, password: this.password, };
       const loginResponse = await doLogin(loginRequest);
 
-      const loginInfo = {username: "abc", email: this.email, token: loginResponse.accessToken, userID: "afds2"}
-      //this.$store.dispatch("login", loginResponse.firstName + " "+ loginResponse.lastName, this.email, loginResponse.accessToken, loginResponse.userId)
+      const loginInfo = {username: loginResponse.firstName + " "+ loginResponse.lastName, email: this.email, token: loginResponse.accessToken, userID: loginResponse.userId, teacher: loginResponse.teacher}
       this.$store.dispatch("login", loginInfo)
       await this.$router.push({
         name: "Subjects",

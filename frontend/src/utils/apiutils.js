@@ -24,7 +24,7 @@ export function getUser(){
 
 export function getAllUsers(){
     return axios
-        .get("", {
+        .get("http://localhost:8085/api/user/get-all", {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }

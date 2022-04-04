@@ -41,13 +41,17 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    login(context, {username, email, token, userID}) {
+    login(context, {username, email, token, userID, teacher}) {
       context.commit("SET_USERNAME", username);
       context.commit("SET_EMAIL", email);
       context.commit("SET_STATUS", true);
-      context.commit("SET_ROLE", "student");
       context.commit("SET_TOKEN", token);
       context.commit("SET_USERID", userID);
+      if(teacher){
+        context.commit("SET_ROLE", "admin");
+      } else {
+        context.commit("SET_ROLE", "admin");
+      }
     },
     logout(context) {
       context.commit("SET_USERNAME", "");
