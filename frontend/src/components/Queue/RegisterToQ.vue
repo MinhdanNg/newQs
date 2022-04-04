@@ -34,6 +34,8 @@
       <input type="radio" id="help" name="helpType" />
       <label for="help">Hjelp</label>
   </div>
+    </div>
+  </div>
 </template>
 
 <script>

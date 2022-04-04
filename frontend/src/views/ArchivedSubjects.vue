@@ -25,9 +25,6 @@ export default {
       subjectsList:
       /* TODO: getSubjectsWhereStudent() and is archived*/
           [
-            { subjectCode: "1234",
-              subjectName: "test",
-              subjectID: 1,}
           ],
     }
   },

@@ -5,7 +5,7 @@
       <h2>{{subjectName}}</h2>
       <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin') && isActive">Til kø</button>
       <div v-if="$store.state.role==='læringsassistent'">
-        <button v-if="!subjectInfo.active" class="infoButton" @click="startQ">Start kø</button>
+        <button v-if="isActive" class="infoButton" @click="startQ">Start kø</button>
         <button v-else class="infoButton" @click="stopQ">Stopp kø</button>
       </div>
       <div v-if="$store.state.role==='admin'">
@@ -41,21 +41,19 @@
 </template>
 
 <script>
-import {deleteSubject, archiveSubject, startQueue, stopQueue} from "@/utils/apiutils";
+import {deleteSubject, archiveSubject, startQueue, stopQueue, getQueue} from "@/utils/apiutils";
 
 export default {
   name: "Subject",
   props: {
     subjectCode: String,
     subjectName: String,
-    subjectID: String,
-    isActive: Boolean,
+    subjectID: Number,
     showUserTasks: Boolean,
   },
   data() {
     return {
-      //taskInfo: getMyTasks(this.subjectID),
-      //subjectInfo: getSubject(this.subjectID)
+      isActive: getQueue(this.subjectID).active
     }
   },
   methods: {

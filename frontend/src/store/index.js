@@ -50,7 +50,7 @@ const store = new Vuex.Store({
       if(teacher){
         context.commit("SET_ROLE", "admin");
       } else {
-        context.commit("SET_ROLE", "admin");
+        context.commit("SET_ROLE", "student");
       }
     },
     logout(context) {

@@ -18,7 +18,7 @@ export function getUser(){
             }
         })
         .then((response) => {
-            return response;
+            return response.data;
         });
 }
 
@@ -30,7 +30,7 @@ export function getAllUsers(){
             }
         })
         .then((response) => {
-            return response;
+            return response.data;
         });
 }
 
@@ -43,7 +43,7 @@ export function getSubjectsWhereStudent(){
             }
         })
         .then((response) =>{
-            return response;
+            return response.data;
         });
 }
 export function getSubjectsWhereAssistant(){
@@ -52,17 +52,20 @@ export function getSubjectsWhereAssistant(){
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }
+        })
+        .then((response) => {
+            return response.data
         });
 }
 export function getSubjectsByUserID(userID){
     return axios
-        .get("http://localhost:8085/api/subject/"+userID+"/", {
+        .get("http://localhost:8085/api/subject/get-where-student/"+userID, {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }
         })
         .then((response) =>{
-            return response;
+            return response.data;
         });
 }
 export function getAllSubjects(){
@@ -84,7 +87,7 @@ export function getSubject(subjectID){
             }
         })
         .then ((response) =>{
-            return response
+            return response.data
         })
 }
 
@@ -121,7 +124,7 @@ export function getMyTasks(subjectID){
         }
     })
         .then((response) => {
-            return response
+            return response.data
         });
 }
 
@@ -134,7 +137,7 @@ export function getQueue(subjectID){
             }
         })
         .then((response) =>{
-            return response
+            return response.data
         });
 }
 
@@ -146,7 +149,7 @@ export function startQueue(subjectID){
             }
         })
         .then((response) =>{
-            return response
+            return response.data
         });
 }
 
@@ -158,7 +161,7 @@ export function stopQueue(subjectID){
             }
         })
         .then((response) =>{
-            return response
+            return response.data
         });
 }
 

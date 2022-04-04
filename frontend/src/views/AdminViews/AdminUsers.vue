@@ -4,9 +4,9 @@
     <div>
       <input type="text" placeholder="Søk etter bruker" class="searchBox" v-model="search"/>
     </div>
-    <div class="userBox"  v-for="(user, index) in users" :key="index">
+    <div class="userBox"  v-for="(user, index) in filteredList" :key="index">
       <User class="userObject"
-            :userName="user.firstName + ' ' + user.lastName"
+            :userName="user.username"
             :userEmail="user.email"
             :userRole="user.teacher"
             :userId="user.id"
@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      users: getAllUsers(),
+      allUsers: [],
       backdrop: false,
       addingUser: false,
       userSubjectsModal: false,
@@ -45,6 +45,16 @@ export default {
     }
   },
   methods: {
+    async getUsers() {
+      const users = await getAllUsers()
+      users.forEach((user) =>
+          this.allUsers.push({
+            username: user.firstName + " " + user.lastName,
+            email: user.email,
+            isTeacher: user.teacher,
+            userID: user.userId
+          }))
+    },
     closeModal() {
       this.backdrop = false;
       this.addingUser = false;
@@ -60,13 +70,16 @@ export default {
         this.addingUser = true;
       }
     },
+  },
     computed: {
       filteredList() {
-        return this.users.filter(user => {
-          return user.firstName.toLowerCase().includes(this.search.toLowerCase()) || user.lastName.toLowerCase().includes(this.search.toLowerCase())
+        return this.allUsers.filter(user => {
+          return user.username.toLowerCase().includes(this.search.toLowerCase())
         })
       },
-    }
+    },
+    beforeMount() {
+      this.getUsers()
   }
 }
 </script>

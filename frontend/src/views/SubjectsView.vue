@@ -6,16 +6,18 @@
     <div>
       <Subject v-for="(subject, index) in activeSubjects"
                :key="index"
-               :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"/>
+               :subjectCode="subject.subjectCode"
+               :subjectName="subject.subjectName"
+               :subjectID="subject.subjectID"/>
     </div>
     <hr />
     <h3>Inaktiv kø</h3>
     <div>
       <Subject v-for="(subject, index) in inactiveSubjects"
                :key="index"
-               :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"/>
+               :subjectCode="subject.subjectCode"
+               :subjectName="subject.subjectName"
+               :subjectID="subject.subjectID"/>
     </div>
   </div>
 </template>
@@ -39,11 +41,11 @@ export default {
       if(this.$store.state.role==='student'){
         const allSubjects = await getSubjectsWhereStudent()
         allSubjects.forEach((subject) =>
-            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
       } else if(this.$store.state.role==='læringsassistent'){
         const allSubjects = await getSubjectsWhereAssistant()
         allSubjects.forEach((subject) =>
-            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
       }
     },
   },

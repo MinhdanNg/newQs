@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {getSubjectsByUserID} from "@/utils/apiutils";
+
 export default {
   name: "User",
   props: {
@@ -41,6 +43,11 @@ export default {
     }
   },
   methods: {
+    async getSubjects() {
+        const allSubjects = await getSubjectsByUserID(this.userId)
+        allSubjects.forEach((subject) =>
+            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+    },
     closeModal() {
       this.backdrop = false;
       this.userSubjectsModal = false;
