@@ -37,11 +37,7 @@ export default {
   },
   data (){
     return {
-      subjectsList: [{
-        archive: '',
-        subjectCode: '',
-        subjectName: '',
-      }],
+      subjectsList: [],
       backdrop: false,
       addingSubject: false,
       search: '',

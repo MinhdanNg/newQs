@@ -32,34 +32,14 @@ export default {
   },
   methods: {
     async handleClickSignin() {
-      const loginRequest = {username: this.email, password: this.password};
+      const loginRequest = {username: this.email, password: this.password, };
       const loginResponse = await doLogin(loginRequest);
 
-      /*this.loginStatus = loginResponse.loginStatus;
-    if (this.loginStatus === "Success") {
-      this.$store.dispatch("login", loginResponse.username, this.email, true);
-
+      const loginInfo = {username: "abc", email: this.email, token: loginResponse.accessToken, userID: "afds2"}
+      //this.$store.dispatch("login", loginResponse.firstName + " "+ loginResponse.lastName, this.email, loginResponse.accessToken, loginResponse.userId)
+      this.$store.dispatch("login", loginInfo)
       await this.$router.push({
-        name: "subjects",
-      });
-    } else if(this.loginStatus === "Failure"){
-      this.loginStatusMsg = "E-post eller passordet er feil. Prøv igjen."
-    loginResponse
-      //Testing purposes
-      this.$store.state.loginStatus = true;
-      if(this.$store.state.role === 'admin'){
-        await this.$router.push({
-          name: "AdminSubjects",
-        });
-      } else {
-        await this.$router.push({
-          name: "Subjects",
-        });
-      }
-     */
-      this.$store.commit("SET_TOKEN", loginResponse.accessToken)
-      await this.$router.push({
-        name: "Subjects"
+        name: "Subjects",
       })
     },
   },

@@ -11,10 +11,10 @@
     <textarea id="teachers" name="teachers" placeholder="Format: Etternavn, fornavn, epost (linjeskift)" v-model="teachers"></textarea>
 
     <label for="teachAss">Øvingslærere: </label>
-    <textarea id="teachAss" name="teachAss" placeholder="Format: Etternavn, fornavn, epost (linjeskift)"></textarea>
+    <textarea id="teachAss" name="teachAss" placeholder="Format: Etternavn, fornavn, epost (linjeskift)" v-model="teachAss"></textarea>
 
     <label for="students">Studenter: </label>
-    <textarea id="students" name="students" placeholder="Format: Etternavn, fornavn, epost (linjeskift)"></textarea>
+    <textarea id="students" name="students" placeholder="Format: Etternavn, fornavn, epost (linjeskift)" v-model="students"></textarea>
 
     <label for="taskCount">Antall øvinger: </label>
     <input type="number" id="taskCount" name="taskCount" v-model="taskCount" @input="createTasklist">
@@ -25,8 +25,8 @@
       <div id="allSubgroups">
         <div v-for="(subgroup, index) in subgroups" :key="index" class="subgroup">
           <p>Undergruppe {{index + 1}}</p>
-          <p>Inneholder øvingene: {{subgroup.subgroupTasks}}</p>
-          <p>Antall obligatoriske øvinger: {{subgroup.subgroupObligatory}}</p>
+          <p>Inneholder øvingene: {{subgroup.numTasks}}</p>
+          <p>Antall obligatoriske øvinger: {{subgroup.numRequired}}</p>
         </div>
         <div v-if="tasklist.length > 0">
           <p>Undergruppe {{this.currentSubgroupNumber}}</p>
@@ -75,9 +75,8 @@ export default {
     },
     addSubgroup(){
       this.subgroups.push(
-          {subgroupNumber: this.currentSubgroupNumber,
-          subgroupTasks: this.currentSubgroupChecked,
-          subgroupObligatory: this.currentSubgroupObligatory}
+          {numTasks: this.currentSubgroupChecked,
+          numRequired: this.currentSubgroupObligatory}
       )
       this.tasklist.splice(this.tasklist.indexOf(this.currentSubgroupChecked[0]), this.currentSubgroupChecked.length)
       this.currentSubgroupNumber++
@@ -92,7 +91,7 @@ export default {
         teachersCSV: this.teachers,
         studentsCSV: this.students,
         assistantsCSV: this.teachAss,
-        tasks: this.tasklist,
+        tasks: this.subgroups,
       });
     },
   },

@@ -34,7 +34,7 @@ export default {
       });
     },
     logOut(){
-      this.$store.state.loginStatus = false;
+      this.$store.dispatch("logout")
       this.$router.push({
         name: "Login",
       });

@@ -1,16 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
-
-export default new Vuex.Store({
+const store = new Vuex.Store({
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+  })],
   state: {
-    username: "Kåre jensen",
+    username: "",
     email: "",
-    loginStatus: true,
-    role: "admin",
-    accessToken: "",
+    loginStatus: false,
+    role: "",
     userID: "",
+    accessToken: "",
+  },
+  getters: {
+    token: function (state) {
+      return state.accessToken
+    }
   },
   mutations: {
     SET_USERNAME(state, username) {
@@ -27,21 +35,28 @@ export default new Vuex.Store({
     },
     SET_TOKEN(state, token){
       state.accessToken = token
+    },
+    SET_USERID(state, id){
+      state.userID = id
     }
   },
   actions: {
-    login(context, username, email, status) {
+    login(context, {username, email, token, userID}) {
       context.commit("SET_USERNAME", username);
       context.commit("SET_EMAIL", email);
-      context.commit("SET_STATUS", status);
+      context.commit("SET_STATUS", true);
       context.commit("SET_ROLE", "student");
+      context.commit("SET_TOKEN", token);
+      context.commit("SET_USERID", userID);
     },
     logout(context) {
       context.commit("SET_USERNAME", "");
       context.commit("SET_EMAIL", "");
       context.commit("SET_STATUS", false);
       context.commit("SET_ROLE", "");
+      sessionStorage.clear();
     },
   },
-  modules: {},
 });
+
+export default store;

@@ -22,7 +22,7 @@
 
 <script>
 import Subject from "@/components/Subject/Subject";
-// import { getSubjectsWhereStudent } from "@/utils/apiutils.js";
+import {getSubjectsWhereAssistant, getSubjectsWhereStudent} from "@/utils/apiutils.js";
 
 export default {
   name: "SubjectsView",
@@ -31,14 +31,21 @@ export default {
   },
   data (){
     return {
-      subjectsList:
-      /* TODO: getSubjectsWhereStudent() if student, else get where assistant*/
-          [
-            { subjectCode: "1234",
-              subjectName: "test",
-              subjectID: 1,}
-      ],
+      subjectsList: [],
     }
+  },
+  methods: {
+    async getSubjects() {
+      if(this.$store.state.role==='student'){
+        const allSubjects = await getSubjectsWhereStudent()
+        allSubjects.forEach((subject) =>
+            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+      } else if(this.$store.state.role==='læringsassistent'){
+        const allSubjects = await getSubjectsWhereAssistant()
+        allSubjects.forEach((subject) =>
+            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+      }
+    },
   },
   computed: {
     activeSubjects(){
@@ -51,6 +58,8 @@ export default {
       this.subjectsList.forEach(s => {!s.isActive ? activeSubjects.push(s) : null})
       return activeSubjects
     }
+  }, beforeMount() {
+    this.getSubjects()
   }
 };
 </script>

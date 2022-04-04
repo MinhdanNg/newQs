@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import {getMyTasks, deleteSubject, archiveSubject, getSubject, startQueue, stopQueue} from "@/utils/apiutils";
+import {deleteSubject, archiveSubject, startQueue, stopQueue} from "@/utils/apiutils";
 
 export default {
   name: "Subject",
@@ -54,8 +54,8 @@ export default {
   },
   data() {
     return {
-      taskInfo: getMyTasks(this.subjectID),
-      subjectInfo: getSubject(this.subjectID)
+      //taskInfo: getMyTasks(this.subjectID),
+      //subjectInfo: getSubject(this.subjectID)
     }
   },
   methods: {
