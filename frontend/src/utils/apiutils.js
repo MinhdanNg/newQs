@@ -57,6 +57,18 @@ export function getSubjectsWhereAssistant(){
             return response.data
         });
 }
+
+export function getSubjectsOverview (){
+    return axios
+        .get("http://localhost:8085/api/subject/get-my-subject-overview", {
+            headers: {
+                Authorization: 'Bearer ' + store.getters.token
+            }
+        })
+        .then((response) => {
+            return response.data
+        });
+}
 export function getSubjectsByUserID(userID){
     return axios
         .get("http://localhost:8085/api/subject/get-where-student/"+userID, {

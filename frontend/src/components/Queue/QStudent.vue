@@ -6,7 +6,6 @@
     <p id="username" class="gridItem">{{ username }}</p>
     <p id="helpType" class="gridItem">{{ helpType }}</p>
     <p id="task" class="gridItem">Øving {{ taskNumber }}</p>
-
     <p id="place" class="gridItem hideOnMobile">{{ place }}</p>
     <p id="TA" class="gridItem hideOnMobile">{{ TA }}</p>
   </div>

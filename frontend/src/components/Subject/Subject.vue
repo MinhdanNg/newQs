@@ -27,10 +27,9 @@
              <th id="resultColumn">Resultat</th>
              <th id="commentColumn">Kommentar</th>
            </tr>
-           <tr>
-             <td>Øving 1</td>
-             <td>Godkjent</td>
-             <td>Levert for sent</td>
+           <tr v-for="(task, index) in taskList" :key="index">
+             <td>Øving {{task.taskNum}}</td>
+             <td>{{ task.status }}</td>
            </tr>
          </table>
         </div>
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import {deleteSubject, archiveSubject, startQueue, stopQueue, getQueue} from "@/utils/apiutils";
+import {deleteSubject, archiveSubject, startQueue, stopQueue, getQueue, getSubjectsOverview} from "@/utils/apiutils";
 
 export default {
   name: "Subject",
@@ -53,13 +52,22 @@ export default {
   },
   data() {
     return {
-      isActive: ''
+      isActive: '',
+      taskList: [],
     }
   },
   methods: {
     async queueStatus(){
       const status = await getQueue(this.subjectID)
       this.isActive = status.active
+    },
+    async taskStatus(){
+      const taskstatus = await getSubjectsOverview().subjects
+      let counter = 1;
+      for(const task in taskstatus){
+        this.taskList.push({taskNum: counter, status: task.tasks[counter - 1]})
+        counter++
+      }
     },
     toQueue() {
       this.$router.push({
@@ -85,6 +93,7 @@ export default {
   },
   beforeMount() {
     this.queueStatus()
+    this.taskStatus()
   }
 };
 </script>

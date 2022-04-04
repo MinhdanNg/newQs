@@ -31,7 +31,8 @@
       <label for="approval">Godkjenning</label>
       <input type="radio" id="help" name="helpType" />
       <label for="help">Hjelp</label>
-  </div>
+    </div>
+      <button @click="registerToQueue">Registrer</button>
     </div>
   </div>
 </template>
@@ -60,6 +61,9 @@ export default {
       const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType, message: this.message}
       addToQueue(queueInfo)
     }
+  },
+  beforeMount() {
+    this.getTasks()
   }
 };
 </script>
