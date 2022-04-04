@@ -23,7 +23,7 @@
       <div v-show="place === 'school'">
       <label>Bordnummer: </label>
       <select name="tableNumber" id="tableNumber" class="selector">
-        <option v-for='(n, i) in 18' :key="n" value="i">{{i + 1}}</option>
+        <option v-for='(n, i) in 18' :key="n" :value="i">{{i + 1}}</option>
       </select>
       </div>
     </div>
@@ -33,11 +33,6 @@
       <label for="approval">Godkjenning</label>
       <input type="radio" id="help" name="helpType" />
       <label for="help">Hjelp</label>
-    </div>
-    <label> Beskjed: </label>
-    <input type="text" id="message" />
-    <input type="submit" value="Still i kø" class="filterItem" @click="registerToQueue" id="registerButton"/>
-    </div>
   </div>
 </template>
 
@@ -55,13 +50,8 @@ export default {
   },
   methods: {
     registerToQueue(){
-      const queueInfo = {taskNumber: this.taskNumber, place: this.place, helpType: this.helpType, message: this.message}
-      const queueStatus = addToQueue(queueInfo)
-
-      if(queueStatus === "success"){
-        console.log("success")
-      }
-      this.$emit("stopwatchStart")
+      const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType, message: this.message}
+      addToQueue(queueInfo)
     }
   }
 };
