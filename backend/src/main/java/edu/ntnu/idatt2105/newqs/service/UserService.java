@@ -10,17 +10,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService
@@ -34,6 +34,12 @@ public class UserService
     public UserService(RestTemplateBuilder restTemplateBuilder)
     {
         this.restTemplate = restTemplateBuilder.build();
+    }
+
+    public List<UserResponse> getAll()
+    {
+        List<User> users = (List<User>) userRepository.findAll();
+        return Mapper.ToUserResponses(users);
     }
 
     public UserResponse get(String userId)
@@ -63,7 +69,17 @@ public class UserService
 
         AccessTokenResponse accessTokenResponse = responseEntity.getBody();
 
-        return new LoginResponse(accessTokenResponse.getAccess_token(), accessTokenResponse.getExpires_in());
+        Optional<User> optionalUser = userRepository.findUserByEmail(request.getUsername());
+
+        if (optionalUser.isPresent())
+        {
+            return Mapper.ToLoginResponse(accessTokenResponse, optionalUser.get());
+        }
+        else
+        {
+            return Mapper.ToLoginResponse(accessTokenResponse, null);
+        }
+
     }
 
     public List<User> getOrCreate(String usersCSV, boolean isTeacher)
@@ -86,13 +102,19 @@ public class UserService
 
             LOGGER.trace("Email: " + email);
 
-            User user = userRepository.findUserByEmail(email);
+            Optional<User> optionalUser = userRepository.findUserByEmail(email);
 
-            if (user == null)
+            User user;
+            if (optionalUser.isEmpty())
             {
                 user = register(firstName, lastName, email, isTeacher);
             }
-            else if (isTeacher)
+            else
+            {
+                user = optionalUser.get();
+            }
+
+            if (isTeacher)
             {
                 user.setIsTeacher(true);
                 userRepository.save(user);
@@ -105,9 +127,22 @@ public class UserService
 
     private User register(String firstName, String lastName, String email, boolean isTeacher)
     {
+        User user = getKeycloak(email);
+
+        if (user == null)
+        {
+            user = registerKeycloak(firstName, lastName, email, isTeacher);
+        }
+
+        userRepository.save(user);
+        return user;
+    }
+
+    private User registerKeycloak(String firstName, String lastName, String email, boolean isTeacher)
+    {
         String accessToken = getAdminAccessToken();
 
-        final String uri2 = "http://localhost:8080/auth/admin/realms/master/users";
+        final String uri = "http://localhost:8080/auth/admin/realms/master/users";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -132,16 +167,41 @@ public class UserService
 
         HttpEntity<String> userRegisterRequest = new HttpEntity<>(userJSONObject.toString(), headers);
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri2, userRegisterRequest, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, userRegisterRequest, String.class);
 
         String url = responseEntity.getHeaders().getLocation().toString();
         String[] urlSplit = url.split("/");
         String userId = urlSplit[urlSplit.length - 1];
 
-        User user = new User(userId, firstName, lastName, email, isTeacher);
-        userRepository.save(user);
+        return new User(userId, firstName, lastName, email, isTeacher);
+    }
 
-        return user;
+    private User getKeycloak(String email)
+    {
+        String accessToken = getAdminAccessToken();
+
+        final String uri = "http://localhost:8080/auth/admin/realms/master/users?email=" + email;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(accessToken);
+
+        HttpEntity<String> userGetRequest = new HttpEntity<>(headers);
+
+        ResponseEntity<List> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, userGetRequest, List.class);
+
+        if (responseEntity.hasBody())
+        {
+            LinkedHashMap linkedHashMap = (LinkedHashMap) responseEntity.getBody().get(0);
+
+            String id = (String) linkedHashMap.get("id");
+            String firstName = (String) linkedHashMap.get("firstName");
+            String lastName = (String) linkedHashMap.get("lastName");
+
+            return new User(id, firstName, lastName, email, false);
+        }
+
+        return null;
     }
 
     private String getAdminAccessToken()
@@ -150,5 +210,4 @@ public class UserService
         LoginResponse adminLoginResponse = login(adminLoginRequest);
         return adminLoginResponse.getAccessToken();
     }
-
 }

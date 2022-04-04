@@ -43,6 +43,13 @@ public class SubjectController
         return subjectService.getAll();
     }
 
+    @GetMapping(value = "/get-where-student/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<SubjectResponse> getWhereStudentFor(@PathVariable String userId)
+    {
+        return subjectService.getWhereStudent(userId);
+    }
+
     @GetMapping(value = "/get-where-student")
     @ResponseStatus(value = HttpStatus.OK)
     public List<SubjectResponse> getWhereStudent()
@@ -85,6 +92,13 @@ public class SubjectController
     public void addUsers(@PathVariable long subjectId, @RequestBody SubjectAddUsersRequest request)
     {
         subjectService.addUsers(subjectId, request);
+    }
+
+    @GetMapping(value = "/{subjectId}/get-task-overview/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public SubjectGetTaskOverviewResponse getTaskOverviewFor(@PathVariable long subjectId, @PathVariable String userId)
+    {
+        return subjectService.getMyTaskOverview(subjectId, userId);
     }
 
     @GetMapping(value = "/{subjectId}/get-my-task-overview")
