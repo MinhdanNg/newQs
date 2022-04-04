@@ -12,7 +12,7 @@ public class QueueItemResponse
 
     public QueueItemResponse() { }
 
-    public QueueItemResponse(UserResponse student, int tasks, UserResponse assistedBy, String type, String table)
+    public QueueItemResponse(UserResponse student, int task, UserResponse assistedBy, String type, String table)
     {
         this.student = student;
         this.task = task;
