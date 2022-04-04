@@ -37,9 +37,15 @@ export default {
 
       const loginInfo = {username: loginResponse.firstName + " "+ loginResponse.lastName, email: this.email, token: loginResponse.accessToken, userID: loginResponse.userId, teacher: loginResponse.teacher}
       this.$store.dispatch("login", loginInfo)
-      await this.$router.push({
-        name: "Subjects",
-      })
+      if(loginResponse.teacher){
+        await this.$router.push({
+          name: "AdminSubjects",
+        })
+      } else {
+        await this.$router.push({
+          name: "Subjects",
+        })
+      }
     },
   },
 }

@@ -38,7 +38,7 @@
 import QStudent from "@/components/Queue/QStudent.vue";
 import HelpStudent from "@/components/Queue/HelpStudent";
 import RegisterToQ from "@/components/Queue/RegisterToQ";
-import {getQueueItems} from "@/utils/apiutils";
+import {getQueueItems, getSubject} from "@/utils/apiutils";
 
 export default {
   name: "Queue",
@@ -49,11 +49,10 @@ export default {
   },
   props: {
     subjectID: Number,
-    subjectName: String,
   },
   data() {
     return {
-
+      subjectName: '',
       queueList: [],
 
       isHelping: false,
@@ -66,18 +65,20 @@ export default {
   },
   methods: {
     async getQueueItem(){
-      const queueItems = await getQueueItems(this.subjectID)
+      const subject = await getSubject(this.$store.state.currentSubjectId)
+      this.subjectName = subject.name
+      const queueItems = await getQueueItems(this.$store.state.currentSubjectId)
       for (const item of queueItems) {
         item.assistedBy != null ? this.queueList.push({
               username: item.student.firstName + " " + item.student.lastName,
               helpType: item.type,
-              task: item.tasks[0],
+              task: item.task,
               place: item.table,
               TA: item.assistedBy.firstName + " " + item.assistedBy.lastName,
               studentId: item.student.id}) :
             this.queueList.push({username: item.student.firstName + " " + item.student.lastName,
               helpType: item.type,
-              task: item.tasks[0],
+              task: item.task,
               place: item.table,
               TA: "",
               studentId: item.student.id})

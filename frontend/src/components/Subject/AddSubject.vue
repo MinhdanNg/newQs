@@ -2,10 +2,10 @@
 <div id="addSubjectContainer">
   <form id="subjectForm">
     <label for="subjectCode">Fagkode: </label>
-    <input type="text" id="subjectCode" name="subjectCode">
+    <input type="text" id="subjectCode" name="subjectCode" v-model="subjectCode">
 
     <label for="subjectName">Fagnavn: </label>
-    <input type="text" id="subjectName" name="subjectName">
+    <input type="text" id="subjectName" name="subjectName" v-model="subjectName">
 
     <label for="teachers">Lærere: </label>
     <textarea id="teachers" name="teachers" placeholder="Format: Etternavn, fornavn, epost (linjeskift)" v-model="teachers"></textarea>
@@ -75,7 +75,7 @@ export default {
     },
     addSubgroup(){
       this.subgroups.push(
-          {numTasks: this.currentSubgroupChecked,
+          {numTasks: this.currentSubgroupChecked.length,
           numRequired: this.currentSubgroupObligatory}
       )
       this.tasklist.splice(this.tasklist.indexOf(this.currentSubgroupChecked[0]), this.currentSubgroupChecked.length)
@@ -85,14 +85,16 @@ export default {
 
     },
     addSubject(){
-      addSubject({
+      const subjectInfo = {
         name: this.subjectName,
         code: this.subjectCode,
         teachersCSV: this.teachers,
         studentsCSV: this.students,
         assistantsCSV: this.teachAss,
         taskGroups: this.subgroups,
-      });
+      }
+      addSubject(subjectInfo);
+      window.location.reload()
     },
   },
 }

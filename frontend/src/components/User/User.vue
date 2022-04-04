@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {getSubjectsByUserID} from "@/utils/apiutils";
+import { getSubjectsOverview } from "@/utils/apiutils";
 
 export default {
   name: "User",
@@ -29,24 +29,20 @@ export default {
     userName: String,
     userEmail: String,
     userRole: String,
-    userId: Number,
+    userId: String,
   },
   data (){
     return {
-      userSubjects: [{subjectName: "Full-stack applikasjonsutvikling",
-      status: "Godkjent"},
-        {subjectName: "Nettverksprogrammering",
-          status: "Ikke godkjent"},
-        {subjectName: "Full-stack applikasjonsutvikling",
-          status: "Godkjent"}],
+      userSubjects: [],
 
     }
   },
   methods: {
     async getSubjects() {
-        const allSubjects = await getSubjectsByUserID(this.userId)
-        allSubjects.forEach((subject) =>
-            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+        const allSubjects = await getSubjectsOverview(this.userId)
+      console.log(allSubjects)
+        /*allSubjects.forEach((subject) =>
+            this.userSubjects.push({ subjectCode: subject.subjects.code, subjectName: subject.subjects.name, subjectStatus: subject.subjects.approved}))*/
     },
     closeModal() {
       this.backdrop = false;
@@ -57,6 +53,9 @@ export default {
         this.backdrop = true;
         this.userSubjectsModal = true;
     },
+  },
+  beforeMount() {
+    this.getSubjects()
   }
 }
 </script>

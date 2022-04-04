@@ -9,13 +9,14 @@
             :userName="user.username"
             :userEmail="user.email"
             :userRole="user.teacher"
-            :userId="user.id"
+            :userId="user.userID"
       />
-
+<!--
       <button @click="showModal('user')">Mer</button>
       <UserSubjects v-show="userSubjectsModal"
-                    :studentName="'test'"
-                    class="modalContent"/>
+                    :studentName="user.username"
+                    :studentID = user.userID
+                    class="modalContent"/>-->
     </div>
     <div id="modalBackdrop" @click="closeModal" v-show="backdrop"></div>
     <AddUser v-if="addingUser" class="modalContent"/>
@@ -25,7 +26,6 @@
 <script>
 import User from "@/components/User/User";
 import AddUser from "@/components/User/AddUser";
-import UserSubjects from "@/components/User/UserSubjects";
 import {getAllUsers} from "@/utils/apiutils";
 
 export default {
@@ -33,7 +33,6 @@ export default {
   components: {
     User,
     AddUser,
-    UserSubjects
   },
   data() {
     return {
@@ -52,7 +51,7 @@ export default {
             username: user.firstName + " " + user.lastName,
             email: user.email,
             isTeacher: user.teacher,
-            userID: user.userId
+            userID: user.id
           }))
     },
     closeModal() {

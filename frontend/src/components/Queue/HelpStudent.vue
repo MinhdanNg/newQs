@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {approveStudent, helpStudent, postponeStudent, rejectStudent} from "@/utils/apiutils";
+import {approveStudent, helpStudent, postponeStudent} from "@/utils/apiutils";
 
 export default {
   name: "HelpStudent",
@@ -36,23 +36,18 @@ export default {
   },
   methods: {
     helpStudent() {
-      if(this.isHelping){
-        this.isHelping = false;
-        this.helpButton = "Hjelp student";
-        rejectStudent(this.subjectID, this.studentID)
-
-      } else {
-        this.$emit("borderStatus", "help");
-        this.isHelping = true;
-        this.helpButton = "Hjelper";
-        helpStudent(this.subjectID, this.studentID)
-      }
+      helpStudent()
+      this.isHelping = true;
+      this.helpButton = "Hjelper";
+      window.location.reload()
     },
     approveTask() {
       approveStudent(this.subjectID, this.studentID)
+      window.location.reload()
     },
     pendStudent() {
       postponeStudent(this.subjectID, this.studentID)
+      window.location.reload()
     },
   },
 };

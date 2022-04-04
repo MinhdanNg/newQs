@@ -5,7 +5,7 @@
       <h2>{{subjectName}}</h2>
       <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin') && isActive">Til kø</button>
       <div v-if="$store.state.role==='læringsassistent'">
-        <button v-if="isActive" class="infoButton" @click="startQ">Start kø</button>
+        <button v-if="!isActive" class="infoButton" @click="startQ">Start kø</button>
         <button v-else class="infoButton" @click="stopQ">Stopp kø</button>
       </div>
       <div v-if="$store.state.role==='admin'">

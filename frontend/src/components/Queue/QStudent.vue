@@ -1,7 +1,7 @@
 <template>
   <div
     class="studentContainer"
-    v-bind:class="{ pending: isPending, helping: TA.length > 0 }"
+    v-bind:class="{ helping: TA.length > 0 }"
   >
     <p id="username" class="gridItem">{{ username }}</p>
     <p id="helpType" class="gridItem">{{ helpTypeTranslate }}</p>
@@ -29,7 +29,7 @@ export default {
     TA: String,
   },
   methods: {
-    translateHelptype(){
+    prettify(){
       if(this.helpType === 'help'){
         this.helpTypeTranslate = "Hjelp"
       } else {
@@ -38,7 +38,7 @@ export default {
     }
   },
   beforeMount() {
-    this.translateHelptype()
+    this.prettify()
   }
 };
 </script>
@@ -74,10 +74,7 @@ export default {
 #TA {
   grid-area: TA;
 }
-.pending {
-  border: 1px solid yellow;
-  border-left: 20px solid yellow;
-}
+
 .helping {
   border: 1px solid lightgreen;
   border-left: 20px solid lightgreen;

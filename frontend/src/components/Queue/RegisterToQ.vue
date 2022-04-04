@@ -2,7 +2,7 @@
   <div>
     <div id="registerQContainer">
       <h2>Registrering</h2>
-    <select name="task" class="selector">
+    <select name="task" class="selector" v-model="taskNumber">
       <option value="" disabled selected hidden>Øving...</option>
       <option v-for="task in tasks" :key="task">
         {{ task }}
@@ -27,12 +27,12 @@
     </div>
     <img src="@/assets/roomPic.png" alt="Picture of the room" v-show="place === 'school'">
     <div>
-      <input type="radio" id="approval" name="helpType" checked />
-      <label for="approval">Godkjenning</label>
-      <input type="radio" id="help" name="helpType" />
-      <label for="help">Hjelp</label>
+      <input type="radio" value="approval" name="helpType" checked v-model="helpType"/>
+      <label>Godkjenning</label>
+      <input type="radio" value="help" name="helpType" v-model="helpType"/>
+      <label>Hjelp</label>
     </div>
-      <button @click="registerToQueue">Registrer</button>
+      <button @click="registerToQueue" id="registerButton">Registrer</button>
     </div>
   </div>
 </template>
@@ -46,7 +46,6 @@ export default {
       taskNumber: '',
       place: 'home',
       helpType: '',
-      message: '',
       tasks: '',
     }
   },
@@ -55,9 +54,10 @@ export default {
       const numTasks = await getSubject(this.$store.state.currentSubjectId)
       this.tasks = numTasks.numTasks
     },
-    registerToQueue(){
-      const queueInfo = {task: this.taskNumber, tableNr: this.place, type: this.helpType}
-      addToQueue(this.$store.state.currentSubjectId, queueInfo)
+    async registerToQueue(){
+      const queueInfo = {task: parseInt(this.taskNumber), tableNr: this.place, type: this.helpType}
+      await addToQueue(this.$store.state.currentSubjectId, queueInfo)
+      window.location.reload()
     }
   },
   beforeMount() {
