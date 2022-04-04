@@ -2,16 +2,22 @@
   <div>
     <button @click="showModal('addUser')">Legg til bruker</button>
     <div>
-      <input type="text" placeholder="Søk etter bruker" class="searchBox" v-model="search"/>
-    </div>
-    <div class="userBox"  v-for="(user, index) in filteredList" :key="index">
-      <User class="userObject"
-            :userName="user.username"
-            :userEmail="user.email"
-            :userRole="user.teacher"
-            :userId="user.userID"
+      <input
+        type="text"
+        placeholder="Søk etter bruker"
+        class="searchBox"
+        v-model="search"
       />
-<!--
+    </div>
+    <div class="userBox" v-for="(user, index) in filteredList" :key="index">
+      <User
+        class="userObject"
+        :userName="user.username"
+        :userEmail="user.email"
+        :userRole="user.teacher"
+        :userId="user.userID"
+      />
+      <!--
       <button @click="showModal('user')">Mer</button>
       <UserSubjects v-show="userSubjectsModal"
                     :studentName="user.username"
@@ -19,14 +25,14 @@
                     class="modalContent"/>-->
     </div>
     <div id="modalBackdrop" @click="closeModal" v-show="backdrop"></div>
-    <AddUser v-if="addingUser" class="modalContent"/>
+    <AddUser v-if="addingUser" class="modalContent" />
   </div>
 </template>
 
 <script>
 import User from "@/components/User/User";
 import AddUser from "@/components/User/AddUser";
-import {getAllUsers} from "@/utils/apiutils";
+import { getAllUsers } from "@/utils/apiutils";
 
 export default {
   name: "UsersView",
@@ -40,19 +46,20 @@ export default {
       backdrop: false,
       addingUser: false,
       userSubjectsModal: false,
-      search: '',
-    }
+      search: "",
+    };
   },
   methods: {
     async getUsers() {
-      const users = await getAllUsers()
+      const users = await getAllUsers();
       users.forEach((user) =>
-          this.allUsers.push({
-            username: user.firstName + " " + user.lastName,
-            email: user.email,
-            isTeacher: user.teacher,
-            userID: user.id
-          }))
+        this.allUsers.push({
+          username: user.firstName + " " + user.lastName,
+          email: user.email,
+          isTeacher: user.teacher,
+          userID: user.id,
+        })
+      );
     },
     closeModal() {
       this.backdrop = false;
@@ -70,17 +77,17 @@ export default {
       }
     },
   },
-    computed: {
-      filteredList() {
-        return this.allUsers.filter(user => {
-          return user.username.toLowerCase().includes(this.search.toLowerCase())
-        })
-      },
+  computed: {
+    filteredList() {
+      return this.allUsers.filter((user) => {
+        return user.username.toLowerCase().includes(this.search.toLowerCase());
+      });
     },
-    beforeMount() {
-      this.getUsers()
-  }
-}
+  },
+  beforeMount() {
+    this.getUsers();
+  },
+};
 </script>
 
 <style scoped>
@@ -112,7 +119,7 @@ export default {
   border: 4px solid lightblue;
   overflow: scroll;
 }
-.userBox{
+.userBox {
   display: flex;
   flex-direction: row;
 }

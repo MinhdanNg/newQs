@@ -2,36 +2,43 @@
   <div>
     <button @click="showModal">Legg til fag</button>
     <div>
-      <input type="text" placeholder="Søk etter emnekode" class="searchBox" v-model="search"/>
+      <input
+        type="text"
+        placeholder="Søk etter emnekode"
+        class="searchBox"
+        v-model="search"
+      />
     </div>
     <h2>Aktive fag</h2>
     <div>
-      <Subject v-for="(subject, index) in activeSubjects"
-               :key="index"
-               :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"
-               :subjectID="subject.subjectID"
+      <Subject
+        v-for="(subject, index) in activeSubjects"
+        :key="index"
+        :subject-code="subject.subjectCode"
+        :subject-name="subject.subjectName"
+        :subjectID="subject.subjectID"
       />
     </div>
     <hr />
     <h3>Arkiverte fag</h3>
     <div>
-      <Subject v-for="(subject, index) in inactiveSubjects"
-               :key="index"
-               :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"
-               :subjectID="subject.subjectID"
+      <Subject
+        v-for="(subject, index) in inactiveSubjects"
+        :key="index"
+        :subject-code="subject.subjectCode"
+        :subject-name="subject.subjectName"
+        :subjectID="subject.subjectID"
       />
     </div>
     <div id="modalBackdrop" @click="closeModal" v-show="backdrop"></div>
-    <AddSubject v-if="addingSubject" class="modalContent"/>
+    <AddSubject v-if="addingSubject" class="modalContent" />
   </div>
 </template>
 
 <script>
 import Subject from "@/components/Subject/Subject";
 import AddSubject from "@/components/Subject/AddSubject";
-import { getAllSubjects } from "@/utils/apiutils"
+import { getAllSubjects } from "@/utils/apiutils";
 
 export default {
   name: "SubjectsView",
@@ -39,19 +46,25 @@ export default {
     AddSubject,
     Subject,
   },
-  data (){
+  data() {
     return {
       subjectsList: [],
       backdrop: false,
       addingSubject: false,
-      search: '',
-    }
+      search: "",
+    };
   },
   methods: {
     async getSubjects() {
-      const allSubjects = await getAllSubjects()
+      const allSubjects = await getAllSubjects();
       allSubjects.forEach((subject) =>
-          this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
+        this.subjectsList.push({
+          archive: subject.archive,
+          subjectCode: subject.code,
+          subjectName: subject.name,
+          subjectID: subject.subjectId,
+        })
+      );
     },
     closeModal() {
       this.backdrop = false;
@@ -64,25 +77,31 @@ export default {
     },
   },
   beforeMount() {
-    this.getSubjects()
-    },
+    this.getSubjects();
+  },
   computed: {
-    activeSubjects(){
-      let activeSubjects = []
-      this.subjectsList.forEach(s => {!s.archive ? activeSubjects.push(s) : null})
-      return activeSubjects
+    activeSubjects() {
+      let activeSubjects = [];
+      this.subjectsList.forEach((s) => {
+        !s.archive ? activeSubjects.push(s) : null;
+      });
+      return activeSubjects;
     },
-    inactiveSubjects(){
-      let activeSubjects = []
-      this.subjectsList.forEach(s => {s.archive ? activeSubjects.push(s) : null})
-      return activeSubjects
+    inactiveSubjects() {
+      let activeSubjects = [];
+      this.subjectsList.forEach((s) => {
+        s.archive ? activeSubjects.push(s) : null;
+      });
+      return activeSubjects;
     },
     filteredList() {
-      return this.subjectsList.filter(subject => {
-        return subject.subjectCode.toLowerCase().includes(this.search.toLowerCase())
-      })
+      return this.subjectsList.filter((subject) => {
+        return subject.subjectCode
+          .toLowerCase()
+          .includes(this.search.toLowerCase());
+      });
     },
-  }
+  },
 };
 </script>
 

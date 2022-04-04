@@ -1,12 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
-  plugins: [createPersistedState({
-    storage: window.sessionStorage,
-  })],
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   state: {
     username: "",
     email: "",
@@ -19,8 +21,8 @@ const store = new Vuex.Store({
   },
   getters: {
     token: function (state) {
-      return state.accessToken
-    }
+      return state.accessToken;
+    },
   },
   mutations: {
     SET_USERNAME(state, username) {
@@ -35,24 +37,24 @@ const store = new Vuex.Store({
     SET_ROLE(state, role) {
       state.role = role;
     },
-    SET_TOKEN(state, token){
-      state.accessToken = token
+    SET_TOKEN(state, token) {
+      state.accessToken = token;
     },
-    SET_USERID(state, id){
-      state.userID = id
+    SET_USERID(state, id) {
+      state.userID = id;
     },
-    SET_SUBJECTID(state, id){
-      state.currentSubjectId = id
-    }
+    SET_SUBJECTID(state, id) {
+      state.currentSubjectId = id;
+    },
   },
   actions: {
-    login(context, {username, email, token, userID, teacher}) {
+    login(context, { username, email, token, userID, teacher }) {
       context.commit("SET_USERNAME", username);
       context.commit("SET_EMAIL", email);
       context.commit("SET_STATUS", true);
       context.commit("SET_TOKEN", token);
       context.commit("SET_USERID", userID);
-      if(teacher){
+      if (teacher) {
         context.commit("SET_ROLE", "admin");
       } else {
         context.commit("SET_ROLE", "student");

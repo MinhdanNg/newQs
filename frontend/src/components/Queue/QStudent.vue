@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="studentContainer"
-    v-bind:class="{ helping: TA.length > 0 }"
-  >
+  <div class="studentContainer" v-bind:class="{ helping: TA.length > 0 }">
     <p id="username" class="gridItem">{{ username }}</p>
     <p id="helpType" class="gridItem">{{ helpTypeTranslate }}</p>
     <p id="task" class="gridItem">Øving {{ taskNumber }}</p>
@@ -12,13 +9,12 @@
 </template>
 
 <script>
-
 export default {
   name: "QStudent",
   data() {
     return {
       isPending: false,
-      helpTypeTranslate: '',
+      helpTypeTranslate: "",
     };
   },
   props: {
@@ -29,17 +25,17 @@ export default {
     TA: String,
   },
   methods: {
-    prettify(){
-      if(this.helpType === 'help'){
-        this.helpTypeTranslate = "Hjelp"
+    prettify() {
+      if (this.helpType === "help") {
+        this.helpTypeTranslate = "Hjelp";
       } else {
-        this.helpTypeTranslate = "Godkjenning"
+        this.helpTypeTranslate = "Godkjenning";
       }
-    }
+    },
   },
   beforeMount() {
-    this.prettify()
-  }
+    this.prettify();
+  },
 };
 </script>
 

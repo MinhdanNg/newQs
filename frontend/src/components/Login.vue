@@ -1,7 +1,7 @@
 <template>
   <div id="loginContainer">
     <div id="username">
-      <input v-model="email" type="text" id="emailInput" placeholder="Epost"/>
+      <input v-model="email" type="text" id="emailInput" placeholder="Epost" />
     </div>
     <div id="password">
       <input
@@ -11,48 +11,59 @@
         placeholder="Passord"
       />
     </div>
-    <button v-on:click="handleClickSignin" id="loginButton">Logg inn</button>
+    <button
+      @click="handleClickSignin"
+      @keyup.enter="handleClickSignin"
+      id="loginButton"
+    >
+      Logg inn
+    </button>
     <label id="loginStatusMsg">{{ loginStatusMsg }}</label>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import {doLogin} from "@/utils/apiutils.js";
+import { doLogin } from "@/utils/apiutils.js";
 
 export default {
   name: "LoginComponent",
   data() {
     return {
-      email: '',
-      password: '',
-      loginStatus: '',
-      loginStatusMsg: '',
-    }
+      email: "",
+      password: "",
+      loginStatus: "",
+      loginStatusMsg: "",
+    };
   },
   methods: {
     async handleClickSignin() {
-      const loginRequest = {username: this.email, password: this.password, };
+      const loginRequest = { username: this.email, password: this.password };
       const loginResponse = await doLogin(loginRequest);
 
-      const loginInfo = {username: loginResponse.firstName + " "+ loginResponse.lastName, email: this.email, token: loginResponse.accessToken, userID: loginResponse.userId, teacher: loginResponse.teacher}
-      this.$store.dispatch("login", loginInfo)
-      if(loginResponse.teacher){
+      const loginInfo = {
+        username: loginResponse.firstName + " " + loginResponse.lastName,
+        email: this.email,
+        token: loginResponse.accessToken,
+        userID: loginResponse.userId,
+        teacher: loginResponse.teacher,
+      };
+      this.$store.dispatch("login", loginInfo);
+      if (loginResponse.teacher) {
         await this.$router.push({
           name: "AdminSubjects",
-        })
+        });
       } else {
         await this.$router.push({
           name: "Subjects",
-        })
+        });
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>
-input{
+input {
   background-color: transparent;
   border: 1px solid lightblue;
   border-radius: 5px;

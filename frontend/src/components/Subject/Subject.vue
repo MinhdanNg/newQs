@@ -1,37 +1,48 @@
 <template>
   <div id="subjectContainer">
     <div id="subjectNames">
-      <p>{{subjectCode}}</p>
-      <h2>{{subjectName}}</h2>
-      <button @click="toQueue" class="infoButton" v-if="!($store.state.role==='admin') && isActive">Til kø</button>
-      <div v-if="$store.state.role==='læringsassistent'">
-        <button v-if="!isActive" class="infoButton" @click="startQ">Start kø</button>
+      <p>{{ subjectCode }}</p>
+      <h2>{{ subjectName }}</h2>
+      <button
+        @click="toQueue"
+        class="infoButton"
+        v-if="!($store.state.role === 'admin') && isActive"
+      >
+        Til kø
+      </button>
+      <div v-if="$store.state.role === 'læringsassistent'">
+        <button v-if="!isActive" class="infoButton" @click="startQ">
+          Start kø
+        </button>
         <button v-else class="infoButton" @click="stopQ">Stopp kø</button>
       </div>
-      <div v-if="$store.state.role==='admin'">
+      <div v-if="$store.state.role === 'admin'">
         <button @click="archiveSubject" class="infoButton">Arkiver</button>
         <button @click="deleteSubject" class="infoButton">Slett</button>
         <button @click="viewMoreSubject" class="infoButton">Se mer</button>
       </div>
     </div>
-    <div v-if="$store.state.role==='student' || showUserTasks" id="subjectDetail" >
+    <div
+      v-if="$store.state.role === 'student' || showUserTasks"
+      id="subjectDetail"
+    >
       <div id="taskInfo" class="tabContent">
         <div class="title">
           <h2>Øvinger</h2>
-          <p>Status: </p>
+          <p>Status:</p>
         </div>
         <div>
-         <table class="taskTable">
-           <tr>
-             <th id="taskColumn">Øving</th>
-             <th id="resultColumn">Resultat</th>
-             <th id="commentColumn">Kommentar</th>
-           </tr>
-           <tr v-for="(task, index) in taskList" :key="index">
-             <td>Øving {{task.taskNum}}</td>
-             <td>{{ task.status }}</td>
-           </tr>
-         </table>
+          <table class="taskTable">
+            <tr>
+              <th id="taskColumn">Øving</th>
+              <th id="resultColumn">Resultat</th>
+              <th id="commentColumn">Kommentar</th>
+            </tr>
+            <tr v-for="(task, index) in taskList" :key="index">
+              <td>Øving {{ task.taskNum }}</td>
+              <td>{{ task.status }}</td>
+            </tr>
+          </table>
         </div>
       </div>
       <div id="TAInfo" class="tabContent"></div>
@@ -40,7 +51,14 @@
 </template>
 
 <script>
-import {deleteSubject, archiveSubject, startQueue, stopQueue, getQueue, getSubjectsOverview} from "@/utils/apiutils";
+import {
+  deleteSubject,
+  archiveSubject,
+  startQueue,
+  stopQueue,
+  getQueue,
+  getSubjectsOverview,
+} from "@/utils/apiutils";
 
 export default {
   name: "Subject",
@@ -52,50 +70,51 @@ export default {
   },
   data() {
     return {
-      isActive: '',
+      isActive: "",
       taskList: [],
-    }
+    };
   },
   methods: {
-    async queueStatus(){
-      const status = await getQueue(this.subjectID)
-      this.isActive = status.active
+    async queueStatus() {
+      const status = await getQueue(this.subjectID);
+      this.isActive = status.active;
     },
-    async taskStatus(){
-      const taskstatus = await getSubjectsOverview().subjects
+    async taskStatus() {
+      const taskstatus = await getSubjectsOverview().subjects;
       let counter = 1;
-      for(const task in taskstatus){
-        this.taskList.push({taskNum: counter, status: task.tasks[counter - 1]})
-        counter++
+      for (const task in taskstatus) {
+        this.taskList.push({
+          taskNum: counter,
+          status: task.tasks[counter - 1],
+        });
+        counter++;
       }
     },
     toQueue() {
       this.$router.push({
         name: "Queue",
-        params: {subjectID: this.subjectID,
-          subjectName: this.subjectName}
+        params: { subjectID: this.subjectID, subjectName: this.subjectName },
       });
-      this.$store.commit("SET_SUBJECTID", this.subjectID)
+      this.$store.commit("SET_SUBJECTID", this.subjectID);
     },
-    startQ(){
-      startQueue(this.subjectID)
+    startQ() {
+      startQueue(this.subjectID);
     },
-    stopQ(){
-      stopQueue(this.subjectID)
+    stopQ() {
+      stopQueue(this.subjectID);
     },
-    archiveSubject(){
-      archiveSubject(this.subjectID)
+    archiveSubject() {
+      archiveSubject(this.subjectID);
     },
-    deleteSubject(){
-      deleteSubject(this.subjectID)
+    deleteSubject() {
+      deleteSubject(this.subjectID);
     },
-    viewMoreSubject(){
-    }
+    viewMoreSubject() {},
   },
   beforeMount() {
-    this.queueStatus()
-    this.taskStatus()
-  }
+    this.queueStatus();
+    this.taskStatus();
+  },
 };
 </script>
 
@@ -153,12 +172,13 @@ h3 {
   width: 70%;
 }
 #taskColumn {
-  width: 15%
+  width: 15%;
 }
 #resultColumn {
   width: 15%;
 }
-th, td {
+th,
+td {
   border-bottom: 1px solid dimgrey;
   padding: 10px;
 }

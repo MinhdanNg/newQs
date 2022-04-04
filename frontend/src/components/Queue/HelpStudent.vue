@@ -2,8 +2,12 @@
   <div>
     <div id="helpContainer">
       <h1 class="containerItem">{{ this.username }}</h1>
-      <button @click="helpStudent" id="helpStudentButton"
-              :style="isHelping ? {backgroundColor: 'green'} : null " class="helpButton">
+      <button
+        @click="helpStudent"
+        id="helpStudentButton"
+        :style="isHelping ? { backgroundColor: 'green' } : null"
+        class="helpButton"
+      >
         {{ helpButton }}
       </button>
       <div class="containerItem">
@@ -19,7 +23,7 @@
 </template>
 
 <script>
-import {approveStudent, helpStudent, postponeStudent} from "@/utils/apiutils";
+import { approveStudent, helpStudent, postponeStudent } from "@/utils/apiutils";
 
 export default {
   name: "HelpStudent",
@@ -31,23 +35,23 @@ export default {
     return {
       isHelping: false,
       helpButton: "Hjelp student",
-      subjectID: this.$store.state.currentSubjectId
+      subjectID: this.$store.state.currentSubjectId,
     };
   },
   methods: {
     helpStudent() {
-      helpStudent()
+      helpStudent();
       this.isHelping = true;
       this.helpButton = "Hjelper";
-      window.location.reload()
+      window.location.reload();
     },
     approveTask() {
-      approveStudent(this.subjectID, this.studentID)
-      window.location.reload()
+      approveStudent(this.subjectID, this.studentID);
+      window.location.reload();
     },
     pendStudent() {
-      postponeStudent(this.subjectID, this.studentID)
-      window.location.reload()
+      postponeStudent(this.subjectID, this.studentID);
+      window.location.reload();
     },
   },
 };

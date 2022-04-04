@@ -2,7 +2,16 @@
   <div id="container">
     <div id="nav" v-if="$store.state.loginStatus">
       <img src="./assets/logo.png" alt="logo" id="logo" />
-      <p id="usernameNav">{{ $store.state.username }}<button id="swapRole" @click="swapRole" v-if="!($store.state.role==='admin')"> {{$store.state.role}}</button></p>
+      <p id="usernameNav">
+        {{ $store.state.username
+        }}<button
+          id="swapRole"
+          @click="swapRole"
+          v-if="!($store.state.role === 'admin')"
+        >
+          {{ $store.state.role }}
+        </button>
+      </p>
       <div>
         <button class="navButtons" id="logOutButton" @click="logOut">
           <img src="./assets/logout.png" alt="Logg ut" id="logoutIcon" />
@@ -10,8 +19,8 @@
       </div>
     </div>
     <div id="content">
-      <AdminView v-if="$store.state.role === 'admin'"/>
-      <router-view v-else/>
+      <AdminView v-if="$store.state.role === 'admin'" />
+      <router-view v-else />
     </div>
   </div>
 </template>
@@ -24,25 +33,25 @@ export default {
   },
   methods: {
     swapRole() {
-      if(this.$store.state.role === "student"){
-        this.$store.commit("SET_ROLE", "læringsassistent")
+      if (this.$store.state.role === "student") {
+        this.$store.commit("SET_ROLE", "læringsassistent");
       } else {
-        this.$store.commit("SET_ROLE", "student")
+        this.$store.commit("SET_ROLE", "student");
       }
-      if(this.$route.name !== 'Subjects'){
+      if (this.$route.name !== "Subjects") {
         this.$router.push({
           name: "Subjects",
         });
       }
     },
-    logOut(){
-      this.$store.dispatch("logout")
+    logOut() {
+      this.$store.dispatch("logout");
       this.$router.push({
         name: "Login",
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style>
 body {

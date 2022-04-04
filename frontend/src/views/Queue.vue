@@ -1,14 +1,20 @@
 <template>
   <div id="queueContainer">
     <h1>{{ subjectName }}</h1>
-    <button v-if="$store.state.role==='student'" id="queueUpButton" @click="showModal('register')">Still deg i kø</button>
+    <button
+      v-if="$store.state.role === 'student'"
+      id="queueUpButton"
+      @click="showModal('register')"
+    >
+      Still deg i kø
+    </button>
     <div id="queueAndFilter">
       <div id="queue">
         <button
-            v-for="(student, index) in queueList"
-            :key="index"
-            @click="showModal('help', index)"
-            class="btnStudent"
+          v-for="(student, index) in queueList"
+          :key="index"
+          @click="showModal('help', index)"
+          class="btnStudent"
         >
           <QStudent
             :username="student.username"
@@ -28,7 +34,11 @@
           :username="currentStudentModal.username"
           :studentID="currentStudentModal.studentId"
         />
-        <RegisterToQ class="modalContent" id="registerModal" v-if="registerQModal"/>
+        <RegisterToQ
+          class="modalContent"
+          id="registerModal"
+          v-if="registerQModal"
+        />
       </div>
     </div>
   </div>
@@ -38,7 +48,7 @@
 import QStudent from "@/components/Queue/QStudent.vue";
 import HelpStudent from "@/components/Queue/HelpStudent";
 import RegisterToQ from "@/components/Queue/RegisterToQ";
-import {getQueueItems, getSubject} from "@/utils/apiutils";
+import { getQueueItems, getSubject } from "@/utils/apiutils";
 
 export default {
   name: "Queue",
@@ -52,53 +62,58 @@ export default {
   },
   data() {
     return {
-      subjectName: '',
+      subjectName: "",
       queueList: [],
 
       isHelping: false,
       helpStudentModal: false,
       registerQModal: false,
       backdrop: false,
-      currentStudentModal: '',
-
+      currentStudentModal: "",
     };
   },
   methods: {
-    async getQueueItem(){
-      const subject = await getSubject(this.$store.state.currentSubjectId)
-      this.subjectName = subject.name
-      const queueItems = await getQueueItems(this.$store.state.currentSubjectId)
+    async getQueueItem() {
+      const subject = await getSubject(this.$store.state.currentSubjectId);
+      this.subjectName = subject.name;
+      const queueItems = await getQueueItems(
+        this.$store.state.currentSubjectId
+      );
       for (const item of queueItems) {
-        item.assistedBy != null ? this.queueList.push({
+        item.assistedBy != null
+          ? this.queueList.push({
               username: item.student.firstName + " " + item.student.lastName,
               helpType: item.type,
               task: item.task,
               place: item.table,
               TA: item.assistedBy.firstName + " " + item.assistedBy.lastName,
-              studentId: item.student.id}) :
-            this.queueList.push({username: item.student.firstName + " " + item.student.lastName,
+              studentId: item.student.id,
+            })
+          : this.queueList.push({
+              username: item.student.firstName + " " + item.student.lastName,
               helpType: item.type,
               task: item.task,
               place: item.table,
               TA: "",
-              studentId: item.student.id})
+              studentId: item.student.id,
+            });
       }
     },
     closeModal() {
       this.backdrop = false;
-      if(this.helpStudentModal){
-        this.helpStudentModal = !this.helpStudentModal
+      if (this.helpStudentModal) {
+        this.helpStudentModal = !this.helpStudentModal;
       } else {
         this.registerQModal = !this.registerQModal;
       }
     },
 
     showModal(modal, index) {
-      if(modal === "help" && this.$store.state.role === 'læringsassistent') {
+      if (modal === "help" && this.$store.state.role === "læringsassistent") {
         this.backdrop = true;
         this.helpStudentModal = true;
         this.currentStudentModal = this.queueList[index];
-      } else if(modal === "register" && this.$store.state.role === 'student'){
+      } else if (modal === "register" && this.$store.state.role === "student") {
         this.backdrop = true;
         this.registerQModal = true;
       }
@@ -108,8 +123,8 @@ export default {
     },
   },
   beforeMount() {
-    this.getQueueItem()
-  }
+    this.getQueueItem();
+  },
 };
 </script>
 <style scoped>

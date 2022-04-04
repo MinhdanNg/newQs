@@ -3,20 +3,28 @@
     <table>
       <tr>
         <td>
-          <p>{{userName}}</p>
+          <p>{{ userName }}</p>
         </td>
         <td>
-          <p>{{userEmail}}</p>
+          <p>{{ userEmail }}</p>
         </td>
         <td>
-          <p>{{userRole}}</p>
+          <p>{{ userRole }}</p>
         </td>
         <td>
-          <p v-for="(subject,index) in userSubjects" :key="index">{{subject.subjectName}}: <span v-bind:class="{approved: subject.status==='Godkjent', unapproved: !(subject.status==='Godkjent')}">{{subject.status}}</span></p>
+          <p v-for="(subject, index) in userSubjects" :key="index">
+            {{ subject.subjectName }}:
+            <span
+              v-bind:class="{
+                approved: subject.status === 'Godkjent',
+                unapproved: !(subject.status === 'Godkjent'),
+              }"
+              >{{ subject.status }}</span
+            >
+          </p>
         </td>
       </tr>
     </table>
-
   </div>
 </template>
 
@@ -31,17 +39,16 @@ export default {
     userRole: String,
     userId: String,
   },
-  data (){
+  data() {
     return {
       userSubjects: [],
-
-    }
+    };
   },
   methods: {
     async getSubjects() {
-        const allSubjects = await getSubjectsOverview(this.userId)
-      console.log(allSubjects)
-        /*allSubjects.forEach((subject) =>
+      const allSubjects = await getSubjectsOverview(this.userId);
+      console.log(allSubjects);
+      /*allSubjects.forEach((subject) =>
             this.userSubjects.push({ subjectCode: subject.subjects.code, subjectName: subject.subjects.name, subjectStatus: subject.subjects.approved}))*/
     },
     closeModal() {
@@ -50,14 +57,14 @@ export default {
     },
 
     showModal() {
-        this.backdrop = true;
-        this.userSubjectsModal = true;
+      this.backdrop = true;
+      this.userSubjectsModal = true;
     },
   },
   beforeMount() {
-    this.getSubjects()
-  }
-}
+    this.getSubjects();
+  },
+};
 </script>
 
 <style scoped>
