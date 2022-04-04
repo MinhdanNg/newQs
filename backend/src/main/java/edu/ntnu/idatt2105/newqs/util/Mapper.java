@@ -6,6 +6,8 @@ import edu.ntnu.idatt2105.newqs.model.queue.QueueItemResponse;
 import edu.ntnu.idatt2105.newqs.model.room.RoomResponse;
 import edu.ntnu.idatt2105.newqs.model.subject.SubjectResponse;
 import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupResponse;
+import edu.ntnu.idatt2105.newqs.model.user.AccessTokenResponse;
+import edu.ntnu.idatt2105.newqs.model.user.LoginResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
 import java.lang.reflect.Array;
@@ -100,5 +102,18 @@ public class Mapper
                 item.getTimeJoined(),
                 item.getTableNr()
         );
+    }
+
+    public static LoginResponse ToLoginResponse(AccessTokenResponse accessTokenResponse, User user)
+    {
+        return new LoginResponse(
+                accessTokenResponse.getAccess_token(),
+                accessTokenResponse.getExpires_in(),
+                user != null ? user.getFirstName() : null,
+                user != null ? user.getLastName() : null,
+                user != null ? user.getEmail() : null,
+                user != null ? user.getEmail() : null,
+                user != null ? user.getIsTeacher() : false
+                );
     }
 }
