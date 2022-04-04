@@ -48,8 +48,9 @@ public class QueueItemController
 
     @PutMapping(value = "/{studentId}/postpone")
     @ResponseStatus(value = HttpStatus.OK)
-    public void postpone(@PathVariable long subjectId, @PathVariable String studentId)
+    public void postpone(@PathVariable long subjectId, @PathVariable String studentId) throws AccessException
     {
+        authorizationService.assertAssistantGrant(subjectId);
         queueItemService.postpone(subjectId, studentId);
     }
 }

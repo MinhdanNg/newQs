@@ -3,7 +3,6 @@ package edu.ntnu.idatt2105.newqs.util;
 import edu.ntnu.idatt2105.newqs.entity.*;
 import edu.ntnu.idatt2105.newqs.model.queue.QueueResponse;
 import edu.ntnu.idatt2105.newqs.model.queue.QueueItemResponse;
-import edu.ntnu.idatt2105.newqs.model.room.RoomResponse;
 import edu.ntnu.idatt2105.newqs.model.subject.SubjectResponse;
 import edu.ntnu.idatt2105.newqs.model.tasks.TaskGroupResponse;
 import edu.ntnu.idatt2105.newqs.model.user.AccessTokenResponse;
@@ -70,18 +69,7 @@ public class Mapper
     {
         return new QueueResponse(
                 queue.isActive(),
-                ToRoomResponse(queue.getRoom()),
                 ToQueueItemResponses(queue.getItems())
-        );
-    }
-
-    public static RoomResponse ToRoomResponse(Room room)
-    {
-        return new RoomResponse(
-                room.getId(),
-                room.getName(),
-                room.getNumTables(),
-                room.getImageURL()
         );
     }
 

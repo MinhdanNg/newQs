@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,29 +27,33 @@ public class SubjectController
 
     @PostMapping(value = "/register")
     @ResponseStatus(value = HttpStatus.OK)
-    public SubjectResponse register(@RequestBody SubjectRegisterRequest request)
+    public SubjectResponse register(@RequestBody SubjectRegisterRequest request) throws AccessException
     {
+        authorizationService.assertTeacherGrant();
         return subjectService.register(request);
     }
 
     @GetMapping(value = "/{subjectId}/get")
     @ResponseStatus(value = HttpStatus.OK)
-    public SubjectResponse get(@PathVariable long subjectId)
+    public SubjectResponse get(@PathVariable long subjectId) throws AccessException
     {
+        authorizationService.assertStudentGrant(subjectId);
         return subjectService.get(subjectId);
     }
 
     @GetMapping(value = "/get-all")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<SubjectResponse> getAll()
+    public List<SubjectResponse> getAll() throws AccessException
     {
+        authorizationService.assertTeacherGrant();
         return subjectService.getAll();
     }
 
     @GetMapping(value = "/get-where-student/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<SubjectResponse> getWhereStudentFor(@PathVariable String userId)
+    public List<SubjectResponse> getWhereStudentFor(@PathVariable String userId) throws AccessException
     {
+        authorizationService.assertIsUser(userId);
         return subjectService.getWhereStudent(userId);
     }
 
@@ -68,50 +73,48 @@ public class SubjectController
 
     @PutMapping(value = "/{subjectId}/activate")
     @ResponseStatus(value = HttpStatus.OK)
-    public void activate(@PathVariable long subjectId)
+    public void activate(@PathVariable long subjectId) throws AccessException
     {
+        authorizationService.assertTeacherGrant();
         subjectService.activate(subjectId);
     }
 
     @PutMapping(value = "/{subjectId}/archive")
     @ResponseStatus(value = HttpStatus.OK)
-    public void archive(@PathVariable long subjectId)
+    public void archive(@PathVariable long subjectId) throws AccessException
     {
+        authorizationService.assertTeacherGrant();
         subjectService.archive(subjectId);
     }
 
     @DeleteMapping(value = "/{subjectId}/delete")
     @ResponseStatus(value = HttpStatus.OK)
-    public void delete(@PathVariable long subjectId)
+    public void delete(@PathVariable long subjectId) throws AccessException
     {
+        authorizationService.assertTeacherGrant();
         subjectService.delete(subjectId);
     }
 
     @PostMapping(value = "/{subjectId}/add-users")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addUsers(@PathVariable long subjectId, @RequestBody SubjectAddUsersRequest request)
+    public void addUsers(@PathVariable long subjectId, @RequestBody SubjectAddUsersRequest request) throws AccessException
     {
+        authorizationService.assertAssistantGrant(subjectId);
         subjectService.addUsers(subjectId, request);
     }
 
-    @GetMapping(value = "/{subjectId}/get-task-overview/{userId}")
+    @GetMapping(value = "/get-subject-overview/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public SubjectGetTaskOverviewResponse getTaskOverviewFor(@PathVariable long subjectId, @PathVariable String userId)
+    public StudentSubjectOverviewResponse getSubjectOverviewFor(@PathVariable String userId) throws AccessException
     {
-        return subjectService.getMyTaskOverview(subjectId, userId);
+        authorizationService.assertIsUser(userId);
+        return subjectService.getSubjectOverview(userId);
     }
 
-    @GetMapping(value = "/{subjectId}/get-my-task-overview")
+    @GetMapping(value = "/get-my-subject-overview")
     @ResponseStatus(value = HttpStatus.OK)
-    public SubjectGetTaskOverviewResponse getMyTaskOverview(@PathVariable long subjectId)
+    public StudentSubjectOverviewResponse getMySubjectOverview()
     {
-        return subjectService.getMyTaskOverview(subjectId, authorizationService.getUserId());
-    }
-
-    @GetMapping(value = "/{subjectId}/get-all-task-overview")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<SubjectGetTaskOverviewResponse> getAllTaskOverview(@PathVariable long subjectId)
-    {
-        return subjectService.getAllTaskOverview(subjectId);
+        return subjectService.getSubjectOverview(authorizationService.getUserId());
     }
 }

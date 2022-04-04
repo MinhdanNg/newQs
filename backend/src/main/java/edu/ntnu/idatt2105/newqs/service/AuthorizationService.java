@@ -21,6 +21,22 @@ public class AuthorizationService
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
+    public void assertIsUser(String userId) throws AccessException
+    {
+        if(!(getUserId().equals(userId) || isTeacher()))
+        {
+            throw new AccessException("Access denied");
+        }
+    }
+
+    public void assertIsUser(long subjectId, String userId) throws AccessException
+    {
+        if(!(getUserId().equals(userId) || isAssistantIn(subjectId) || isTeacher()))
+        {
+            throw new AccessException("Access denied");
+        }
+    }
+
     public void assertStudentGrant(long subjectId) throws AccessException
     {
         if(!(isStudentIn(subjectId) || isAssistantIn(subjectId) || isTeacher()))

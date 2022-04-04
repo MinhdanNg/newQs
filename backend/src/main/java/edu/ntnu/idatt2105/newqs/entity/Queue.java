@@ -12,14 +12,12 @@ public class Queue implements Serializable
     @GeneratedValue
     private long id;
     private boolean isActive;
-    @ManyToOne
-    private Room room;
     @OneToMany
     private List<QueueItem> items;
 
     public Queue()
     {
-        isActive = true;
+        isActive = false;
         items = new ArrayList<>();
     }
 
@@ -41,16 +39,6 @@ public class Queue implements Serializable
     public void setActive(boolean active)
     {
         isActive = active;
-    }
-
-    public Room getRoom()
-    {
-        return room;
-    }
-
-    public void setRoom(Room room)
-    {
-        this.room = room;
     }
 
     public List<QueueItem> getItems()

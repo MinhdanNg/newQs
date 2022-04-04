@@ -213,7 +213,7 @@ public class UserService
             String firstName = (String) linkedHashMap.get("firstName");
             String lastName = (String) linkedHashMap.get("lastName");
 
-            return new User(id, firstName, lastName, username, false);
+            return new User(id, firstName, lastName, username, username.equals("admin"));
         }
 
         return null;

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SubjectService
@@ -127,13 +126,49 @@ public class SubjectService
         subjectRepository.save(subject);
     }
 
-    public List<SubjectGetTaskOverviewResponse> getAllTaskOverview(long subjectId)
+    public StudentSubjectOverviewResponse getSubjectOverview(String studentId)
     {
-        return null;
-    }
+        User student = userRepository.findById(studentId).orElseThrow();
+        List<Subject> subjects = subjectRepository.findSubjectsByStudentsContains(student);
 
-    public SubjectGetTaskOverviewResponse getMyTaskOverview(long subjectId, String userId)
-    {
-        return null;
+        List<SubjectOverviewResponse> subjectOverviewResponses = new ArrayList<>();
+
+        for (Subject subject : subjects)
+        {
+            List<Task> studentApprovedTasks = student.getApprovedTasks();
+            List<Boolean> taskOverview = new ArrayList<>();
+            boolean approvedSubject = true;
+            for (TaskGroup taskGroup : subject.getTaskGroups())
+            {
+                int approvedInTaskGroup = 0;
+                for (Task task : taskGroup.getTasks())
+                {
+                    boolean approvedTask = studentApprovedTasks.contains(task);
+                    taskOverview.add(approvedTask);
+                    if (approvedTask)
+                    {
+                        approvedInTaskGroup++;
+                    }
+                }
+
+                if (approvedInTaskGroup < taskGroup.getNumRequired())
+                {
+                    approvedSubject = false;
+                }
+            }
+
+            SubjectOverviewResponse subjectOverviewResponse = new SubjectOverviewResponse(
+                    subject.getId(),
+                    subject.getCode(),
+                    subject.getName(),
+                    approvedSubject,
+                    taskOverview
+            );
+
+            subjectOverviewResponses.add(subjectOverviewResponse);
+
+        }
+
+        return new StudentSubjectOverviewResponse(Mapper.ToUserResponse(student), subjectOverviewResponses);
     }
 }
