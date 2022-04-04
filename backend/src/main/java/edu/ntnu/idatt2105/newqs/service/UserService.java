@@ -1,7 +1,9 @@
 package edu.ntnu.idatt2105.newqs.service;
 
+import edu.ntnu.idatt2105.newqs.entity.Subject;
 import edu.ntnu.idatt2105.newqs.entity.User;
 import edu.ntnu.idatt2105.newqs.model.user.*;
+import edu.ntnu.idatt2105.newqs.repository.SubjectRepository;
 import edu.ntnu.idatt2105.newqs.repository.UserRepository;
 import edu.ntnu.idatt2105.newqs.util.Mapper;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +30,8 @@ public class UserService
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     private final RestTemplate restTemplate;
 
@@ -45,6 +49,27 @@ public class UserService
     public UserResponse get(String userId)
     {
         User user = userRepository.findById(userId).orElseThrow();
+        return Mapper.ToUserResponse(user);
+    }
+
+    public UserResponse register(UserRegisterRequest request)
+    {
+        User user = register(request.getFirstName(), request.getLastName(), request.getEmail(), request.isTeacher());
+
+        for (long subjectId : request.getStudentSubjects())
+        {
+            Subject subject = subjectRepository.findById(subjectId).orElseThrow();
+            subject.getStudents().add(user);
+            subjectRepository.save(subject);
+        }
+
+        for (long subjectId : request.getAssistantSubjects())
+        {
+            Subject subject = subjectRepository.findById(subjectId).orElseThrow();
+            subject.getAssistants().add(user);
+            subjectRepository.save(subject);
+        }
+
         return Mapper.ToUserResponse(user);
     }
 

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.expression.AccessException;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,14 @@ public class UserController
     public UserResponse get(@PathVariable String userId)
     {
         return userService.get(userId);
+    }
+
+    @PostMapping(value = "/register")
+    @ResponseStatus(value = HttpStatus.OK)
+    public UserResponse register(@RequestBody UserRegisterRequest request) throws AccessException
+    {
+        authorizationService.assertTeacherGrant();
+        return userService.register(request);
     }
 
     @PostMapping(value = "/login")
