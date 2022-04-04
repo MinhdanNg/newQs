@@ -67,6 +67,12 @@ public class SubjectService
         return Mapper.ToSubjectResponse(subject);
     }
 
+    public boolean isAssistant(long subjectId, String userId)
+    {
+        User assistant = userRepository.findById(userId).orElseThrow();
+        return subjectRepository.findById(subjectId).orElseThrow().getAssistants().contains(assistant);
+    }
+
     public SubjectResponse get(long subjectId)
     {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();

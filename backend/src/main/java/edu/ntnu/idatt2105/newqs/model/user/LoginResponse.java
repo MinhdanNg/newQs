@@ -4,13 +4,25 @@ public class LoginResponse
 {
     String accessToken;
     int expiresIn;
+    String userId;
+    String firstName;
+    String lastName;
+    String email;
+    String username;
+    boolean isTeacher;
 
     public LoginResponse() { }
 
-    public LoginResponse(String accessToken, int expiresIn)
+    public LoginResponse(String accessToken, int expiresIn, String userId, String firstName, String lastName, String email, String username, boolean isTeacher)
     {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.isTeacher = isTeacher;
     }
 
     public String getAccessToken()
@@ -31,5 +43,65 @@ public class LoginResponse
     public void setExpiresIn(int expiresIn)
     {
         this.expiresIn = expiresIn;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public boolean isTeacher()
+    {
+        return isTeacher;
+    }
+
+    public void setTeacher(boolean teacher)
+    {
+        isTeacher = teacher;
     }
 }
