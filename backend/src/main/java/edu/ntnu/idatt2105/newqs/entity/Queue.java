@@ -13,6 +13,7 @@ public class Queue implements Serializable
     private long id;
     private boolean isActive;
     @OneToMany
+    @OrderColumn
     private List<QueueItem> items;
 
     public Queue()

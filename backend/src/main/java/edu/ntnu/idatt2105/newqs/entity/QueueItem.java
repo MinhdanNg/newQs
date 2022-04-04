@@ -18,18 +18,16 @@ public class QueueItem implements Serializable
     @ManyToOne
     private User assistedBy;
     private String type;
-    private Date timeJoined;
     private String tableNr;
 
     public QueueItem() { }
 
-    public QueueItem(User student, List<Task> tasks, User assistedBy, String type, Date timeJoined, String tableNr)
+    public QueueItem(User student, List<Task> tasks, User assistedBy, String type, String tableNr)
     {
         this.student = student;
         this.tasks = tasks;
         this.assistedBy = assistedBy;
         this.type = type;
-        this.timeJoined = timeJoined;
         this.tableNr = tableNr;
     }
 
@@ -81,16 +79,6 @@ public class QueueItem implements Serializable
     public void setType(String type)
     {
         this.type = type;
-    }
-
-    public Date getTimeJoined()
-    {
-        return timeJoined;
-    }
-
-    public void setTimeJoined(Date timeJoined)
-    {
-        this.timeJoined = timeJoined;
     }
 
     public String getTableNr()

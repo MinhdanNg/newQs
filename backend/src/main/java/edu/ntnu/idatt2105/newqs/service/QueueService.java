@@ -65,7 +65,7 @@ public class QueueService
 
         List<Task> tasks = subjectTasks.stream().filter(task -> request.getTasks().contains(task.getTaskNr())).collect(Collectors.toList());
 
-        QueueItem queueItem = new QueueItem(student, tasks, null, request.getType(), new Date(), request.getTableNr());
+        QueueItem queueItem = new QueueItem(student, tasks, null, request.getType(), request.getTableNr());
 
         queueItem = queueItemRepository.save(queueItem);
         queue.getItems().add(queueItem);

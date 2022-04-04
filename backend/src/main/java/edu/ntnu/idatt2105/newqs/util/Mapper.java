@@ -85,7 +85,6 @@ public class Mapper
                 item.getTasks().stream().map(Task::getTaskNr).mapToInt(taskNr -> taskNr).toArray(),
                 ToUserResponse(item.getAssistedBy()),
                 item.getType(),
-                item.getTimeJoined(),
                 item.getTableNr()
         );
     }
