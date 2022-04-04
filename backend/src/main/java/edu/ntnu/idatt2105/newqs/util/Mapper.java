@@ -10,8 +10,6 @@ import edu.ntnu.idatt2105.newqs.model.user.AccessTokenResponse;
 import edu.ntnu.idatt2105.newqs.model.user.LoginResponse;
 import edu.ntnu.idatt2105.newqs.model.user.UserResponse;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

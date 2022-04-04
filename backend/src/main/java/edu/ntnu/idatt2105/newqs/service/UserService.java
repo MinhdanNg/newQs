@@ -48,11 +48,6 @@ public class UserService
         return Mapper.ToUserResponse(user);
     }
 
-    public boolean isTeacher(String userId)
-    {
-        return userRepository.findById(userId).orElseThrow().getIsTeacher();
-    }
-
     public LoginResponse login(LoginRequest request)
     {
         final String uri = "http://localhost:8080/auth/realms/master/protocol/openid-connect/token";
@@ -205,7 +200,14 @@ public class UserService
 
         if (responseEntity.hasBody())
         {
-            LinkedHashMap linkedHashMap = (LinkedHashMap) responseEntity.getBody().get(0);
+            List list = responseEntity.getBody();
+
+            if (list.size() == 0)
+            {
+                return null;
+            }
+
+            LinkedHashMap linkedHashMap = (LinkedHashMap) list.get(0);
 
             String id = (String) linkedHashMap.get("id");
             String firstName = (String) linkedHashMap.get("firstName");

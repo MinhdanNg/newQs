@@ -2,12 +2,12 @@ package edu.ntnu.idatt2105.newqs.controller;
 
 import edu.ntnu.idatt2105.newqs.model.subject.*;
 import edu.ntnu.idatt2105.newqs.service.SubjectService;
+import edu.ntnu.idatt2105.newqs.service.AuthorizationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +21,8 @@ public class SubjectController
     private static final Logger LOGGER = LogManager.getLogger(SubjectController.class);
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private AuthorizationService authorizationService;
 
     @PostMapping(value = "/register")
     @ResponseStatus(value = HttpStatus.OK)
@@ -54,16 +56,14 @@ public class SubjectController
     @ResponseStatus(value = HttpStatus.OK)
     public List<SubjectResponse> getWhereStudent()
     {
-        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return subjectService.getWhereStudent(studentId);
+        return subjectService.getWhereStudent(authorizationService.getUserId());
     }
 
     @GetMapping(value = "/get-where-assistant")
     @ResponseStatus(value = HttpStatus.OK)
     public List<SubjectResponse> getWhereAssistant()
     {
-        String assistantId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return subjectService.getWhereAssistant(assistantId);
+        return subjectService.getWhereAssistant(authorizationService.getUserId());
     }
 
     @PutMapping(value = "/{subjectId}/activate")
@@ -105,8 +105,7 @@ public class SubjectController
     @ResponseStatus(value = HttpStatus.OK)
     public SubjectGetTaskOverviewResponse getMyTaskOverview(@PathVariable long subjectId)
     {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return subjectService.getMyTaskOverview(subjectId, userId);
+        return subjectService.getMyTaskOverview(subjectId, authorizationService.getUserId());
     }
 
     @GetMapping(value = "/{subjectId}/get-all-task-overview")
