@@ -16,6 +16,8 @@ public class Mapper
 {
     public static SubjectResponse ToSubjectResponse(Subject subject)
     {
+        if (subject == null) return null;
+
         int numTasks = subject.getTaskGroups().stream().mapToInt(taskGroup -> taskGroup.getTasks().size()).sum();
 
         return new SubjectResponse(
@@ -43,6 +45,8 @@ public class Mapper
 
     public static UserResponse ToUserResponse(User user)
     {
+        if (user == null) return null;
+
         return new UserResponse(
                 user.getId(),
                 user.getFirstName(),
@@ -59,6 +63,8 @@ public class Mapper
 
     public static TaskGroupResponse ToTaskGroupResponse(TaskGroup taskGroup)
     {
+        if (taskGroup == null) return null;
+
         return new TaskGroupResponse(
                 taskGroup.getTasks().size(),
                 taskGroup.getNumRequired()
@@ -67,6 +73,8 @@ public class Mapper
 
     public static QueueResponse ToQueueResponse(Queue queue)
     {
+        if (queue == null) return null;
+
         return new QueueResponse(
                 queue.isActive(),
                 ToQueueItemResponses(queue.getItems())
@@ -80,6 +88,8 @@ public class Mapper
 
     public static QueueItemResponse ToQueueItemResponse(QueueItem item)
     {
+        if (item == null) return null;
+
         return new QueueItemResponse(
                 ToUserResponse(item.getStudent()),
                 item.getTasks().stream().map(Task::getTaskNr).mapToInt(taskNr -> taskNr).toArray(),
