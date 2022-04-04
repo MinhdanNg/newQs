@@ -1,12 +1,14 @@
 package edu.ntnu.idatt2105.newqs.controller;
 
 import edu.ntnu.idatt2105.newqs.model.user.*;
+import edu.ntnu.idatt2105.newqs.service.AuthorizationService;
 import edu.ntnu.idatt2105.newqs.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class UserController
     private static final Logger LOGGER = LogManager.getLogger(UserController.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorizationService authorizationService;
 
     @GetMapping(value = "/get-all")
     @ResponseStatus(value = HttpStatus.OK)
