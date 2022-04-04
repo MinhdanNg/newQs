@@ -48,6 +48,11 @@ public class UserService
         return Mapper.ToUserResponse(user);
     }
 
+    public boolean isTeacher(String userId)
+    {
+        return userRepository.findById(userId).orElseThrow().getIsTeacher();
+    }
+
     public LoginResponse login(LoginRequest request)
     {
         final String uri = "http://localhost:8080/auth/realms/master/protocol/openid-connect/token";

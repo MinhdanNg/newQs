@@ -109,6 +109,7 @@ public class Mapper
         return new LoginResponse(
                 accessTokenResponse.getAccess_token(),
                 accessTokenResponse.getExpires_in(),
+                user != null ? user.getId() : null,
                 user != null ? user.getFirstName() : null,
                 user != null ? user.getLastName() : null,
                 user != null ? user.getEmail() : null,

@@ -4,6 +4,7 @@ public class LoginResponse
 {
     String accessToken;
     int expiresIn;
+    String userId;
     String firstName;
     String lastName;
     String email;
@@ -12,10 +13,11 @@ public class LoginResponse
 
     public LoginResponse() { }
 
-    public LoginResponse(String accessToken, int expiresIn, String firstName, String lastName, String email, String username, boolean isTeacher)
+    public LoginResponse(String accessToken, int expiresIn, String userId, String firstName, String lastName, String email, String username, boolean isTeacher)
     {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,6 +43,16 @@ public class LoginResponse
     public void setExpiresIn(int expiresIn)
     {
         this.expiresIn = expiresIn;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
     }
 
     public String getFirstName()
