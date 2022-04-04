@@ -102,7 +102,7 @@ export function addSubject(subjectInfo){
 
 export function deleteSubject(subjectID){
     return axios
-        .post("http://localhost:8085/api/subject/" + subjectID + "/delete", {
+        .delete("http://localhost:8085/api/subject/" + subjectID + "/delete", {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }
@@ -143,25 +143,19 @@ export function getQueue(subjectID){
 
 export function startQueue(subjectID){
     return axios
-        .get("http://localhost:8085/api/subject/" + subjectID + "/queue/start", {
+        .put("http://localhost:8085/api/subject/" + subjectID + "/queue/start", {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }
-        })
-        .then((response) =>{
-            return response.data
         });
 }
 
 export function stopQueue(subjectID){
     return axios
-        .get("http://localhost:8085/api/subject/" + subjectID + "/queue/stop", {
+        .put("http://localhost:8085/api/subject/" + subjectID + "/queue/stop", {
             headers: {
                 Authorization: 'Bearer ' + store.getters.token
             }
-        })
-        .then((response) =>{
-            return response.data
         });
 }
 

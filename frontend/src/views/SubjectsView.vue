@@ -3,8 +3,15 @@
     <router-link :to="{ name: 'Subjects' }">Aktive fag</router-link> |
     <router-link :to="{ name: 'ArchivedSubjects' }">Arkiverte fag</router-link>
     <h2>Aktiv kø</h2>
-    <div>
-      <Subject v-for="(subject, index) in activeSubjects"
+    <div v-if="$store.state.role === 'student'">
+      <Subject v-for="(subject, index) in studentActiveQueues"
+               :key="index"
+               :subjectCode="subject.subjectCode"
+               :subjectName="subject.subjectName"
+               :subjectID="subject.subjectID"/>
+    </div>
+    <div v-else>
+      <Subject v-for="(subject, index) in teachAssActiveQueues"
                :key="index"
                :subjectCode="subject.subjectCode"
                :subjectName="subject.subjectName"
@@ -12,8 +19,15 @@
     </div>
     <hr />
     <h3>Inaktiv kø</h3>
-    <div>
-      <Subject v-for="(subject, index) in inactiveSubjects"
+    <div v-if="$store.state.role === 'student'">
+      <Subject v-for="(subject, index) in studentInactiveQueues"
+               :key="index"
+               :subjectCode="subject.subjectCode"
+               :subjectName="subject.subjectName"
+               :subjectID="subject.subjectID"/>
+    </div>
+    <div v-else>
+      <Subject v-for="(subject, index) in teachAssInactiveQueues"
                :key="index"
                :subjectCode="subject.subjectCode"
                :subjectName="subject.subjectName"
@@ -24,7 +38,7 @@
 
 <script>
 import Subject from "@/components/Subject/Subject";
-import {getSubjectsWhereAssistant, getSubjectsWhereStudent} from "@/utils/apiutils.js";
+import {getQueue, getSubjectsWhereAssistant, getSubjectsWhereStudent} from "@/utils/apiutils.js";
 
 export default {
   name: "SubjectsView",
@@ -33,33 +47,34 @@ export default {
   },
   data (){
     return {
-      subjectsList: [],
+      studentSubjectsList: [],
+      teachAssSubjectsList: [],
+      studentActiveQueues: [],
+      studentInactiveQueues: [],
+      teachAssActiveQueues: [],
+      teachAssInactiveQueues: [],
     }
   },
   methods: {
     async getSubjects() {
-      if(this.$store.state.role==='student'){
-        const allSubjects = await getSubjectsWhereStudent()
-        allSubjects.forEach((subject) =>
-            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
-      } else if(this.$store.state.role==='læringsassistent'){
-        const allSubjects = await getSubjectsWhereAssistant()
-        allSubjects.forEach((subject) =>
-            this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
+      const studentSubjects = await getSubjectsWhereStudent()
+      studentSubjects.forEach((subject) =>
+          subject.active ? this.studentSubjectsList.push({active: subject.active, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}): null)
+      const teachAssSubjects = await getSubjectsWhereAssistant()
+      teachAssSubjects.forEach((subject) =>
+          subject.active ? this.teachAssSubjectsList.push({active: subject.active, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}): null)
+
+      for (const subject of this.studentSubjectsList) {
+        const status = await getQueue(subject.subjectID)
+        status.active ? this.studentActiveQueues.push(subject) : this.studentInactiveQueues.push(subject);
+      }
+      for (const subject of this.teachAssSubjectsList) {
+        const status = await getQueue(subject.subjectID)
+        status.active ? this.teachAssActiveQueues.push(subject) : this.teachAssInactiveQueues.push(subject);
       }
     },
   },
   computed: {
-    activeSubjects(){
-      let activeSubjects = []
-      this.subjectsList.forEach(s => {s.isActive ? activeSubjects.push(s) : null})
-      return activeSubjects
-    },
-    inactiveSubjects(){
-      let activeSubjects = []
-      this.subjectsList.forEach(s => {!s.isActive ? activeSubjects.push(s) : null})
-      return activeSubjects
-    }
   }, beforeMount() {
     this.getSubjects()
   }

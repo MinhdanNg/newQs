@@ -9,7 +9,9 @@
       <Subject v-for="(subject, index) in activeSubjects"
                :key="index"
                :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"/>
+               :subject-name="subject.subjectName"
+               :subjectID="subject.subjectID"
+      />
     </div>
     <hr />
     <h3>Arkiverte fag</h3>
@@ -17,7 +19,9 @@
       <Subject v-for="(subject, index) in inactiveSubjects"
                :key="index"
                :subject-code="subject.subjectCode"
-               :subject-name="subject.subjectName"/>
+               :subject-name="subject.subjectName"
+               :subjectID="subject.subjectID"
+      />
     </div>
     <div id="modalBackdrop" @click="closeModal" v-show="backdrop"></div>
     <AddSubject v-if="addingSubject" class="modalContent"/>
@@ -47,7 +51,7 @@ export default {
     async getSubjects() {
       const allSubjects = await getAllSubjects()
       allSubjects.forEach((subject) =>
-          this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name}))
+          this.subjectsList.push({archive: subject.archive, subjectCode: subject.code, subjectName: subject.name, subjectID: subject.subjectId}))
     },
     closeModal() {
       this.backdrop = false;
