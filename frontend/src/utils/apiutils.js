@@ -182,22 +182,22 @@ export function getQueueItems(subjectID) {
 export function startQueue(subjectID) {
   return axios.put(
     "http://localhost:8085/api/subject/" + subjectID + "/queue/start",
-    {
-      headers: {
-        Authorization: "Bearer " + store.getters.token,
-      },
-    }
+      {
+      }, {headers: {
+              Authorization: "Bearer " + store.getters.token,
+          },
+      }
   );
 }
 
 export function stopQueue(subjectID) {
   return axios.put(
     "http://localhost:8085/api/subject/" + subjectID + "/queue/stop",
-    {
-      headers: {
-        Authorization: "Bearer " + store.getters.token,
-      },
-    }
+      {
+      }, {headers: {
+              Authorization: "Bearer " + store.getters.token,
+          },
+      }
   );
 }
 
@@ -221,10 +221,10 @@ export function helpStudent(subjectID, studentID) {
       studentID +
       "/assist",
     {
-      headers: {
-        Authorization: "Bearer " + store.getters.token,
-      },
-    }
+    }, {headers: {
+              Authorization: "Bearer " + store.getters.token,
+          },
+      }
   );
 }
 export function approveStudent(subjectID, studentID) {
@@ -248,11 +248,11 @@ export function postponeStudent(subjectID, studentID) {
       "/queue-item/" +
       studentID +
       "/postpone",
-    {
-      headers: {
-        Authorization: "Bearer " + store.getters.token,
-      },
-    }
+      {
+      }, {headers: {
+              Authorization: "Bearer " + store.getters.token,
+          },
+      }
   );
 }
 export function rejectStudent(subjectID, studentID) {

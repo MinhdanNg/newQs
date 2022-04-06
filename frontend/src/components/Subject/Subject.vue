@@ -19,7 +19,6 @@
       <div v-if="$store.state.role === 'admin'">
         <button @click="archiveSubject" class="infoButton">Arkiver</button>
         <button @click="deleteSubject" class="infoButton">Slett</button>
-        <button @click="viewMoreSubject" class="infoButton">Se mer</button>
       </div>
     </div>
     <div
@@ -97,19 +96,22 @@ export default {
       });
       this.$store.commit("SET_SUBJECTID", this.subjectID);
     },
-    startQ() {
-      startQueue(this.subjectID);
+    async startQ() {
+      await startQueue(this.subjectID);
+      window.location.reload();
     },
-    stopQ() {
-      stopQueue(this.subjectID);
+    async stopQ() {
+      await stopQueue(this.subjectID);
+      window.location.reload();
     },
-    archiveSubject() {
-      archiveSubject(this.subjectID);
+    async archiveSubject() {
+      await archiveSubject(this.subjectID);
+      window.location.reload();
     },
     deleteSubject() {
       deleteSubject(this.subjectID);
+      window.location.reload();
     },
-    viewMoreSubject() {},
   },
   beforeMount() {
     this.queueStatus();

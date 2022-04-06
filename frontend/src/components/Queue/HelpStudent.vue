@@ -43,7 +43,6 @@ export default {
       helpStudent();
       this.isHelping = true;
       this.helpButton = "Hjelper";
-      window.location.reload();
     },
     approveTask() {
       approveStudent(this.subjectID, this.studentID);
