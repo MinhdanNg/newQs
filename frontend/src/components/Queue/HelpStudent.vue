@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     helpStudent() {
-      helpStudent();
+      helpStudent(this.$store.state.currentSubjectId, this.studentID);
       this.isHelping = true;
       this.helpButton = "Hjelper";
     },
